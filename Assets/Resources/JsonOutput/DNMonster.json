@@ -1,0 +1,23 @@
+[
+  {
+    "Id": "mob_slim_1",
+    "Name": "슬라이무",
+    "Description": "슬라이무는 공격을 받을 때마다 딸기맛, 초코맛, 바닐라맛으로 변한다",
+    "IconPath": null,
+    "PrefabPath": null
+  },
+  {
+    "Id": "mob_dog_1",
+    "Name": "도그",
+    "Description": "도그는 도그다",
+    "IconPath": null,
+    "PrefabPath": null
+  },
+  {
+    "Id": "mob_pigme_1",
+    "Name": "피그미",
+    "Description": "피그미는 충돌하면 사라진다. 간헐적으로 금화가 터져나온다.",
+    "IconPath": null,
+    "PrefabPath": null
+  }
+]

@@ -20,7 +20,8 @@ public enum DaniTechUIType
     DNDialogueUI,
     DNInfoBookUI,
     RobbyUI,
-    SettingPopup
+    SettingPopup,
+    GameBookUI
 }
 
 public static class DaniTechUIManagerExtension

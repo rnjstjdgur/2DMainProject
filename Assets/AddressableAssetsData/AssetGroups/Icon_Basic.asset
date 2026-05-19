@@ -15,6 +15,21 @@ MonoBehaviour:
   m_GroupName: Icon_Basic
   m_GUID: 2817fc9d26d631b4395ae7e1877c37a6
   m_SerializeEntries:
+  - m_GUID: 3a0c58ad308715444a72cc5105a81ff2
+    m_Address: Icon/Icon_Item_Fire
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 541d040d28a992e43b90d7281f4b82f0
+    m_Address: Icon/Icon_Item_Ice
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64609c4d8e8793c4fac594c08422e46c
+    m_Address: Icon/Icon_Item_Aqua
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 84d8daaadc9dbf84e90b1f56d606062f
     m_Address: Icon/Icon_Item_Equip_Hat_1
     m_ReadOnly: 0
@@ -22,6 +37,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b28c3fc6e6dfdb543bb0344328a5b40f
     m_Address: Icon/Icon_Item_Gold_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7d5687068ba53043ac1cd65584896bd
+    m_Address: Icon/Icon_Item_Lightning
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5695069d7e2f8a48b3c7a1aa12d69e7
+    m_Address: Icon/Icon_Item_MagicArrow
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

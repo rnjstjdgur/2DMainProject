@@ -48,5 +48,55 @@
     "MaxStackCount": 20,
     "SellingPrice": 100,
     "IconPath": "Icon/Icon_Item_Box_1"
+  },
+  {
+    "Id": "Item_MagicArrow",
+    "Name": "매직 애로우",
+    "Description": "기초적인 공격마법으로 마나 덩어리로 적을 공격한다",
+    "ItemType": "Normal",
+    "Grade": "Normal",
+    "MaxStackCount": 1,
+    "SellingPrice": 0,
+    "IconPath": "Icon/Icon_Item_MagicArrow"
+  },
+  {
+    "Id": "Item_Aqua",
+    "Name": "아쿠아",
+    "Description": "물을 생성하여 공격한다",
+    "ItemType": "Normal",
+    "Grade": "Normal",
+    "MaxStackCount": 1,
+    "SellingPrice": 0,
+    "IconPath": "Icon/Icon_Item_Aqua"
+  },
+  {
+    "Id": "Item_Fire",
+    "Name": "파이어",
+    "Description": "불꽃을 일으켜 공격한다",
+    "ItemType": "Normal",
+    "Grade": "Normal",
+    "MaxStackCount": 1,
+    "SellingPrice": 0,
+    "IconPath": "Icon/Icon_Item_Fire"
+  },
+  {
+    "Id": "Item_Ice",
+    "Name": "아이스",
+    "Description": "수분을 얼려서 얼음을 만들어 공격한다",
+    "ItemType": "Normal",
+    "Grade": "Normal",
+    "MaxStackCount": 1,
+    "SellingPrice": 0,
+    "IconPath": "Icon/Icon_Item_Ice"
+  },
+  {
+    "Id": "Item_Lightning",
+    "Name": "라이트닝",
+    "Description": "전기를 일으켜 공격한다",
+    "ItemType": "Normal",
+    "Grade": "Normal",
+    "MaxStackCount": 1,
+    "SellingPrice": 0,
+    "IconPath": "Icon/Icon_Item_Lightning"
   }
 ]

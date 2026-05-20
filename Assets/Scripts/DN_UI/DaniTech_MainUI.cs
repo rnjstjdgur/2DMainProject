@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class DaniTech_MainUI : DaniTechUIBase
 {
@@ -8,6 +9,12 @@ public class DaniTech_MainUI : DaniTechUIBase
     [SerializeField] private DaniTechUIButton Btn_OpenInventory;
     [SerializeField] private DaniTechUIButton Btn_OpenGameBook;
 
+    [Header("스킬영역")]
+    [SerializeField] private DaniTechUIButton Btn_NormalAttack;
+    [SerializeField] private DaniTechUIButton Btn_CircleSkill;
+    [SerializeField] private DaniTechUIButton Btn_RaySkill;
+    [SerializeField] private DaniTechUIButton Btn_ProjectileSkill;
+
     private void OnEnable()
     {
         Btn_MyProfile.BindOnClickButtonEvent(OnClick_OpenMyProfile);
@@ -15,6 +22,32 @@ public class DaniTech_MainUI : DaniTechUIBase
         Btn_MonsterSpawn.BindOnClickButtonEvent(OnClicK_MonsterSpawn);
         Btn_OpenInventory.BindOnClickButtonEvent(OnClick_OpenInventory);
         Btn_OpenGameBook.BindOnClickButtonEvent(OnClick_OpenGameBook);
+
+        // 스킬
+        Btn_NormalAttack.BindOnClickButtonEvent(OnClick_UseNormalSkill);
+        Btn_CircleSkill.BindOnClickButtonEvent(OnClick_UseCircleSkill);
+        Btn_RaySkill.BindOnClickButtonEvent(OnClick_UseRaySkill);
+        Btn_ProjectileSkill.BindOnClickButtonEvent(OnClick_UseProjectileSkill);
+    }
+
+    public void OnClick_UseNormalSkill()
+    {
+        DaniTechGameManager.Inst.Player.UseNormalAttack();
+    }
+
+    public void OnClick_UseCircleSkill()
+    {
+        DaniTechGameManager.Inst.Player.UseCircleSkill();
+    }
+
+    public void OnClick_UseRaySkill()
+    {
+        DaniTechGameManager.Inst.Player.UseRaySkill();
+    }
+
+    public void OnClick_UseProjectileSkill()
+    {
+        DaniTechGameManager.Inst.Player.UseProjectileSkill();
     }
 
     public void OnClick_OpenInventory()

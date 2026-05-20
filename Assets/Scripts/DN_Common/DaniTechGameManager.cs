@@ -5,6 +5,9 @@ public class DaniTechGameManager : MonoBehaviour
 {
     public static DaniTechGameManager Inst { get; set; }
 
+    // 플레이어 캐싱 (1개라서 몬스터와 다르게 캐싱해도 괜찮다)
+    public Player2D Player;
+
     // 플레이 중에 저장되어야 하는 정보들이 있는 위치
     private DaniTechPlayerModel _playerModel = new DaniTechPlayerModel();
 

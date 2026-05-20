@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &67997097225992002
+--- !u!1 &988590796325963049
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3381554362602067370}
-  - component: {fileID: 5700589797395842478}
+  - component: {fileID: 9192351228819369026}
+  - component: {fileID: 6288677291912391479}
   m_Layer: 0
-  m_Name: DNGameManager
+  m_Name: MapManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3381554362602067370
+--- !u!4 &9192351228819369026
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67997097225992002}
+  m_GameObject: {fileID: 988590796325963049}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -253.85901, y: -220.86444, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5700589797395842478
+--- !u!114 &6288677291912391479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 67997097225992002}
+  m_GameObject: {fileID: 988590796325963049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90bc782bc9fbfc84fb52abbfeee6b466, type: 3}
+  m_Script: {fileID: 11500000, guid: c3c1d1a49b204304eb3be68344b29a16, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DaniTechGameManager
-  Player: {fileID: 4762404758259184080, guid: 2c24543d408afbf49baabb8ff69bba97, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::MapManager
+  Prefab_Player: {fileID: 9124186025880486968, guid: 2c24543d408afbf49baabb8ff69bba97, type: 3}
+  Prefab_TilemapChunk: {fileID: 3691853233084655582, guid: a6900bf1357fae44fb6c2348f1ca4e42, type: 3}
+  _chunkSize: 20

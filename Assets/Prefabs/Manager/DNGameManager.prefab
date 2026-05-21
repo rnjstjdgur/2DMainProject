@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90bc782bc9fbfc84fb52abbfeee6b466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DaniTechGameManager
-  Player: {fileID: 4762404758259184080, guid: 2c24543d408afbf49baabb8ff69bba97, type: 3}
+  Prefab_Player: {fileID: 9124186025880486968, guid: 2c24543d408afbf49baabb8ff69bba97, type: 3}

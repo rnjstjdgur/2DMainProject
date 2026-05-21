@@ -11,6 +11,7 @@ public class RobbyUI : DaniTechUIBase
 
     public void OnClick_GameStart()
     {
+        DaniTechGameManager.Inst.StartGame();
         DaniTechUIManager.Instance.CloseContentUI(DaniTechUIType.RobbyUI);
     }
 

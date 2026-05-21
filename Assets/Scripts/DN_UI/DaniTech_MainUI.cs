@@ -32,22 +32,22 @@ public class DaniTech_MainUI : DaniTechUIBase
 
     public void OnClick_UseNormalSkill()
     {
-        DaniTechGameManager.Inst.Player.UseNormalAttack();
+        DaniTechGameManager.Inst.Player().UseNormalAttack();
     }
 
     public void OnClick_UseCircleSkill()
     {
-        DaniTechGameManager.Inst.Player.UseCircleSkill();
+        DaniTechGameManager.Inst.Player().UseCircleSkill();
     }
 
     public void OnClick_UseRaySkill()
     {
-        DaniTechGameManager.Inst.Player.UseRaySkill();
+        DaniTechGameManager.Inst.Player().UseRaySkill();
     }
 
     public void OnClick_UseProjectileSkill()
     {
-        DaniTechGameManager.Inst.Player.UseProjectileSkill();
+        DaniTechGameManager.Inst.Player().UseProjectileSkill();
     }
 
     public void OnClick_OpenInventory()

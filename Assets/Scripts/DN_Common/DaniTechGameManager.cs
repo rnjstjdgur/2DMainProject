@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class DaniTechGameManager : MonoBehaviour
 {
+    [Header("프리팹")]
+    [SerializeField] private GameObject Prefab_Player;
     public static DaniTechGameManager Inst { get; set; }
-
-    // 플레이어 캐싱 (1개라서 몬스터와 다르게 캐싱해도 괜찮다)
-    public Player2D Player;
 
     // 플레이 중에 저장되어야 하는 정보들이 있는 위치
     private DaniTechPlayerModel _playerModel = new DaniTechPlayerModel();
+    private Player2D player;
+    private bool _IsGameStart = false;
 
     private void Awake()
     {
@@ -19,6 +20,23 @@ public class DaniTechGameManager : MonoBehaviour
     private void Start()
     {
         LoadSaveData();
+        GameObject spawnPlayer = Instantiate(Prefab_Player, Vector3.zero, Quaternion.identity);
+        player = spawnPlayer.GetComponent<Player2D>();
+    }
+
+    public bool IsGameStart()
+    {
+        return _IsGameStart;
+    }
+
+    public void StartGame()
+    {
+        _IsGameStart = true;
+    }
+
+    public Player2D Player()
+    {
+        return player;
     }
 
     public void SaveData()
@@ -28,6 +46,7 @@ public class DaniTechGameManager : MonoBehaviour
 
     public void SaveAndEndGame()
     {
+        _IsGameStart = false;
         SaveData();
         Application.Quit();
     }

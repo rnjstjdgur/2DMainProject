@@ -19,6 +19,8 @@ public class Player2D : MonoBehaviour
 
     private void Update()
     {
+        bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
+        if (isGameStart == false) return;
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 

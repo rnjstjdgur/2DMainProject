@@ -8,6 +8,7 @@ public class SkillProjectile : DaniTech_SkillBase
 
     private Vector3 _moveDirection = Vector3.right;
     private float _skillMoveSpeed = 10.0f;  // [ToDo] 나중에 데이터로 받아와서 스킬의 속도를 대입하자
+    private float _skillDurationTime = 3.0f;    // [ToDo] 나중에 데이터로 받아와서 스킬의 유지시간을 대입하자 (스킬이 강화되면 유지시간이 늘어나는식)
 
     public void InitSkillObject(Vector3 launchDirection)
     {
@@ -30,7 +31,7 @@ public class SkillProjectile : DaniTech_SkillBase
 
     IEnumerator DestroySkillAfterDelay()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(_skillDurationTime);
         Destroy(gameObject);
     }
 }

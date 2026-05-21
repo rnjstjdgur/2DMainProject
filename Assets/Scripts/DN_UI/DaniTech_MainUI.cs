@@ -37,7 +37,8 @@ public class DaniTech_MainUI : DaniTechUIBase
 
     public void OnClick_UseCircleSkill()
     {
-        DaniTechGameManager.Inst.Player().UseCircleSkill();
+        // [ToDo] 나중에 사거리, 범위를 데이터에서 받아오자
+        DaniTechGameManager.Inst.Player().UseCircleSkill(1.0f, 3f);
     }
 
     public void OnClick_UseRaySkill()

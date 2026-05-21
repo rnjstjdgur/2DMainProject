@@ -50,9 +50,9 @@ public class Player2D : MonoBehaviour
         StartCoroutine(CoStartNormalAttack());
     }
 
-    public void UseCircleSkill()
+    public void UseCircleSkill(float skillRange, float skillRadius)
     {
-        UseOverlapSkill(new Vector2(1.0f, 0.0f), 3f);
+        UseOverlapSkill(new Vector2(skillRange, 0.0f), skillRadius);
     }
 
     public void UseRaySkill()
@@ -62,7 +62,7 @@ public class Player2D : MonoBehaviour
 
     public void UseProjectileSkill()
     {
-
+        DaniTechGameObjectManager.Inst.CreateProjectileSkillObject();
     }
 
     // 기믹 관련 ====================================================================
@@ -98,6 +98,11 @@ public class Player2D : MonoBehaviour
             default:
                 return rawDir.normalized;
         }
+    }
+
+    public Vector3 GetLookDirection()
+    {
+        return new Vector3(_lookDirection.x, _lookDirection.y, 0f);
     }
 
     public void UseOverlapSkill(Vector2 offsetPosition, float radius)

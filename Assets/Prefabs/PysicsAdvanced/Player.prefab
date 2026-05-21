@@ -257,6 +257,8 @@ MonoBehaviour:
   Move_Speed: 5
   Move_Direction: {x: 0, y: 0, z: 0}
   Collider_PlayerNormalAttack: {fileID: 4409836486017895474}
+  Transform_SkillProjectileRoot: {fileID: 0}
+  _currentView: 2
 --- !u!212 &1866102760799174013
 SpriteRenderer:
   serializedVersion: 2

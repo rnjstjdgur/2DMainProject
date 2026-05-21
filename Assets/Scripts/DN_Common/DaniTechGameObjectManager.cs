@@ -5,8 +5,13 @@ using UnityEngine;
 public class DaniTechGameObjectManager : MonoBehaviour
 {
     // 생성할 몬스터의 프리팹
+    [Header("프리팹")]
+    [SerializeField] private GameObject Prefab_SkillProjectile;
     [SerializeField] private GameObject Prefab_Enemy;
+
+    [Header("트랜스폼")]
     [SerializeField] private Transform Root_Enemy;
+    [SerializeField] private Transform Tranform_ProjectileSkillRoot;
 
     public static DaniTechGameObjectManager Inst { get; set; }
 
@@ -21,6 +26,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         Inst = this;
     }
+
 
     public void RequestSpawnEnemy()
     {
@@ -96,10 +102,24 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
 
 
-
-
-
     //[필드 오브젝트] ====================================================================================================
+
+    public void CreateProjectileSkillObject()
+    {
+        var player = DaniTechGameManager.Inst.Player();
+
+        if (player == null)
+        {
+            Debug.LogWarning("플레이어가 존재하지 않습니다");
+            return;
+        }
+        var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Tranform_ProjectileSkillRoot);
+
+        SkillProjectile projectileScript = skillObj.GetComponent<SkillProjectile>();
+        if (projectileScript == null) return;
+        Vector3 playerDir = player.GetLookDirection();
+        projectileScript.InitSkillObject(playerDir);
+    }
 
     public async UniTaskVoid CreateFieldObject(string fieldObjectDataId, Transform spawnSpot)
     {

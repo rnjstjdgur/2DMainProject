@@ -29,21 +29,6 @@ public class Player2D : MonoBehaviour
         transform.Translate(Move_Direction * Move_Speed * Time.deltaTime);
     }
 
-
-
-
-
-
-    //public bool CheckSkillUseable()
-    //{
-    //    //if (_isSkillUsing == true)
-    //    //{
-    //    //    DaniTechUIManager.Instance.OpenSimplePopup("스킬이 이미 사용중입니다");
-    //    //}
-    //    //return false;
-    //}
-    
-
     // 스킬
     public void UseNormalAttack()
     {

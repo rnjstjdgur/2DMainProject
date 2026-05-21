@@ -107,18 +107,16 @@ public class DaniTechGameObjectManager : MonoBehaviour
     public void CreateProjectileSkillObject()
     {
         var player = DaniTechGameManager.Inst.Player();
+        if (player == null) return;
 
-        if (player == null)
-        {
-            Debug.LogWarning("플레이어가 존재하지 않습니다");
-            return;
-        }
         var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Tranform_ProjectileSkillRoot);
+        if (skillObj == null) return;
 
-        SkillProjectile projectileScript = skillObj.GetComponent<SkillProjectile>();
-        if (projectileScript == null) return;
+        SkillProjectile skillProjectileComponent = skillObj.GetComponent<SkillProjectile>();
+        if (skillProjectileComponent == null) return;
+
         Vector3 playerDir = player.GetLookDirection();
-        projectileScript.InitSkillObject(playerDir);
+        skillProjectileComponent.InitSkillObject(playerDir);
     }
 
     public async UniTaskVoid CreateFieldObject(string fieldObjectDataId, Transform spawnSpot)

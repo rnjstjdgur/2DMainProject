@@ -3,25 +3,33 @@ using UnityEngine;
 
 public class SkillProjectile : DaniTech_SkillBase
 {
+    [Header("Sprite Renderer")]
+    [SerializeField] private SpriteRenderer spriteRenderer_Effect;
+
     private Vector3 _moveDirection = Vector3.right;
+    private float _skillMoveSpeed = 10.0f;  // [ToDo] 나중에 데이터로 받아와서 스킬의 속도를 대입하자
 
     public void InitSkillObject(Vector3 launchDirection)
     {
         _moveDirection = launchDirection.normalized;
 
+        // [ToDo] 데이터로 스킬 스프라이트를 받아와서 스킬별로 다른 이미지가 생성됨
+        //var skillData = DaniTechGameDataManager.Instance.GetSkill();
+        //Sprite skillSprite = DaniTechResourceManager.Inst.LoadSprite(skillData.spritePath);
+        //spriteRenderer_Effect.sprite = skillSprite;
+
         float angle = Mathf.Atan2(_moveDirection.y, _moveDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
+        StartCoroutine(DestroySkillAfterDelay());
     }
 
     void Update()
     {
-        // [ToDo] 날아가는 속도를 일단 5.0으로 하고 나중에 데이터에서 받아와 스킬별로 다른 속도로 날아가도록 하자
-        StartCoroutine(ShootProjectileSkill());
+        transform.position += _moveDirection * _skillMoveSpeed * Time.deltaTime;
     }
 
-    IEnumerator ShootProjectileSkill()
+    IEnumerator DestroySkillAfterDelay()
     {
-        transform.position += _moveDirection * 10.0f * Time.deltaTime;
         yield return new WaitForSeconds(3.0f);
         Destroy(gameObject);
     }

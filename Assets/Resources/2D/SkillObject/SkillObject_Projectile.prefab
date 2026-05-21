@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa8ce086ef5f61408bfde782ee8eedf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillProjectile
+  spriteRenderer_Effect: {fileID: 965630293792048008}
 --- !u!1 &8268459609927866530
 GameObject:
   m_ObjectHideFlags: 0

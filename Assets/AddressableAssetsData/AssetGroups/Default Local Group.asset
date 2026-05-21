@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 80e8e0aaab7e37b4084b72f287df5f5d
   m_SerializeEntries:
+  - m_GUID: 01086b3fad4fd154f9c29150b49fc601
+    m_Address: Icon/Icon_Bear
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0d079c0737bf2f246b127fb22a014fa1
     m_Address: Sound/Voice_Pug_2_failed
     m_ReadOnly: 0
@@ -37,6 +42,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 43237ee419ec47b49a6349f963676aa1
     m_Address: 2DPrefab/Harvest_Potato
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4fcb57a277d8ed943b22e0b0ba31911b
+    m_Address: 2DObject/Monster_Bear
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -72,6 +82,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d8d61a3cf509c944a9072703554e32fb
     m_Address: Sound/Voice_Pug_1_success
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3a09a8551a56ca4e96b661e673f2239
+    m_Address: 2DObject/Monster_Slime
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f98f5aec2d3ecef41b7762e16e80c136
+    m_Address: Icon/Icon_Slime
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

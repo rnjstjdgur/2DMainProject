@@ -72,6 +72,15 @@ public class Monster2D : DaniTech_MonsterBase
 
         Vector3 ShootDirection = this.transform.right;
 
-        skillProjectileComponent.InitSkillObject(ShootDirection);
+        skillProjectileComponent.InitSkillObject(ShootDirection, "Enemy");
     }
+
+    //private void OnSkillCollision(int colliedObjecInstanceId)
+    //{
+    //    if (colliedObjecInstanceId == 0)
+    //    {
+    //        var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+    //        player.TakeDamage(_damage);
+    //    }
+    //}
 }

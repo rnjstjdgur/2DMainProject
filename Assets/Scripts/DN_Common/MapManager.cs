@@ -38,7 +38,7 @@ public class MapManager : MonoBehaviour
     {
         if (_playerTransform == null)
         {
-            Player2D PlayerObj = DaniTechGameManager.Inst.Player();
+            Player2D PlayerObj = DaniTechGameManager.Inst.GetLocalPlayer();
             if (PlayerObj == null) return;
             _playerTransform = PlayerObj.transform;
         }

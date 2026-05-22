@@ -29,7 +29,7 @@ public class Player2D : MonoBehaviour
 
     private void Start()
     {
-        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
+        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(DaniTechGameManager.Inst.GetLocalPlayer());
     }
 
     private void Update()
@@ -62,11 +62,6 @@ public class Player2D : MonoBehaviour
     public void UseCircleSkill(float skillRange, float skillRadius)
     {
         UseOverlapSkill(new Vector2(skillRange, 0.0f), skillRadius);
-    }
-
-    public void UseRaySkill()
-    {
-
     }
 
     public void UseProjectileSkill()
@@ -132,6 +127,7 @@ public class Player2D : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _playerHp -= damage;
+        Debug.LogError($"플레이어가 {damage} 데미지를 입었습니다. 현재체력: {_playerHp}");
 
         if (_playerHp < 0)
         {

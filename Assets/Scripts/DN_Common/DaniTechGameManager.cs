@@ -34,11 +34,6 @@ public class DaniTechGameManager : MonoBehaviour
         _IsGameStart = true;
     }
 
-    public Player2D Player()
-    {
-        return player;
-    }
-
     public void SaveData()
     {
         DaniTechNetworkManager.Inst.RequstSaveData(_playerModel);
@@ -85,6 +80,6 @@ public class DaniTechGameManager : MonoBehaviour
 
     public Player2D GetLocalPlayer()
     {
-        return DaniTechGameObjectManager.Inst.GetLocalPlayer();
+        return player;
     }
 }

@@ -35,15 +35,15 @@ public class DaniTechGameObjectManager : MonoBehaviour
         _localPlayer = localPlayer;
     }
 
-    public Player2D GetLocalPlayer()
-    {
-        if (_localPlayer == null)
-        {
-            Debug.LogError("등록된 플레이어가 없습니다. 참조에 실패하였습니다.");
-            return null;
-        }
-        return _localPlayer;
-    }
+    //public Player2D GetLocalPlayer()
+    //{
+    //    if (_localPlayer == null)
+    //    {
+    //        Debug.LogError("등록된 플레이어가 없습니다. 참조에 실패하였습니다.");
+    //        return null;
+    //    }
+    //    return _localPlayer;
+    //}
 
     public void RequestSpawnEnemy()
     {
@@ -155,7 +155,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public void CreateProjectileSkillObject()
     {
-        var player = DaniTechGameManager.Inst.Player();
+        var player = DaniTechGameManager.Inst.GetLocalPlayer();
         if (player == null) return;
 
         var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Tranform_ProjectileSkillRoot);
@@ -165,7 +165,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
         if (skillProjectileComponent == null) return;
 
         Vector3 playerDir = player.GetLookDirection();
-        skillProjectileComponent.InitSkillObject(playerDir);
+        skillProjectileComponent.InitSkillObject(playerDir, "Player");
     }
 
     public async UniTaskVoid CreateFieldObject(string fieldObjectDataId, Transform spawnSpot)

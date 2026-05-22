@@ -24,6 +24,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     private Dictionary<int, Monster2D> _monsterObjectContainer = new Dictionary<int, Monster2D>();
 
     private Player2D _localPlayer;
+    private Monster2D _monster;
 
     private void Awake()
     {
@@ -34,16 +35,6 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         _localPlayer = localPlayer;
     }
-
-    //public Player2D GetLocalPlayer()
-    //{
-    //    if (_localPlayer == null)
-    //    {
-    //        Debug.LogError("등록된 플레이어가 없습니다. 참조에 실패하였습니다.");
-    //        return null;
-    //    }
-    //    return _localPlayer;
-    //}
 
     public void RequestSpawnEnemy()
     {
@@ -153,7 +144,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     //[필드 오브젝트] ====================================================================================================
 
-    public void CreateProjectileSkillObject()
+    public void CreateProjectileSkillObjectByPlayer()
     {
         var player = DaniTechGameManager.Inst.GetLocalPlayer();
         if (player == null) return;
@@ -165,7 +156,29 @@ public class DaniTechGameObjectManager : MonoBehaviour
         if (skillProjectileComponent == null) return;
 
         Vector3 playerDir = player.GetLookDirection();
-        skillProjectileComponent.InitSkillObject(playerDir, "Player");
+        skillProjectileComponent.InitSkillObject(playerDir, 0, "Player", onSkillCollision);
+    }
+    public void CreateProjectileSkillObjectByMonster()
+    {
+
+        var gObj = Instantiate(Prefab_SkillProjectile, _monster.transform.position, Quaternion.identity, this.transform);
+        if (gObj == null) return;
+
+        var skillProjectileComponent = gObj.GetComponent<SkillProjectile>();
+        if (skillProjectileComponent == null) return;
+
+        Vector3 ShootDirection = this.transform.right;
+
+        skillProjectileComponent.InitSkillObject(ShootDirection, _monster.GetMonsterInstanceId(), "Enemy", onSkillCollision);
+    }
+
+    public void onSkillCollision(int colliedObjectInstanceId, int damage)
+    {
+        if (colliedObjectInstanceId == 0)
+        {
+            var player = DaniTechGameManager.Inst.GetLocalPlayer();
+            player.TakeDamage(damage);
+        }
     }
 
     public async UniTaskVoid CreateFieldObject(string fieldObjectDataId, Transform spawnSpot)

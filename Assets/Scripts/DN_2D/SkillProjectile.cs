@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using UnityEditor.AddressableAssets.Build;
 using UnityEngine;
 
 public class SkillProjectile : DaniTech_SkillBase
@@ -16,9 +15,14 @@ public class SkillProjectile : DaniTech_SkillBase
     private float _skillDurationTime = 3.0f;    // [ToDo] 나중에 데이터로 받아와서 스킬의 유지시간을 대입하자 (스킬이 강화되면 유지시간이 늘어나는식)
 
 
-    private event Action<int> _onSkillCollision;
+    private event Action<int, int> _onSkillCollision;
 
-    public void InitSkillObject(Vector3 launchDirection, /*int damage, int ownerInstanceId,*/ string parentTag/*, Action<int> onSkillCollision*/)
+    private void OnDisable()
+    {
+        _onSkillCollision = null;
+    }
+
+    public void InitSkillObject(Vector3 launchDirection, int ownerInstanceId, string parentTag, Action<int, int> onSkillCollision = null)
     {
         _moveDirection = launchDirection.normalized;
 
@@ -31,8 +35,8 @@ public class SkillProjectile : DaniTech_SkillBase
         tag = parentTag;
 
         //_damage = damage;
-        //_ownerInstanceId = ownerInstanceId;
-        //_onSkillCollision = onSkillCollision;
+        _ownerInstanceId = ownerInstanceId;
+        _onSkillCollision = onSkillCollision;
 
         float angle = Mathf.Atan2(_moveDirection.y, _moveDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -62,16 +66,19 @@ public class SkillProjectile : DaniTech_SkillBase
 
     private void CheckCollision(Collider2D collision)
     {
-        Debug.Log($"[투사체 충돌] 대상: {collision.name}, 태그: {collision.tag}");
-        if (collision.CompareTag("Player"))
+        var player = DaniTechGameManager.Inst.GetLocalPlayer();
+
+        bool isOwnerPlayer = (_ownerInstanceId == 0);
+        if (collision.CompareTag("Player") && isOwnerPlayer)
         {
             // 일단 투사체가 직접 데미지를 부여해보자
-            var player = DaniTechGameManager.Inst.GetLocalPlayer();
             player.TakeDamage(_damage);
+            var instanceId = player.GetPlayerInstanceId();
+            Debug.Log($"{instanceId}");
 
             Destroy(this.gameObject);
         }
 
-        _onSkillCollision?.Invoke(0);
+        _onSkillCollision?.Invoke(0, player.Damage());
     }
 }

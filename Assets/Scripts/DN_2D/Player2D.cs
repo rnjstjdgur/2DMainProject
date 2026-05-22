@@ -21,6 +21,7 @@ public class Player2D : MonoBehaviour
 
     private Vector2 _lastOverlapOffset = Vector2.zero;
     private float _lastOverlapRadius = 1f;
+    private int _instanceId = 0;
 
     private void Awake()
     {
@@ -66,7 +67,7 @@ public class Player2D : MonoBehaviour
 
     public void UseProjectileSkill()
     {
-        DaniTechGameObjectManager.Inst.CreateProjectileSkillObject();
+        DaniTechGameObjectManager.Inst.CreateProjectileSkillObjectByPlayer();
     }
 
     // 기믹 관련 ====================================================================
@@ -124,6 +125,16 @@ public class Player2D : MonoBehaviour
 
     // 전투 관련 =================================================
 
+    public int Damage()
+    {
+        return _playerBaseAtk;
+    }
+
+    public int GetPlayerInstanceId()
+    {
+        return _instanceId;
+    }
+
     public void TakeDamage(int damage)
     {
         _playerHp -= damage;
@@ -140,10 +151,6 @@ public class Player2D : MonoBehaviour
     {
         // bool _isAlive = false;
     }
-
-
-
-
 
 
 

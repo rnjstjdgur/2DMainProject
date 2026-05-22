@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Monster2D : DaniTech_MonsterBase
@@ -20,6 +21,11 @@ public class Monster2D : DaniTech_MonsterBase
     private void OnDisable()
     {
         _isAlive = false;
+    }
+
+    public int GetMonsterInstanceId()
+    {
+        return _instanceId;
     }
 
     public void InitMonster(int instanceId, string dataId)
@@ -58,22 +64,22 @@ public class Monster2D : DaniTech_MonsterBase
                 break;
             }
 
-            UseSkill();
+            DaniTechGameObjectManager.Inst.CreateProjectileSkillObjectByMonster();
         }
     }
 
-    private void UseSkill()
-    {
-        var gObj = Instantiate(Prefab_ThisMonsterSkillObject, this.transform.position, Quaternion.identity, DaniTechGameObjectManager.Inst.transform);
-        if (gObj == null) return;
+    //private void UseSkill()
+    //{
+    //    var gObj = Instantiate(Prefab_ThisMonsterSkillObject, this.transform.position, Quaternion.identity, DaniTechGameObjectManager.Inst.transform);
+    //    if (gObj == null) return;
 
-        var skillProjectileComponent = gObj.GetComponent<SkillProjectile>();
-        if (skillProjectileComponent == null) return;
+    //    var skillProjectileComponent = gObj.GetComponent<SkillProjectile>();
+    //    if (skillProjectileComponent == null) return;
 
-        Vector3 ShootDirection = this.transform.right;
+    //    Vector3 ShootDirection = this.transform.right;
 
-        skillProjectileComponent.InitSkillObject(ShootDirection, "Enemy");
-    }
+    //    skillProjectileComponent.InitSkillObject(ShootDirection, _instanceId, "Enemy", onSkillCollision);
+    //}
 
     //private void OnSkillCollision(int colliedObjecInstanceId)
     //{

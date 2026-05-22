@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Xml;
 using UnityEngine;
 
 public class Player2D : MonoBehaviour
@@ -10,6 +11,9 @@ public class Player2D : MonoBehaviour
     [Header("스킬")]
     [SerializeField] private Collider2D Collider_PlayerNormalAttack;
 
+    [Header("전투관련 정보")]     // 초기값 나중에 데이터로 받아오거나 에디터에서 수정하자
+    [SerializeField] private int _playerHp = 1000;
+    [SerializeField] private int _playerBaseAtk = 100;
     // 스킬 관련 =======================================================
     public enum ViewType { Isometric, SideView, TopDown}
     public ViewType _currentView = ViewType.TopDown;
@@ -21,6 +25,11 @@ public class Player2D : MonoBehaviour
     private void Awake()
     {
         Collider_PlayerNormalAttack.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
     }
 
     private void Update()
@@ -72,17 +81,7 @@ public class Player2D : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         Collider_PlayerNormalAttack.gameObject.SetActive(false);
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(1f, 1f, 0f, 0.5f);
-        Vector2 lookDir = GetAdjusedDirection(_lookDirection);
-        Vector2 rightOffset = lookDir * _lastOverlapOffset.x;
-        Vector2 upOffset = new Vector2(-lookDir.y, lookDir.x) * _lastOverlapOffset.y;
-
-        Vector3 center = transform.position + (Vector3)(rightOffset + upOffset);
-        Gizmos.DrawWireSphere(center, _lastOverlapRadius);
-    }
+    
 
     private Vector2 GetAdjusedDirection(Vector2 rawDir)
     {
@@ -126,5 +125,40 @@ public class Player2D : MonoBehaviour
                 Debug.Log($"오버랩 스킬 적중: {col.name}");
             }
         }
+    }
+
+    // 전투 관련 =================================================
+
+    public void TakeDamage(int damage)
+    {
+        _playerHp -= damage;
+
+        if (_playerHp < 0)
+        {
+            // 죽음 처리 하기
+            PlayerDie();
+        }
+    }
+
+    public void PlayerDie()
+    {
+        // bool _isAlive = false;
+    }
+
+
+
+
+
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1f, 1f, 0f, 0.5f);
+        Vector2 lookDir = GetAdjusedDirection(_lookDirection);
+        Vector2 rightOffset = lookDir * _lastOverlapOffset.x;
+        Vector2 upOffset = new Vector2(-lookDir.y, lookDir.x) * _lastOverlapOffset.y;
+
+        Vector3 center = transform.position + (Vector3)(rightOffset + upOffset);
+        Gizmos.DrawWireSphere(center, _lastOverlapRadius);
     }
 }

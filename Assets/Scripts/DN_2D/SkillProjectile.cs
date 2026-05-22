@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using UnityEditor.AddressableAssets.Build;
 using UnityEngine;
 
 public class SkillProjectile : DaniTech_SkillBase
 {
     [Header("Sprite Renderer")]
     [SerializeField] private SpriteRenderer spriteRenderer_Effect;
+
+    private int _damage = 100;
 
     private Vector3 _moveDirection = Vector3.right;
     private float _skillMoveSpeed = 10.0f;  // [ToDo] 나중에 데이터로 받아와서 스킬의 속도를 대입하자
@@ -33,5 +36,25 @@ public class SkillProjectile : DaniTech_SkillBase
     {
         yield return new WaitForSeconds(_skillDurationTime);
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        CheckCollision(collision);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        CheckCollision(collision.collider);
+    }
+
+    private void CheckCollision(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            // 일단 투사체가 직접 데미지를 부여해보자
+            var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+            player.TakeDamage(_damage);
+        }
     }
 }

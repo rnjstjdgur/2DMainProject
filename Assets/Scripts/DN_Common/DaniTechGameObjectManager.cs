@@ -23,11 +23,27 @@ public class DaniTechGameObjectManager : MonoBehaviour
     private Dictionary<int, DaniTech_2DFieldObject> _fieldObjectContainer = new Dictionary<int, DaniTech_2DFieldObject>();
     private Dictionary<int, Monster2D> _monsterObjectContainer = new Dictionary<int, Monster2D>();
 
+    private Player2D _localPlayer;
+
     private void Awake()
     {
         Inst = this;
     }
 
+    public void RegisterLocalPlayer(Player2D localPlayer)
+    {
+        _localPlayer = localPlayer;
+    }
+
+    public Player2D GetLocalPlayer()
+    {
+        if (_localPlayer == null)
+        {
+            Debug.LogError("등록된 플레이어가 없습니다. 참조에 실패하였습니다.");
+            return null;
+        }
+        return _localPlayer;
+    }
 
     public void RequestSpawnEnemy()
     {

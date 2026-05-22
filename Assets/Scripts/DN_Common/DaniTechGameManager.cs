@@ -82,4 +82,9 @@ public class DaniTechGameManager : MonoBehaviour
         // _playerModel이 Private이므로 외부에서 ItemList를 받아올 수 있게 Get함수를 사용한다
         return _playerModel.ItemList;
     }
+
+    public Player2D GetLocalPlayer()
+    {
+        return DaniTechGameObjectManager.Inst.GetLocalPlayer();
+    }
 }

@@ -31,8 +31,7 @@ public class SkillProjectile : DaniTech_SkillBase
         //Sprite skillSprite = DaniTechResourceManager.Inst.LoadSprite(skillData.spritePath);
         //spriteRenderer_Effect.sprite = skillSprite;
 
-        var tag = this.gameObject.tag;
-        tag = parentTag;
+        this.gameObject.tag = parentTag;
 
         //_damage = damage;
         _ownerInstanceId = ownerInstanceId;

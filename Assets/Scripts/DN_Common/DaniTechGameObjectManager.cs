@@ -158,10 +158,15 @@ public class DaniTechGameObjectManager : MonoBehaviour
         Vector3 playerDir = player.GetLookDirection();
         skillProjectileComponent.InitSkillObject(playerDir, 0, "Player", onSkillCollision);
     }
-    public void CreateProjectileSkillObjectByMonster()
+    public void CreateProjectileSkillObjectByMonster(Monster2D shooter_monster)
     {
+        if (shooter_monster == null)
+        {
+            Debug.LogError("스킬을 시전할 몬스터가 존재하지 않습니다");
+            return;
+        }
 
-        var gObj = Instantiate(Prefab_SkillProjectile, _monster.transform.position, Quaternion.identity, this.transform);
+        var gObj = Instantiate(Prefab_SkillProjectile, shooter_monster.transform.position, Quaternion.identity, this.transform);
         if (gObj == null) return;
 
         var skillProjectileComponent = gObj.GetComponent<SkillProjectile>();
@@ -169,7 +174,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
         Vector3 ShootDirection = this.transform.right;
 
-        skillProjectileComponent.InitSkillObject(ShootDirection, _monster.GetMonsterInstanceId(), "Enemy", onSkillCollision);
+        skillProjectileComponent.InitSkillObject(ShootDirection, shooter_monster.GetMonsterInstanceId(), "Enemy", onSkillCollision);
     }
 
     public void onSkillCollision(int colliedObjectInstanceId, int damage)

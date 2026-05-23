@@ -64,7 +64,7 @@ public class Monster2D : DaniTech_MonsterBase
                 break;
             }
 
-            DaniTechGameObjectManager.Inst.CreateProjectileSkillObjectByMonster();
+            DaniTechGameObjectManager.Inst.CreateProjectileSkillObjectByMonster(this);
         }
     }
 

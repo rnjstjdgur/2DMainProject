@@ -8,7 +8,8 @@ public class SkillProjectile : DaniTech_SkillBase
     [SerializeField] private SpriteRenderer spriteRenderer_Effect;
 
     private int _damage = 100;
-    private int _ownerInstanceId;
+
+    private string _parentTag;
 
     private Vector3 _moveDirection = Vector3.right;
     private float _skillMoveSpeed = 10.0f;  // [ToDo] 나중에 데이터로 받아와서 스킬의 속도를 대입하자
@@ -22,7 +23,7 @@ public class SkillProjectile : DaniTech_SkillBase
         _onSkillCollision = null;
     }
 
-    public void InitSkillObject(Vector3 launchDirection, int ownerInstanceId, string parentTag, Action<int, int> onSkillCollision = null)
+    public void InitSkillObject(Vector3 launchDirection, string parentTag, Action<int, int> onSkillCollision = null)
     {
         _moveDirection = launchDirection.normalized;
 
@@ -33,8 +34,6 @@ public class SkillProjectile : DaniTech_SkillBase
 
         this.gameObject.tag = parentTag;
 
-        //_damage = damage;
-        _ownerInstanceId = ownerInstanceId;
         _onSkillCollision = onSkillCollision;
 
         float angle = Mathf.Atan2(_moveDirection.y, _moveDirection.x) * Mathf.Rad2Deg;
@@ -67,17 +66,13 @@ public class SkillProjectile : DaniTech_SkillBase
     {
         var player = DaniTechGameManager.Inst.GetLocalPlayer();
 
-        bool isOwnerPlayer = (_ownerInstanceId == 0);
-        if (collision.CompareTag("Player") && isOwnerPlayer)
+        if (collision.CompareTag("Player") && _parentTag == ("Enemy"))
         {
             // 일단 투사체가 직접 데미지를 부여해보자
-            player.TakeDamage(_damage);
-            var instanceId = player.GetPlayerInstanceId();
-            Debug.Log($"{instanceId}");
+            _onSkillCollision?.Invoke(0, _damage);
 
             Destroy(this.gameObject);
         }
 
-        _onSkillCollision?.Invoke(0, player.Damage());
     }
 }

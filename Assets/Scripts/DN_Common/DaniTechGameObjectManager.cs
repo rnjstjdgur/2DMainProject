@@ -156,7 +156,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
         if (skillProjectileComponent == null) return;
 
         Vector3 playerDir = player.GetLookDirection();
-        skillProjectileComponent.InitSkillObject(playerDir, 0, "Player", onSkillCollision);
+        skillProjectileComponent.InitSkillObject(playerDir, "Player", onSkillCollision);
     }
     public void CreateProjectileSkillObjectByMonster(Monster2D shooter_monster)
     {
@@ -174,7 +174,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
         Vector3 ShootDirection = this.transform.right;
 
-        skillProjectileComponent.InitSkillObject(ShootDirection, shooter_monster.GetMonsterInstanceId(), "Enemy", onSkillCollision);
+        skillProjectileComponent.InitSkillObject(ShootDirection, "Enemy", onSkillCollision);
     }
 
     public void onSkillCollision(int colliedObjectInstanceId, int damage)

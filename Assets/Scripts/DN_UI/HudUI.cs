@@ -26,8 +26,15 @@ public class HudUI : DaniTechUIBase
         _hudSlotList.Add(instanceId, slotComponent);
     }
 
-    public void RemoveHudSlot()
+    public void RemoveHudSlot(int instanceId)
     {
+        if (_hudSlotList.ContainsKey(instanceId) == true)
+        {
+            var slot = _hudSlotList[instanceId];
+            // Destroy는 컴포넌트인 slot이 아니라 slot.gameObject
+            Destroy(slot.gameObject);
 
+            _hudSlotList.Remove(instanceId);
+        }
     }
 }

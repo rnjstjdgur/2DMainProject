@@ -133,7 +133,7 @@ public static class DaniTechUIManagerExtension
         }
     }
 
-    public static void RemoveHudSlot(this DaniTechUIManager uiManager)
+    public static void RemoveHudSlot(this DaniTechUIManager uiManager, int instanceId)
     {
         // 대상이 죽었을 때 호출
         var uiBase = uiManager.GetOpenedUI(DaniTechUIRootType.MainUI, DaniTechUIType.HudUI);
@@ -141,7 +141,7 @@ public static class DaniTechUIManagerExtension
 
         if (uiBase is HudUI hudUi)
         {
-            hudUi.RemoveHudSlot();
+            hudUi.RemoveHudSlot(instanceId);
         }
     }
 }

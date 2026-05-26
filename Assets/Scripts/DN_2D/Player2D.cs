@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Xml;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class Player2D : MonoBehaviour
     [SerializeField] private Collider2D Collider_PlayerNormalAttack;
 
     [Header("전투관련 정보")]     // 초기값 나중에 데이터로 받아오거나 에디터에서 수정하자
+    [SerializeField] private int _maxHp;
     [SerializeField] private int _playerHp = 1000;
     [SerializeField] private int _playerBaseAtk = 100;
     // 스킬 관련 =======================================================
@@ -22,15 +24,24 @@ public class Player2D : MonoBehaviour
     private Vector2 _lastOverlapOffset = Vector2.zero;
     private float _lastOverlapRadius = 1f;
     private int _instanceId = 0;
+    private bool _lookRight = true;
+
+    private event Action<int, int> _onHpChanged;
+    private event Action<int, int> _onMpChanged;
 
     private void Awake()
     {
         Collider_PlayerNormalAttack.gameObject.SetActive(false);
+
+        _playerHp = 1000;
+        _maxHp = _playerHp;
     }
 
     private void Start()
     {
-        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(DaniTechGameManager.Inst.GetLocalPlayer());
+        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
+        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(DaniTechGameObjectManager.Inst.GetLocalPlayer());
+        DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
     }
 
     private void Update()
@@ -48,7 +59,23 @@ public class Player2D : MonoBehaviour
             _lookDirection = Move_Direction.normalized;
         }
 
+        if (moveX > 0 && !_lookRight)
+        {
+            Flip();
+        }
+        else if (moveX < 0 && _lookRight)
+        {
+            Flip();
+        }
+
         transform.Translate(Move_Direction * Move_Speed * Time.deltaTime);
+    }
+    void Flip()
+    {
+        _lookRight = !_lookRight;
+        Vector3 scaler = transform.localScale;
+        scaler.x *= -1;
+        transform.localScale = scaler;
     }
 
     // 스킬 ====================================================
@@ -150,6 +177,11 @@ public class Player2D : MonoBehaviour
     public void PlayerDie()
     {
         // bool _isAlive = false;
+    }
+    public void BindOnStatChangedEvent(Action<int, int> hpChangeCallback, Action<int, int> mpChangeCallback)
+    {
+        _onHpChanged += hpChangeCallback;
+        _onMpChanged += mpChangeCallback;
     }
 
 

@@ -8,6 +8,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     [Header("프리팹")]
     [SerializeField] private GameObject Prefab_SkillProjectile;
     [SerializeField] private GameObject Prefab_Enemy;
+    [SerializeField] private GameObject Prefab_Player;
 
     [Header("트랜스폼")]
     [SerializeField] private Transform Root_Enemy;
@@ -31,9 +32,27 @@ public class DaniTechGameObjectManager : MonoBehaviour
         Inst = this;
     }
 
+    private void Start()
+    {
+        GameObject spawnPlayer = Instantiate(Prefab_Player, Vector3.zero, Quaternion.identity);
+        _localPlayer = spawnPlayer.GetComponent<Player2D>();
+    }
+
     public void RegisterLocalPlayer(Player2D localPlayer)
     {
         _localPlayer = localPlayer;
+    }
+
+    public Player2D GetLocalPlayer()
+    {
+        if (_localPlayer == null)
+        {
+            Debug.LogError("등록된 플레이어가 없는데! 참조하려고 시도하고 있습니다!!");
+            return null;
+        }
+
+        // 우리가 배웠던 원시적인 Get함수입니다. -> 원시적이지만 유용함
+        return _localPlayer;
     }
 
     public void RequestSpawnEnemy()
@@ -146,7 +165,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public void CreateProjectileSkillObjectByPlayer()
     {
-        var player = DaniTechGameManager.Inst.GetLocalPlayer();
+        var player = GetLocalPlayer();
         if (player == null) return;
 
         var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Tranform_ProjectileSkillRoot);
@@ -181,7 +200,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         if (colliedObjectInstanceId == 0)
         {
-            var player = DaniTechGameManager.Inst.GetLocalPlayer();
+            var player = GetLocalPlayer();
             player.TakeDamage(damage);
         }
     }

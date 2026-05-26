@@ -50,6 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a3124c488a3934a9f5666fe1051861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HudSlotUI
+  SlotOffsetY: 0
+  Slider_Hp: {fileID: 4939035156263483487}
+  Slider_Mp: {fileID: 2661513236856463096}
 --- !u!1 &2131203574463050274
 GameObject:
   m_ObjectHideFlags: 0

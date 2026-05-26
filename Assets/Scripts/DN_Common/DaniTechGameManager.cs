@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class DaniTechGameManager : MonoBehaviour
 {
-    [Header("프리팹")]
-    [SerializeField] private GameObject Prefab_Player;
     public static DaniTechGameManager Inst { get; set; }
 
     // 플레이 중에 저장되어야 하는 정보들이 있는 위치
     private DaniTechPlayerModel _playerModel = new DaniTechPlayerModel();
-    private Player2D player;
     private bool _IsGameStart = false;
 
     private void Awake()
@@ -20,8 +17,6 @@ public class DaniTechGameManager : MonoBehaviour
     private void Start()
     {
         LoadSaveData();
-        GameObject spawnPlayer = Instantiate(Prefab_Player, Vector3.zero, Quaternion.identity);
-        player = spawnPlayer.GetComponent<Player2D>();
     }
 
     public bool IsGameStart()
@@ -76,10 +71,5 @@ public class DaniTechGameManager : MonoBehaviour
     {
         // _playerModel이 Private이므로 외부에서 ItemList를 받아올 수 있게 Get함수를 사용한다
         return _playerModel.ItemList;
-    }
-
-    public Player2D GetLocalPlayer()
-    {
-        return player;
     }
 }

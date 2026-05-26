@@ -18,6 +18,9 @@ public class Monster2D : DaniTech_MonsterBase
     [SerializeField] private int _baseAtk;
     [SerializeField] private bool _isAlive = true;
 
+    private event Action<int, int> _onHpChanged;
+    private event Action<int, int> _onMpChanged;
+
     private void OnDisable()
     {
         _isAlive = false;
@@ -51,6 +54,11 @@ public class Monster2D : DaniTech_MonsterBase
     private int GetFinalSkillDamage(int baseAtk, float skillMultiple)
     {
         return (int)(baseAtk * skillMultiple);
+    }
+    public void BindOnStatChangedEvent(Action<int, int> hpChangeCallback, Action<int, int> mpChangeCallback)
+    {
+        _onHpChanged += hpChangeCallback;
+        _onMpChanged += mpChangeCallback;
     }
 
     IEnumerator CheckAndUseSkill()

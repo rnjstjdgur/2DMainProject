@@ -64,7 +64,7 @@ public class SkillProjectile : DaniTech_SkillBase
 
     private void CheckCollision(Collider2D collision)
     {
-        var player = DaniTechGameManager.Inst.GetLocalPlayer();
+        var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
 
         if (collision.CompareTag("Player") && _parentTag == ("Enemy"))
         {

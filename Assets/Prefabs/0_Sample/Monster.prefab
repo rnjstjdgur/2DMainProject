@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d571d65e2c0a3ba4f981d3fd17e2dab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DaniTechRefCode_MonsterView
+  _rayCastDistance: 10
 --- !u!54 &1834306647706513961
 Rigidbody:
   m_ObjectHideFlags: 0

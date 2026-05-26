@@ -17,9 +17,17 @@ public class Monster2D : DaniTech_MonsterBase
     [SerializeField] private int _baseHp;
     [SerializeField] private int _baseAtk;
     [SerializeField] private bool _isAlive = true;
+    [SerializeField] private float damageInterval = 1.0f; // 데미지를 줄 주기
+
+    private float currentDamageTimer = 0f;
 
     private event Action<int, int> _onHpChanged;
     private event Action<int, int> _onMpChanged;
+
+    private void Start()
+    {
+        currentDamageTimer = damageInterval;
+    }
 
     private void OnDisable()
     {
@@ -43,7 +51,6 @@ public class Monster2D : DaniTech_MonsterBase
             _baseHp = _thisMonsterData.BaseHp;
             _baseAtk = _thisMonsterData.BaseAtk;
         }
-        StartCoroutine(CheckAndUseSkill());
     }
 
     private int GetFinalNormalAtkDamage(int baseAtk, float normalAtkMultiple)
@@ -61,40 +68,35 @@ public class Monster2D : DaniTech_MonsterBase
         _onMpChanged += mpChangeCallback;
     }
 
-    IEnumerator CheckAndUseSkill()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        while (_isAlive)
+        CheckCollision(collision);
+    }
+
+    private void CheckCollision(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
         {
-            yield return new WaitForSeconds(2.0f);
+            currentDamageTimer += Time.deltaTime;
 
-            if (_isAlive == false)
+            if (currentDamageTimer >= damageInterval)
             {
-                break;
-            }
+                var player = collision.gameObject.GetComponent<Player2D>();
+                if (player != null)
+                {
+                    player.TakeDamage(_baseAtk);
+                }
 
-            DaniTechGameObjectManager.Inst.CreateProjectileSkillObjectByMonster(this);
+                currentDamageTimer = 0f;
+            }
         }
     }
 
-    //private void UseSkill()
-    //{
-    //    var gObj = Instantiate(Prefab_ThisMonsterSkillObject, this.transform.position, Quaternion.identity, DaniTechGameObjectManager.Inst.transform);
-    //    if (gObj == null) return;
-
-    //    var skillProjectileComponent = gObj.GetComponent<SkillProjectile>();
-    //    if (skillProjectileComponent == null) return;
-
-    //    Vector3 ShootDirection = this.transform.right;
-
-    //    skillProjectileComponent.InitSkillObject(ShootDirection, _instanceId, "Enemy", onSkillCollision);
-    //}
-
-    //private void OnSkillCollision(int colliedObjecInstanceId)
-    //{
-    //    if (colliedObjecInstanceId == 0)
-    //    {
-    //        var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
-    //        player.TakeDamage(_damage);
-    //    }
-    //}
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            currentDamageTimer = damageInterval;
+        }
+    }
 }

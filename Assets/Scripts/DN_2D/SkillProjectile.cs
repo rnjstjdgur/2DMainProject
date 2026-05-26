@@ -6,13 +6,13 @@ public class SkillProjectile : DaniTech_SkillBase
 {
     [Header("Sprite Renderer")]
     [SerializeField] private SpriteRenderer spriteRenderer_Effect;
+    [SerializeField] private float _skillMoveSpeed = 10.0f;  // [ToDo] 나중에 데이터로 받아와서 스킬의 속도를 대입하자
 
     private int _damage = 100;
 
-    private string _parentTag;
+    private int _ownerInstanceId;
 
     private Vector3 _moveDirection = Vector3.right;
-    private float _skillMoveSpeed = 10.0f;  // [ToDo] 나중에 데이터로 받아와서 스킬의 속도를 대입하자
     private float _skillDurationTime = 3.0f;    // [ToDo] 나중에 데이터로 받아와서 스킬의 유지시간을 대입하자 (스킬이 강화되면 유지시간이 늘어나는식)
 
 
@@ -23,7 +23,7 @@ public class SkillProjectile : DaniTech_SkillBase
         _onSkillCollision = null;
     }
 
-    public void InitSkillObject(Vector3 launchDirection, string parentTag, Action<int, int> onSkillCollision = null)
+    public void InitSkillObject(int ownerInstanceId, Vector3 launchDirection, string parentTag, Action<int, int> onSkillCollision = null)
     {
         _moveDirection = launchDirection.normalized;
 
@@ -64,15 +64,27 @@ public class SkillProjectile : DaniTech_SkillBase
 
     private void CheckCollision(Collider2D collision)
     {
-        var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+        bool isOwnerPlayer = (_ownerInstanceId == 0);
 
-        if (collision.CompareTag("Player") && _parentTag == ("Enemy"))
+        // 투사체가 충돌한 오브젝트의 Tag가 플레이어라면?
+        if (collision.CompareTag("Player") && (isOwnerPlayer == false))
         {
-            // 일단 투사체가 직접 데미지를 부여해보자
             _onSkillCollision?.Invoke(0, _damage);
 
             Destroy(this.gameObject);
         }
+        else if (collision.CompareTag("Enemy") && (isOwnerPlayer))
+        {
+            var gObj = collision.gameObject;
+            if (gObj == null) return;
 
+            var monsterComponent = gObj.GetComponent<Monster2D>();
+            if (monsterComponent == null) return;
+
+            int instId = monsterComponent.GetMonsterInstanceId();
+            _onSkillCollision?.Invoke(instId, _damage);
+
+            Destroy(this.gameObject);
+        }
     }
 }

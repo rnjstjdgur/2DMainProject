@@ -25,6 +25,7 @@ public class DaniTech_2DPlayer : MonoBehaviour
     private bool _isGrounded;
     private float _horizontalInput;
     private bool _lookRight = true;
+    private int _instanceId = 0;
 
     // 추후에는 이런 데이터가 저장될 수 있도록 UI에 있는 것보다 한곳으로 모여지는게 좋다
     private int _currentScore;
@@ -35,6 +36,11 @@ public class DaniTech_2DPlayer : MonoBehaviour
 
         // 2D 캐릭터가 물리 충돌 시 회전해서 넘어지는 것 방지
         _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    private void Start()
+    {
+        DaniTechUIManager.Instance.AddHudSlot(_instanceId);
     }
 
     void Update()

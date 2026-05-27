@@ -3,7 +3,7 @@
     "Id": "mob_slim_1",
     "Name": "슬라이무",
     "Description": "슬라이무는 공격을 받을 때마다 딸기맛, 초코맛, 바닐라맛으로 변한다",
-    "BaseHp": 500,
+    "BaseHp": 100,
     "BaseAtk": 20,
     "NormalAtkMultiple": 1,
     "SkillAtkMultipleList": [
@@ -41,7 +41,7 @@
     "Id": "mob_bear_1",
     "Name": "곰",
     "Description": "곰이다. 곰은 사람을 찢는다.",
-    "BaseHp": 1000,
+    "BaseHp": 300,
     "BaseAtk": 100,
     "NormalAtkMultiple": 0.5,
     "SkillAtkMultipleList": [

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Monster2D
   Skill_CoolTime: 3
-  SpriteRenderer_MonsterSprite: {fileID: 0}
+  SpriteRenderer_MonsterSprite: {fileID: 6627811897836811848}
   Prefab_ThisMonsterSkillObject: {fileID: 3601178608979350394, guid: 9f38ef7ceff11c1469016c97957536c9, type: 3}
   _instanceId: 0
   _dataId: 

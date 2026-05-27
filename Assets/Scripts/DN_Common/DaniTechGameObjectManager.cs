@@ -132,10 +132,20 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public async UniTaskVoid CreateMonsterObject(string monsterDataId, Transform spawnSpot)
     {
+        Debug.Log($"[스폰 요청] {monsterDataId} 생성 시도 시작");
         var monsterData = DaniTechGameDataManager.Instance.GetDNMonsterData(monsterDataId);
-        if (monsterData == null) return;
+        if (monsterData == null)
+        {
+            Debug.LogWarning($"[스폰 실패] 데이터 매니저에 '{monsterDataId}'에 대한 기획 데이터가 존재하지 않습니다!");
+            return;
+        }
 
         var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(monsterData.PrefabPath, Root_Enemy, true);
+        if (createdObj == null)
+        {
+            Debug.LogError($"[스폰 실패] 프리팹 경로가 잘못되었거나 생성에 실패했습니다: {monsterData.PrefabPath}");
+            return;
+        }
         createdObj.transform.position = spawnSpot.position;
 
         AddMonsterObjectOnCreate(createdObj, monsterDataId);

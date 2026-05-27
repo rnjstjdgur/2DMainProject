@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2495663671829163208}
   - component: {fileID: 5336684423402810778}
   - component: {fileID: 1874681594026397106}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Monster_Bear
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Monster2D
   Skill_CoolTime: 3
+  SpriteRenderer_MonsterSprite: {fileID: 0}
   Prefab_ThisMonsterSkillObject: {fileID: 3601178608979350394, guid: 9f38ef7ceff11c1469016c97957536c9, type: 3}
   _instanceId: 0
   _dataId: 
@@ -56,8 +57,9 @@ MonoBehaviour:
   _baseAtk: 0
   _isAlive: 1
   _damageInterval: 1
-  _moveSpeed: 2
   _monsterType: 
+  _moveSpeed: 2
+  _direction: {x: 0, y: 0}
 --- !u!50 &5336684423402810778
 Rigidbody2D:
   serializedVersion: 5
@@ -142,7 +144,7 @@ GameObject:
   - component: {fileID: 2420435343989445246}
   - component: {fileID: 6627811897836811848}
   - component: {fileID: 2976081829499536530}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sprite_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

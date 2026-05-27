@@ -117,6 +117,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillProjectile
   spriteRenderer_Effect: {fileID: 965630293792048008}
   _skillMoveSpeed: 15
+  _scanRadius: 10
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  _skillDistance: 10
 --- !u!50 &928278758267820855
 Rigidbody2D:
   serializedVersion: 5

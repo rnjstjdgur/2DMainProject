@@ -6,6 +6,7 @@ public class Monster2D : DaniTech_MonsterBase
 {
     [Header("몬스터 프리팹에서 미리 세팅할 데이터")]
     [SerializeField] private float Skill_CoolTime;
+    [SerializeField] private SpriteRenderer SpriteRenderer_MonsterSprite;
     [SerializeField] private GameObject Prefab_ThisMonsterSkillObject;
 
     [Header("데이터 확인용")]
@@ -19,8 +20,11 @@ public class Monster2D : DaniTech_MonsterBase
     [SerializeField] private int _baseAtk;
     [SerializeField] private bool _isAlive = true;
     [SerializeField] private float _damageInterval = 1.0f; // 데미지를 줄 주기
-    [SerializeField] private float _moveSpeed = 1.0f;
     [SerializeField] private string _monsterType;
+
+    [Header("이동 관련 정보")]
+    [SerializeField] private float _moveSpeed = 1.0f;
+    [SerializeField] private Vector2 _direction;
 
     private float currentDamageTimer = 0f;
 
@@ -34,6 +38,7 @@ public class Monster2D : DaniTech_MonsterBase
         currentDamageTimer = _damageInterval;
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
         _playerTransform = DaniTechGameManager.Inst.GetPlayerTransform();
+        SpriteRenderer_MonsterSprite = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -41,8 +46,9 @@ public class Monster2D : DaniTech_MonsterBase
         bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
         if (isGameStart == false) return;
 
-        Vector2 direction = (_playerTransform.position - this.transform.position).normalized;
-        transform.Translate(direction * _moveSpeed * Time.deltaTime);
+        _direction = (_playerTransform.position - this.transform.position).normalized;
+        transform.Translate(_direction * _moveSpeed * Time.deltaTime);
+        Flip();
     }
 
     private void OnDisable()
@@ -71,6 +77,16 @@ public class Monster2D : DaniTech_MonsterBase
         }
 
         _maxHp = _baseHp;
+    }
+
+    private void Flip()
+    {
+        if (_direction.x != 0)
+        {
+            // SpriteRenderer의 flipX를 이용해 이미지를 뒤집습니다.
+            // 기본 이미지가 오른쪽을 바라보고 있다면 direction.x < 0 일 때 flipX를 true로 만듭니다.
+            SpriteRenderer_MonsterSprite.flipX = _direction.x < 0;
+        }
     }
 
     private void OnBattleUnitDie()

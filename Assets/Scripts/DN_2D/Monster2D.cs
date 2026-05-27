@@ -31,12 +31,14 @@ public class Monster2D : DaniTech_MonsterBase
     private Transform _playerTransform;
 
     private event Action<int, int> _onHpChanged;
-    private event Action<int, int> _onMpChanged;
 
     private void Start()
     {
         currentDamageTimer = _damageInterval;
-        DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
+        if (_monsterType == "Elite")
+        {
+            DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
+        }
         _playerTransform = DaniTechGameManager.Inst.GetPlayerTransform();
         SpriteRenderer_MonsterSprite = GetComponentInChildren<SpriteRenderer>();
     }
@@ -112,16 +114,21 @@ public class Monster2D : DaniTech_MonsterBase
     //{
     //    return (int)(baseAtk * skillMultiple);
     //}
-    public void BindOnStatChangedEvent(Action<int, int> hpChangeCallback, Action<int, int> mpChangeCallback)
+    public void BindOnStatChangedEvent(Action<int, int> hpChangeCallback)
     {
         _onHpChanged += hpChangeCallback;
-        _onMpChanged += mpChangeCallback;
     }
 
     public void ResetStatChangedEvent()
     {
         _onHpChanged = null;
-        _onMpChanged = null;
+    }
+    
+    private void InvokeStatChangedEvent()
+    {
+        // 우선 HP든 MP든 하나라도 바뀌면 다 호출해준다
+        _onHpChanged?.Invoke(_baseHp, _maxHp);
+        // _onMpChanged?.Invoke(_playerMp);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -152,6 +159,7 @@ public class Monster2D : DaniTech_MonsterBase
     {
         _baseHp -= playerDamage;
         Debug.LogWarning($"몬스터 {_instanceId}가 플레이어의 공격을 받아 체력이 {_baseHp} / {_maxHp}가 되었습니다.");
+        InvokeStatChangedEvent();
 
         if (_baseHp <= 0)
         {

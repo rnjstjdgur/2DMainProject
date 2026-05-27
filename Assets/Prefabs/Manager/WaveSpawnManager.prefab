@@ -52,8 +52,8 @@ MonoBehaviour:
     spawnInterval: 2
     spawnCountPerTime: 5
   - waveName: "\uACF0 "
-    startTime: 60
-    endTime: 120
+    startTime: 10
+    endTime: 20
     monsterDataId: 'mob_bear_1 '
     spawnInterval: 2
     spawnCountPerTime: 3

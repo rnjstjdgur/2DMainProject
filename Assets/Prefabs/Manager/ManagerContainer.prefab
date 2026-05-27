@@ -346,6 +346,14 @@ PrefabInstance:
       propertyPath: _waveTimeline.Array.data[1].monsterDataId
       value: mob_bear_1
       objectReference: {fileID: 0}
+    - target: {fileID: 4921886456244620614, guid: f7c494a469deb7d40a56f2a2b7024078, type: 3}
+      propertyPath: _waveTimeline.Array.data[0].spawnCountPerTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921886456244620614, guid: f7c494a469deb7d40a56f2a2b7024078, type: 3}
+      propertyPath: _waveTimeline.Array.data[1].spawnCountPerTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6932587233161855577, guid: f7c494a469deb7d40a56f2a2b7024078, type: 3}
       propertyPath: m_Name
       value: WaveSpawnManager

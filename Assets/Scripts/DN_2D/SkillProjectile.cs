@@ -15,6 +15,7 @@ public class SkillProjectile : DaniTech_SkillBase
 
     [Header("스킬 전투 관련")]
     [SerializeField] private float _skillDistance = 10.0f;  // 스킬범위
+    [SerializeField] private float _skillCoolTime = 1.0f;
 
     private int _damage = 100;
 
@@ -30,6 +31,11 @@ public class SkillProjectile : DaniTech_SkillBase
     private void OnDisable()
     {
         _onSkillCollision = null;
+    }
+
+    public float SkillCoolTime()
+    {
+        return _skillCoolTime;
     }
 
     public void InitSkillObject(int ownerInstanceId, Vector3 launchDirection, string parentTag, Action<int, int> onSkillCollision = null)

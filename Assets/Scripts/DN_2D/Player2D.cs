@@ -15,6 +15,8 @@ public class Player2D : MonoBehaviour
     [Header("전투관련 정보")]     // 초기값 나중에 데이터로 받아오거나 에디터에서 수정하자
     [SerializeField] private int _maxHp;
     [SerializeField] private int _playerHp = 1000;
+    [SerializeField] private int _playerMp = 0;
+    [SerializeField] private int _maxMp;
     [SerializeField] private int _playerBaseAtk = 100;
     // 스킬 관련 =======================================================
     public enum ViewType { Isometric, SideView, TopDown}
@@ -41,6 +43,7 @@ public class Player2D : MonoBehaviour
     {
         DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
         DaniTechGameObjectManager.Inst.RegisterLocalPlayer(DaniTechGameObjectManager.Inst.GetLocalPlayer());
+        DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
     }
 
@@ -171,6 +174,7 @@ public class Player2D : MonoBehaviour
     {
         _playerHp -= damage;
         Debug.LogError($"플레이어가 {damage} 데미지를 입었습니다. 현재체력: {_playerHp}");
+        InvokeStatChangedEvent();
 
         if (_playerHp < 0)
         {
@@ -193,6 +197,13 @@ public class Player2D : MonoBehaviour
     {
         _onHpChanged = null;
         _onMpChanged = null;
+    }
+
+    private void InvokeStatChangedEvent()
+    {
+        // 우선 HP든 MP든 하나라도 바뀌면 다 호출해준다
+        _onHpChanged?.Invoke(_playerHp, _maxHp);
+         _onMpChanged?.Invoke(_playerMp, _maxMp);
     }
 
     private void OnDrawGizmos()

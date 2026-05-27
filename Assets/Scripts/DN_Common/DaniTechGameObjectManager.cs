@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -47,7 +48,6 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         if (_localPlayer == null)
         {
-            Debug.LogError("등록된 플레이어가 없는데! 참조하려고 시도하고 있습니다!!");
             return null;
         }
 
@@ -57,14 +57,14 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public void RequestSpawnEnemy()
     {
-        if(Prefab_Enemy == null)
+        if (Prefab_Enemy == null)
         {
             Debug.LogWarning("프리팹이 등록되지 않은 오브젝트 입니다.");
             return;
         }
 
         var gObj = Instantiate(Prefab_Enemy, Root_Enemy);
-        if(gObj == null)
+        if (gObj == null)
         {
             Debug.LogWarning("생성에 실패한 게임 오브젝트 입니다.");
             return;
@@ -91,7 +91,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         // 4-1 지금은 Enemy지만, 나중에 IGameEntity 같은 인터페이스로 개선하면 더 좋다
         DaniTech_2DEnemy gameEntity = gObj.GetComponent<DaniTech_2DEnemy>();
-        if(gameEntity == null)
+        if (gameEntity == null)
         {
             Debug.LogWarning($"생성된 {gObj.name}의 InstanceId를 대입할 수 있는 컴포넌트를 가져올 수 없습니다!");
             return;
@@ -104,7 +104,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public GameObject GetEntityObjectCanBeNull(int instanceId)
     {
-        if(_createdGameObjectContainer.ContainsKey(instanceId) == false)
+        if (_createdGameObjectContainer.ContainsKey(instanceId) == false)
         {
             Debug.LogWarning($"{instanceId}는 존재하지 않습니다.");
             return null;
@@ -112,12 +112,12 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
         // 2-1 실체화하면서 등록된 게임 오브젝트가 있다면 반환
         return _createdGameObjectContainer[instanceId];
-    } 
+    }
 
     public void RequestDestroyEntityObject(int instanceId)
     {
         var gObj = GetEntityObjectCanBeNull(instanceId);
-        if(gObj == null)
+        if (gObj == null)
         {
             return;
         }
@@ -178,6 +178,8 @@ public class DaniTechGameObjectManager : MonoBehaviour
         var player = GetLocalPlayer();
         if (player == null) return;
 
+        bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
+
         var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Tranform_ProjectileSkillRoot);
         if (skillObj == null) return;
 
@@ -186,7 +188,58 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
         Vector3 playerDir = player.GetLookDirection();
         var playerId = player.GetPlayerInstanceId();
+
+        var skillCoolTime = skillProjectileComponent.SkillCoolTime();
+
         skillProjectileComponent.InitSkillObject(playerId, playerDir, "Player", onSkillCollision);
+            
+    }
+
+    public void StartAutoProjectileSkillLoop()
+    {
+        AutoSkillLoop().Forget();
+    }
+
+    private async UniTaskVoid AutoSkillLoop()
+    {
+        // 💡 팁: 최초 실행 시 프리팹에서 미리 컴포넌트를 한 번만 읽어와 쿨타임을 체크합니다.
+        if (Prefab_SkillProjectile == null) return;
+        SkillProjectile sampleComponent = Prefab_SkillProjectile.GetComponent<SkillProjectile>();
+        if (sampleComponent == null) return;
+
+        // 프리팹에 설정된 오리지널 쿨타임 가져오기 (예: 1.5초)
+        float coolTime = sampleComponent.SkillCoolTime();
+
+        // [무한 루프] 게임이 동작하는 동안 무한 반복
+        while (true)
+        {
+            // 1. 게임 매니저를 통해 현재 게임 상태가 '스타트'인지 매번 실시간으로 확인
+            if (DaniTechGameManager.Inst != null && DaniTechGameManager.Inst.IsGameStart())
+            {
+                var player = GetLocalPlayer();
+                if (player != null)
+                {
+                    // 2. 주기마다 실제 발사할 투사체 오브젝트 동적 생성 (Instantiate)
+                    var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Tranform_ProjectileSkillRoot);
+
+                    if (skillObj != null)
+                    {
+                        SkillProjectile skillProjectileComponent = skillObj.GetComponent<SkillProjectile>();
+                        if (skillProjectileComponent != null)
+                        {
+                            Vector3 playerDir = player.GetLookDirection();
+                            var playerId = player.GetPlayerInstanceId();
+
+                            // 3. 생성된 투사체 날려보내기 초기화
+                            skillProjectileComponent.InitSkillObject(playerId, playerDir, "Player", onSkillCollision);
+                        }
+                    }
+                }
+            }
+
+            // 4. ⭐️ 핵심: 쿨타임(초)만큼 비동기로 정확히 대기합니다! (유니티 멈춤 현상 완전 해결)
+            await UniTask.Delay(System.TimeSpan.FromSeconds(coolTime));
+        }
     }
 
     public void onSkillCollision(int colliedObjectInstanceId, int damage)
@@ -215,7 +268,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
         var generatedInstanceId = _objectInstanceKeyGenerator;
         var fieldObject = createdObject.GetComponent<DaniTech_2DFieldObject>();
 
-        if(fieldObject != null)
+        if (fieldObject != null)
         {
             _fieldObjectContainer.Add(generatedInstanceId, fieldObject);
             fieldObject.InitFieldObjectInfoOnCreated(generatedInstanceId, fieldObjectDataId);
@@ -237,12 +290,18 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public DaniTech_2DFieldObject GetFieldObjectByInstanceId(int fieldObjectInstanceId)
     {
-        if(_fieldObjectContainer.ContainsKey(fieldObjectInstanceId) == false)
+        if (_fieldObjectContainer.ContainsKey(fieldObjectInstanceId) == false)
         {
             Debug.LogError($"{fieldObjectInstanceId} 찾으려는 필드 오브젝트가 유효하지 않습니다");
             return null;
         }
 
         return _fieldObjectContainer[fieldObjectInstanceId];
-    } 
+    }
+
+    //코루틴 ====================================================================
+    IEnumerator CoWaitForSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+    }
 }

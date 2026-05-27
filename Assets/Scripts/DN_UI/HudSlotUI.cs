@@ -36,7 +36,8 @@ public class HudSlotUI : MonoBehaviour
         var monster = gObj.GetComponent<Monster2D>();
         if (monster != null)
         {
-            monster.BindOnStatChangedEvent(OnTargetEntityHpChanged, OnTargetEntityMpChanged);
+            Slider_Mp.gameObject.SetActive(false);
+            monster.BindOnStatChangedEvent(OnTargetEntityHpChanged);
             return;
         }
     }

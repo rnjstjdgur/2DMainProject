@@ -81,8 +81,9 @@ public class SkillProjectile : DaniTech_SkillBase
             var monsterComponent = gObj.GetComponent<Monster2D>();
             if (monsterComponent == null) return;
 
+            monsterComponent.TakeDamage(_damage);
+
             int instId = monsterComponent.GetMonsterInstanceId();
-            _onSkillCollision?.Invoke(instId, _damage);
 
             Destroy(this.gameObject);
         }

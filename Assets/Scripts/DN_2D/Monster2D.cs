@@ -15,6 +15,7 @@ public class Monster2D : DaniTech_MonsterBase
     [Header("전투에서 필요한 데이터")]
     private DNMonsterData _thisMonsterData;
     [SerializeField] private int _baseHp;
+    [SerializeField] private int _maxHp;
     [SerializeField] private int _baseAtk;
     [SerializeField] private bool _isAlive = true;
     [SerializeField] private float damageInterval = 1.0f; // 데미지를 줄 주기
@@ -35,6 +36,7 @@ public class Monster2D : DaniTech_MonsterBase
     {
         _isAlive = false;
         ResetStatChangedEvent();
+        DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
     }
 
     public int GetMonsterInstanceId()
@@ -55,6 +57,8 @@ public class Monster2D : DaniTech_MonsterBase
             _baseAtk = _thisMonsterData.BaseAtk;
             _monsterType = _thisMonsterData.MonsterType;
         }
+
+        _maxHp = _baseHp;
     }
 
     private void OnBattleUnitDie()
@@ -106,6 +110,23 @@ public class Monster2D : DaniTech_MonsterBase
                 currentDamageTimer = 0f;
             }
         }
+    }
+
+    public void TakeDamage(int playerDamage)
+    {
+        _baseHp -= playerDamage;
+        Debug.LogWarning($"몬스터가 플레이어의 공격을 받아 체력이 {_baseHp} / {_maxHp}가 되었습니다.");
+
+        if (_baseHp <= 0)
+        {
+            MonsterDie();
+        }
+    }
+
+    private void MonsterDie()
+    {
+        Destroy(this.gameObject);
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)

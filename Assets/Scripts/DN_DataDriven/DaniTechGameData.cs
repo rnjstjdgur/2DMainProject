@@ -97,4 +97,5 @@ public class DNMonsterData : GameDataBase
     public List<float> SkillAtkMultipleList;
     public string IconPath;
     public string PrefabPath;
+    public string MonsterType;
 }

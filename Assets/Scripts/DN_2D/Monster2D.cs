@@ -18,6 +18,7 @@ public class Monster2D : DaniTech_MonsterBase
     [SerializeField] private int _baseAtk;
     [SerializeField] private bool _isAlive = true;
     [SerializeField] private float damageInterval = 1.0f; // 데미지를 줄 주기
+    [SerializeField] private string _monsterType;
 
     private float currentDamageTimer = 0f;
 
@@ -27,6 +28,7 @@ public class Monster2D : DaniTech_MonsterBase
     private void Start()
     {
         currentDamageTimer = damageInterval;
+        DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
     }
 
     private void OnDisable()
@@ -51,6 +53,7 @@ public class Monster2D : DaniTech_MonsterBase
             _thisMonsterData = monsterData;
             _baseHp = _thisMonsterData.BaseHp;
             _baseAtk = _thisMonsterData.BaseAtk;
+            _monsterType = _thisMonsterData.MonsterType;
         }
     }
 

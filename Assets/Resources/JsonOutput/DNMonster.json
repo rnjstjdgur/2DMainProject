@@ -10,7 +10,8 @@
       2
     ],
     "IconPath": "Icon/Icon_Slime",
-    "PrefabPath": "2DObject/Monster_Slime"
+    "PrefabPath": "2DObject/Monster_Slime",
+    "MonsterType": "Normal"
   },
   {
     "Id": "mob_dog_1",
@@ -21,7 +22,8 @@
     "NormalAtkMultiple": null,
     "SkillAtkMultipleList": null,
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": null,
+    "MonsterType": "Normal"
   },
   {
     "Id": "mob_pigme_1",
@@ -32,7 +34,8 @@
     "NormalAtkMultiple": null,
     "SkillAtkMultipleList": null,
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": null,
+    "MonsterType": "Epic"
   },
   {
     "Id": "mob_bear_1",
@@ -46,6 +49,7 @@
       5
     ],
     "IconPath": "Icon/Icon_Bear",
-    "PrefabPath": "2DObject/Monster_Bear"
+    "PrefabPath": "2DObject/Monster_Bear",
+    "MonsterType": "Unique"
   }
 ]

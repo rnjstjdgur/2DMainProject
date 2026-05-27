@@ -38,7 +38,7 @@ public class Monster2D : DaniTech_MonsterBase
         currentDamageTimer = _damageInterval;
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
         _playerTransform = DaniTechGameManager.Inst.GetPlayerTransform();
-        SpriteRenderer_MonsterSprite = GetComponent<SpriteRenderer>();
+        SpriteRenderer_MonsterSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
@@ -81,11 +81,19 @@ public class Monster2D : DaniTech_MonsterBase
 
     private void Flip()
     {
+        
         if (_direction.x != 0)
         {
-            // SpriteRenderer의 flipX를 이용해 이미지를 뒤집습니다.
-            // 기본 이미지가 오른쪽을 바라보고 있다면 direction.x < 0 일 때 flipX를 true로 만듭니다.
-            SpriteRenderer_MonsterSprite.flipX = _direction.x < 0;
+            if (_monsterType == "Normal")
+            {
+                SpriteRenderer_MonsterSprite.flipX = _direction.x > 0;
+            }
+            else
+            {
+                // SpriteRenderer의 flipX를 이용해 이미지를 뒤집습니다.
+                // 기본 이미지가 오른쪽을 바라보고 있다면 direction.x < 0 일 때 flipX를 true로 만듭니다.
+                SpriteRenderer_MonsterSprite.flipX = _direction.x < 0;
+            }
         }
     }
 
@@ -143,7 +151,7 @@ public class Monster2D : DaniTech_MonsterBase
     public void TakeDamage(int playerDamage)
     {
         _baseHp -= playerDamage;
-        Debug.LogWarning($"몬스터가 플레이어의 공격을 받아 체력이 {_baseHp} / {_maxHp}가 되었습니다.");
+        Debug.LogWarning($"몬스터 {_instanceId}가 플레이어의 공격을 받아 체력이 {_baseHp} / {_maxHp}가 되었습니다.");
 
         if (_baseHp <= 0)
         {

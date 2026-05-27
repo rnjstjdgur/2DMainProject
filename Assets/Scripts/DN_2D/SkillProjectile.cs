@@ -10,7 +10,7 @@ public class SkillProjectile : DaniTech_SkillBase
 
     [Header("스킬 이동 관련")]
     [SerializeField] private float _skillMoveSpeed = 10.0f;  // [ToDo] 나중에 데이터로 받아와서 스킬의 속도를 대입하자
-    [SerializeField] private float _scanRadius = 10f; // 몬스터를 탐색할 범위 (반지름)
+    [SerializeField] private float _scanRadius = 20.0f; // 몬스터를 탐색할 범위 (반지름)
     [SerializeField] private LayerMask _enemyLayer;
 
     [Header("스킬 전투 관련")]
@@ -123,7 +123,7 @@ public class SkillProjectile : DaniTech_SkillBase
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, _scanRadius, _enemyLayer);
 
         Transform closestEnemy = null;
-        float minDistance = Mathf.Infinity;
+        float minDistance = _skillDistance;
 
         // 2. 찾은 몬스터들을 하나씩 순회하며 거리를 비교합니다.
         foreach (Collider2D enemy in enemies)

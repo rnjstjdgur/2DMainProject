@@ -7,7 +7,13 @@
     "Grade": "Normal",
     "MaxStackCount": 20,
     "SellingPrice": 100,
-    "IconPath": "Icon/Icon_Item_Box_1"
+    "IconPath": "Icon/Icon_Item_Box_1",
+    "UseItemType": "RandomItemBox",
+    "UseItemParameterList": [
+      "Item_Equip_Hat_1:1",
+      "Item_Corn_1:20",
+      "Item_Gold_1:100"
+    ]
   },
   {
     "Id": "Item_Gold_1",
@@ -17,7 +23,9 @@
     "Grade": "Legend",
     "MaxStackCount": 1000,
     "SellingPrice": 1000,
-    "IconPath": "Icon/Icon_Item_Gold_1"
+    "IconPath": "Icon/Icon_Item_Gold_1",
+    "UseItemType": null,
+    "UseItemParameterList": null
   },
   {
     "Id": "Item_Equip_Hat_1",
@@ -27,7 +35,11 @@
     "Grade": "Epic",
     "MaxStackCount": 0,
     "SellingPrice": 1,
-    "IconPath": "Icon/Icon_Item_Equip_Hat_1"
+    "IconPath": "Icon/Icon_Item_Equip_Hat_1",
+    "UseItemType": "StatChangeAtk",
+    "UseItemParameterList": [
+      "700"
+    ]
   },
   {
     "Id": "Item_Corn_1",
@@ -37,7 +49,11 @@
     "Grade": "Normal",
     "MaxStackCount": 100,
     "SellingPrice": 20,
-    "IconPath": "Icon/Icon_Item_Corn"
+    "IconPath": "Icon/Icon_Item_Corn",
+    "UseItemType": "StatChangeHp",
+    "UseItemParameterList": [
+      "20"
+    ]
   },
   {
     "Id": "Item_Potato_1",
@@ -47,7 +63,11 @@
     "Grade": "Normal",
     "MaxStackCount": 20,
     "SellingPrice": 100,
-    "IconPath": "Icon/Icon_Item_Box_1"
+    "IconPath": "Icon/Icon_Item_Box_1",
+    "UseItemType": "SummonMonster",
+    "UseItemParameterList": [
+      "mob_bear_1:2"
+    ]
   },
   {
     "Id": "Item_MagicArrow",
@@ -57,7 +77,9 @@
     "Grade": "Normal",
     "MaxStackCount": 1,
     "SellingPrice": 0,
-    "IconPath": "Icon/Icon_Item_MagicArrow"
+    "IconPath": "Icon/Icon_Item_MagicArrow",
+    "UseItemType": null,
+    "UseItemParameterList": null
   },
   {
     "Id": "Item_Aqua",
@@ -67,7 +89,9 @@
     "Grade": "Normal",
     "MaxStackCount": 1,
     "SellingPrice": 0,
-    "IconPath": "Icon/Icon_Item_Aqua"
+    "IconPath": "Icon/Icon_Item_Aqua",
+    "UseItemType": null,
+    "UseItemParameterList": null
   },
   {
     "Id": "Item_Fire",
@@ -77,7 +101,9 @@
     "Grade": "Normal",
     "MaxStackCount": 1,
     "SellingPrice": 0,
-    "IconPath": "Icon/Icon_Item_Fire"
+    "IconPath": "Icon/Icon_Item_Fire",
+    "UseItemType": null,
+    "UseItemParameterList": null
   },
   {
     "Id": "Item_Ice",
@@ -87,7 +113,9 @@
     "Grade": "Normal",
     "MaxStackCount": 1,
     "SellingPrice": 0,
-    "IconPath": "Icon/Icon_Item_Ice"
+    "IconPath": "Icon/Icon_Item_Ice",
+    "UseItemType": null,
+    "UseItemParameterList": null
   },
   {
     "Id": "Item_Lightning",
@@ -97,6 +125,8 @@
     "Grade": "Normal",
     "MaxStackCount": 1,
     "SellingPrice": 0,
-    "IconPath": "Icon/Icon_Item_Lightning"
+    "IconPath": "Icon/Icon_Item_Lightning",
+    "UseItemType": null,
+    "UseItemParameterList": null
   }
 ]

@@ -44,6 +44,11 @@ public class Player2D : MonoBehaviour
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
     }
 
+    private void OnDisable()
+    {
+        ResetStatChangedEvent();
+    }
+
     private void Update()
     {
         bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
@@ -184,7 +189,11 @@ public class Player2D : MonoBehaviour
         _onMpChanged += mpChangeCallback;
     }
 
-
+    public void ResetStatChangedEvent()
+    {
+        _onHpChanged = null;
+        _onMpChanged = null;
+    }
 
     private void OnDrawGizmos()
     {

@@ -52,6 +52,8 @@ public class DNItemData : GameDataBase
     public string MaxStackCount;
     public string SellingPrice;
     public string IconPath;
+    public string UseItemType;
+    public List<string> UseItemParameterList;
 }
 
 [System.Serializable]

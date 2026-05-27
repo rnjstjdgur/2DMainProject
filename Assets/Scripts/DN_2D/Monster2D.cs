@@ -32,6 +32,7 @@ public class Monster2D : DaniTech_MonsterBase
     private void OnDisable()
     {
         _isAlive = false;
+        ResetStatChangedEvent();
     }
 
     public int GetMonsterInstanceId()
@@ -53,6 +54,12 @@ public class Monster2D : DaniTech_MonsterBase
         }
     }
 
+    private void OnBattleUnitDie()
+    {
+        DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
+        Destroy(this.gameObject);
+    }
+
     private int GetFinalNormalAtkDamage(int baseAtk, float normalAtkMultiple)
     {
         return GetFinalSkillDamage(baseAtk, normalAtkMultiple);
@@ -66,6 +73,12 @@ public class Monster2D : DaniTech_MonsterBase
     {
         _onHpChanged += hpChangeCallback;
         _onMpChanged += mpChangeCallback;
+    }
+
+    public void ResetStatChangedEvent()
+    {
+        _onHpChanged = null;
+        _onMpChanged = null;
     }
 
     private void OnTriggerStay2D(Collider2D collision)

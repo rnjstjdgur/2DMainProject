@@ -52,6 +52,12 @@ public class DaniTechGameManager : MonoBehaviour
         _playerModel.PlayerTotalExp += exp;
     }
 
+    public Transform GetPlayerTransform()
+    {
+        var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+        return player.transform;
+    }
+
     public void AddItem(string itemDataId, int addItemCount)
     {
         // 저장할때 고유값 ID를 부여하기 위해 사용

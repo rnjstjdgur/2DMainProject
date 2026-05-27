@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player2D : MonoBehaviour
 {
     [Header("이동 설정")]
-    [SerializeField] private float Move_Speed = 5f;
+    [SerializeField] private float Move_Speed = 5.0f;
     [SerializeField] private Vector3 Move_Direction;
 
     [Header("스킬")]

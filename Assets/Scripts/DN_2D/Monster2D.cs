@@ -18,25 +18,37 @@ public class Monster2D : DaniTech_MonsterBase
     [SerializeField] private int _maxHp;
     [SerializeField] private int _baseAtk;
     [SerializeField] private bool _isAlive = true;
-    [SerializeField] private float damageInterval = 1.0f; // 데미지를 줄 주기
+    [SerializeField] private float _damageInterval = 1.0f; // 데미지를 줄 주기
+    [SerializeField] private float _moveSpeed = 1.0f;
     [SerializeField] private string _monsterType;
 
     private float currentDamageTimer = 0f;
+
+    private Transform _playerTransform;
 
     private event Action<int, int> _onHpChanged;
     private event Action<int, int> _onMpChanged;
 
     private void Start()
     {
-        currentDamageTimer = damageInterval;
+        currentDamageTimer = _damageInterval;
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
+        _playerTransform = DaniTechGameManager.Inst.GetPlayerTransform();
+    }
+
+    private void Update()
+    {
+        bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
+        if (isGameStart == false) return;
+
+        Vector2 direction = (_playerTransform.position - this.transform.position).normalized;
+        transform.Translate(direction * _moveSpeed * Time.deltaTime);
     }
 
     private void OnDisable()
     {
         _isAlive = false;
         ResetStatChangedEvent();
-        DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
     }
 
     public int GetMonsterInstanceId()
@@ -67,15 +79,15 @@ public class Monster2D : DaniTech_MonsterBase
         Destroy(this.gameObject);
     }
 
-    private int GetFinalNormalAtkDamage(int baseAtk, float normalAtkMultiple)
-    {
-        return GetFinalSkillDamage(baseAtk, normalAtkMultiple);
-    }
+    //private int GetFinalNormalAtkDamage(int baseAtk, float normalAtkMultiple)
+    //{
+    //    return GetFinalSkillDamage(baseAtk, normalAtkMultiple);
+    //}
 
-    private int GetFinalSkillDamage(int baseAtk, float skillMultiple)
-    {
-        return (int)(baseAtk * skillMultiple);
-    }
+    //private int GetFinalSkillDamage(int baseAtk, float skillMultiple)
+    //{
+    //    return (int)(baseAtk * skillMultiple);
+    //}
     public void BindOnStatChangedEvent(Action<int, int> hpChangeCallback, Action<int, int> mpChangeCallback)
     {
         _onHpChanged += hpChangeCallback;
@@ -99,7 +111,7 @@ public class Monster2D : DaniTech_MonsterBase
         {
             currentDamageTimer += Time.deltaTime;
 
-            if (currentDamageTimer >= damageInterval)
+            if (currentDamageTimer >= _damageInterval)
             {
                 var player = collision.gameObject.GetComponent<Player2D>();
                 if (player != null)
@@ -119,21 +131,15 @@ public class Monster2D : DaniTech_MonsterBase
 
         if (_baseHp <= 0)
         {
-            MonsterDie();
+            OnBattleUnitDie();
         }
-    }
-
-    private void MonsterDie()
-    {
-        Destroy(this.gameObject);
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            currentDamageTimer = damageInterval;
+            currentDamageTimer = _damageInterval;
         }
     }
 }

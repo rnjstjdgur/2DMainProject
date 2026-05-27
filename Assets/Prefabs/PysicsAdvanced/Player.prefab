@@ -212,6 +212,7 @@ MonoBehaviour:
   Move_Speed: 5
   Move_Direction: {x: 0, y: 0, z: 0}
   Collider_PlayerNormalAttack: {fileID: 4409836486017895474}
+  _maxHp: 0
   _playerHp: 1000
   _playerBaseAtk: 100
   _currentView: 2

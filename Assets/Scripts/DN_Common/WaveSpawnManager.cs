@@ -39,7 +39,6 @@ public class WaveSpawnManager : MonoBehaviour
 
     public static WaveSpawnManager instance;
 
-    private Player2D _localPlayer;
     private int _playerLevel;
     private float _gameTimer = 0f;
 
@@ -69,10 +68,7 @@ public class WaveSpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (!_isGameActive || _localPlayer == null) return;
-
-        _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
-        _playerLevel = _localPlayer.GetPlayerLevel();
+        if (!_isGameActive) return;
 
         // 1. 전체 게임 시간 흘러감
         _gameTimer += Time.deltaTime;
@@ -124,10 +120,11 @@ public class WaveSpawnManager : MonoBehaviour
 
     private void SpawnWaveGroup(string dataId, int count, float radius, bool isMana = false)
     {
+        var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
         // 1. 이미 검증된 게임오브젝트 매니저에서 플레이어 위치 가져오기
-        if (_localPlayer == null) return;
+        if (player == null) return;
 
-        Vector3 playerPos = _localPlayer.transform.position;
+        Vector3 playerPos = player.transform.position;
 
         for (int i = 0; i < count; i++)
         {

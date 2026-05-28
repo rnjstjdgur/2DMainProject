@@ -12,7 +12,8 @@ public class DaniTechGameObjectManager : MonoBehaviour
     [SerializeField] private GameObject Prefab_Player;
 
     [Header("트랜스폼")]
-    [SerializeField] private Transform Root_Enemy;
+    [SerializeField] private Transform Transform_EnemyRoot;
+    [SerializeField] private Transform Transform_ManaBallRoot;
     [SerializeField] private Transform Tranform_ProjectileSkillRoot;
 
     public static DaniTechGameObjectManager Inst { get; set; }
@@ -63,7 +64,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
             return;
         }
 
-        var gObj = Instantiate(Prefab_Enemy, Root_Enemy);
+        var gObj = Instantiate(Prefab_Enemy, Transform_EnemyRoot);
         if (gObj == null)
         {
             Debug.LogWarning("생성에 실패한 게임 오브젝트 입니다.");
@@ -140,7 +141,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
             return;
         }
 
-        var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(monsterData.PrefabPath, Root_Enemy, true);
+        var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(monsterData.PrefabPath, Transform_EnemyRoot, true);
         if (createdObj == null)
         {
             Debug.LogError($"[스폰 실패] 프리팹 경로가 잘못되었거나 생성에 실패했습니다: {monsterData.PrefabPath}");
@@ -256,10 +257,11 @@ public class DaniTechGameObjectManager : MonoBehaviour
         var fieldObject = DaniTechGameDataManager.Instance.GetDNFieldObjectData(fieldObjectDataId);
         if (fieldObject != null)
         {
-            var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(fieldObject.PrefabPath, Root_Enemy, true);
+            var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(fieldObject.PrefabPath, Transform_ManaBallRoot, true);
             createdObj.transform.position = spawnSpot.position;
             AddFieldObjectOnCreate(createdObj, fieldObjectDataId);
         }
+
     }
 
     private void AddFieldObjectOnCreate(GameObject createdObject, string fieldObjectDataId)

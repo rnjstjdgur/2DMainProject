@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9108250741050088032}
   - component: {fileID: 5016835111727901616}
+  - component: {fileID: 3723738288001275161}
   m_Layer: 0
   m_Name: ManaBall_Blue
   m_TagString: Untagged
@@ -69,6 +70,21 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.012542725, y: -0.067840576}
   m_Radius: 0.64785767
+--- !u!114 &3723738288001275161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3242038590387375466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3a70a47b776ef49bdcb165f09636b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DaniTech_2DFieldObject
+  _fieldObjectInstanceId: 0
+  _fieldObjectDataId: 
+  _fieldObjectName: ManaBall_Blue
 --- !u!1 &7858946603476101140
 GameObject:
   m_ObjectHideFlags: 0

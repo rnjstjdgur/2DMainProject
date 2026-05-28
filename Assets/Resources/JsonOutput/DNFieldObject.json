@@ -43,7 +43,7 @@
   },
   {
     "Id": "dropItem_manaballblue_1",
-    "FieldObjectType": "DropItem",
+    "FieldObjectType": "Exp",
     "Name": "파랑경험치볼",
     "Description": "소량 경험치",
     "DropCountRange": null,
@@ -54,7 +54,7 @@
   },
   {
     "Id": "dropItem_manaballorange_1",
-    "FieldObjectType": "DropItem",
+    "FieldObjectType": "Exp",
     "Name": "주황경험치볼",
     "Description": "중량 경험치",
     "DropCountRange": null,
@@ -65,7 +65,7 @@
   },
   {
     "Id": "dropItem_manaballpink_1",
-    "FieldObjectType": "DropItem",
+    "FieldObjectType": "Exp",
     "Name": "분홍경험치볼",
     "Description": "대량 경험치",
     "DropCountRange": null,

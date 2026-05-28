@@ -73,6 +73,16 @@ public class WaveSpawnManager : MonoBehaviour
         // 1. 전체 게임 시간 흘러감
         _gameTimer += Time.deltaTime;
 
+        var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+        if (player != null)
+        {
+            _playerLevel = player.GetPlayerLevel();
+        }
+        else
+        {
+            _playerLevel = 1; // 플레이어가 로드되기 전이라면 기본 1레벨로 가차 처리
+        }
+
         HandleMonsterSpawn();
         HandleManaSpawn();
     }

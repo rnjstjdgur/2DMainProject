@@ -52,7 +52,7 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                 }
 
                 // 채집과 드랍 1-2) 채집물이나 드랍이 맞으면 "아이템 정보를 찾아서" 인벤토리에 추가해주자
-                var itemData = DaniTechGameDataManager.Instance.GetDNItemData(fieldObjectData.DropItemDataId);
+                var itemData = DaniTechGameDataManager.Instance.GetDNFieldObjectData(fieldObjectData.DropItemDataId);
                 if(itemData == null)
                 {
                     Debug.LogWarning($"유효하지 않은 아이템 데이터 입니다! {_fieldObjectDataId}");

@@ -8,6 +8,8 @@ public class DaniTechGameManager : MonoBehaviour
     // 플레이 중에 저장되어야 하는 정보들이 있는 위치
     private DaniTechPlayerModel _playerModel = new DaniTechPlayerModel();
     private bool _IsGameStart = false;
+    private Player2D _localPlayer;
+
 
     private void Awake()
     {
@@ -48,8 +50,12 @@ public class DaniTechGameManager : MonoBehaviour
 
     public void IncreasePlayerExp(int exp)
     {
+        _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+
         // 추후에 한곳에서 관리할 수 있게 익스텐션으로 빼도 된다
-        _playerModel.PlayerTotalExp += exp;
+        //_playerModel.PlayerTotalExp += exp;
+        if (_localPlayer == null) return;
+        _localPlayer.IncreasePlayerMp(exp);
     }
 
     public Transform GetPlayerTransform()

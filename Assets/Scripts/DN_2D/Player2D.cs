@@ -24,10 +24,15 @@ public class Player2D : MonoBehaviour
     public ViewType _currentView = ViewType.TopDown;
     private Vector2 _lookDirection = Vector2.right;
 
+    private DNCharacterData _playerData;
+
     private Vector2 _lastOverlapOffset = Vector2.zero;
     private float _lastOverlapRadius = 1f;
     private int _instanceId = 0;
-    private bool _lookRight = true;
+    private bool _isLookRight = true;
+    private bool _isPlayerLevelUp = false;
+
+    private readonly int[] _expTable = { 0, 100, 200, 400, 800, 1600, 2400, 3200, 4000, 5000, 6000, 7000, 8000, 9000, 10000 };
 
     private event Action<int, int> _onHpChanged;
     private event Action<int, int> _onMpChanged;
@@ -42,8 +47,10 @@ public class Player2D : MonoBehaviour
 
     private void Start()
     {
+        _playerData = DaniTechGameDataManager.Instance.GetCharacterData("character_basic_01");
+        _playerLevel = _playerData.PlayerLevel;
+
         DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
-        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(DaniTechGameObjectManager.Inst.GetLocalPlayer());
         DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
     }
@@ -68,11 +75,11 @@ public class Player2D : MonoBehaviour
             _lookDirection = Move_Direction.normalized;
         }
 
-        if (moveX > 0 && !_lookRight)
+        if (moveX > 0 && !_isLookRight)
         {
             Flip();
         }
-        else if (moveX < 0 && _lookRight)
+        else if (moveX < 0 && _isLookRight)
         {
             Flip();
         }
@@ -84,7 +91,7 @@ public class Player2D : MonoBehaviour
 
     void Flip()
     {
-        _lookRight = !_lookRight;
+        _isLookRight = !_isLookRight;
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         transform.localScale = scaler;
@@ -95,6 +102,54 @@ public class Player2D : MonoBehaviour
     public int GetPlayerLevel()
     {
         return _playerLevel;
+    }
+
+    public int GetPlayerMp()
+    {
+        return _playerMp;
+    }
+
+    private void CheckPlayerLevelUp()
+    {
+        _isPlayerLevelUp = false;
+
+        while (_playerLevel < _expTable.Length - 1)
+        {
+            int nextLevelExpRequired = _expTable[_playerLevel];
+            if (_playerMp >= nextLevelExpRequired)
+            {
+                _playerMp -= _expTable[_playerLevel]; // 사용한 경험치만큼 차감
+                _playerLevel++;                       // 레벨 상승
+                _isPlayerLevelUp = true;
+
+                Debug.LogWarning($"★ LEVEL UP! ★ 현재 레벨: {_playerLevel}");
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (_isPlayerLevelUp)
+        {
+            //_playerHp = _maxHp;
+            InvokeStatChangedEvent(); // UI 갱신 신호
+        }
+    }
+
+    public int IncreasePlayerMp(int exp)
+    {
+        if (_playerLevel >= _expTable.Length - 1)
+        {
+            Debug.Log("[만렙] 이미 최고 레벨에 도달하여 경험치를 획득할 수 없습니다.");
+            return _playerMp;
+        }
+
+        _playerMp += exp;
+        Debug.Log($"[경험치 획득] +{exp} | 현재 경험치: {_playerMp} / 필요 경험치: {_expTable[_playerLevel]}");
+
+        CheckPlayerLevelUp();
+        return _playerMp;
     }
 
     // 스킬 ====================================================

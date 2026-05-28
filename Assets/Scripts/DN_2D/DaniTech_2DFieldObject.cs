@@ -27,6 +27,8 @@ public class DaniTech_2DFieldObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+
         if(collision.CompareTag("Player") == true)
         {
             // 플레이어와 충돌했을때 이제 GameManager에 아이템을 저장해준다던가 등등 처리
@@ -42,8 +44,23 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                 return;
             }
 
+            if (fieldObjectData.FieldObjectType == "Exp")
+            {
+                DaniTechGameManager.Inst.IncreasePlayerExp(fieldObjectData.ManaPoints);
+
+                //var playerData = DaniTechNetworkManager.Inst.GetDefaultPlayerData();
+                //if (playerData == null) return;
+
+                //int playerTotalExp = playerData.PlayerTotalExp;
+                int playerTotalExp = player.GetPlayerMp();
+
+                Debug.LogWarning($"플레이어가 {fieldObjectData.ManaPoints} 경험치를 획득하였습니다. 총 경험치: {playerTotalExp}");
+
+                DaniTechGameObjectManager.Inst.RequestDestroyFieldObject(_fieldObjectInstanceId);
+            }
+
             // 채집과 드랍 1-1) 내가 상호작용한 필드 오브젝트가 채집물이거나 드랍아이템 유형인지 확인 (Enum으로 바꿔서 쓰면 더 좋다)
-            if(fieldObjectData.FieldObjectType == "Harvest"  ||  fieldObjectData.FieldObjectType == "DropItem")
+            if (fieldObjectData.FieldObjectType == "Harvest"  ||  fieldObjectData.FieldObjectType == "DropItem")
             {
                 if (string.IsNullOrEmpty(fieldObjectData.DropItemDataId))
                 {
@@ -52,7 +69,7 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                 }
 
                 // 채집과 드랍 1-2) 채집물이나 드랍이 맞으면 "아이템 정보를 찾아서" 인벤토리에 추가해주자
-                var itemData = DaniTechGameDataManager.Instance.GetDNFieldObjectData(fieldObjectData.DropItemDataId);
+                var itemData = DaniTechGameDataManager.Instance.GetDNItemData(fieldObjectData.DropItemDataId);
                 if(itemData == null)
                 {
                     Debug.LogWarning($"유효하지 않은 아이템 데이터 입니다! {_fieldObjectDataId}");

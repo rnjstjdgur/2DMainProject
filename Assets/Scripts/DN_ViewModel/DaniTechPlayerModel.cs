@@ -11,6 +11,13 @@ public class DaniTechItemModel
     public int ItemStackCount;
 }
 
+public class SkillModel
+{
+    public string SkillDataId;
+    public string SkillDescription;
+    public int SkillLevel;
+}
+
 // 1) 플레이어 데이터를 만들어보자
 // 1-1) JsonUtility로 직렬화하려면, Mono를 상속받지 않도록 주의하자!
 [Serializable]
@@ -22,4 +29,5 @@ public class DaniTechPlayerModel
     public Vector3 LastMapPosition;
 
     public List<DaniTechItemModel> ItemList = new List<DaniTechItemModel>();
+    public List<SkillModel> SkillList = new List<SkillModel>();
 }

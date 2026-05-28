@@ -31,6 +31,7 @@ public class Player2D : MonoBehaviour
     private int _instanceId = 0;
     private bool _isLookRight = true;
     private bool _isPlayerLevelUp = false;
+    private bool _isPlayerAlive = true;
 
     private readonly int[] _expTable = { 0, 100, 200, 400, 800, 1600, 2400, 3200, 4000, 5000, 6000, 7000, 8000, 9000, 10000 };
 
@@ -62,6 +63,11 @@ public class Player2D : MonoBehaviour
 
     private void Update()
     {
+        if (_isPlayerAlive == false)
+        {
+            Time.timeScale = 0f;
+        }
+
         bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
         if (isGameStart == false) return;
 
@@ -123,6 +129,8 @@ public class Player2D : MonoBehaviour
                 _isPlayerLevelUp = true;
 
                 Debug.LogWarning($"★ LEVEL UP! ★ 현재 레벨: {_playerLevel}");
+                if (_playerLevel == 1) return;
+                DaniTechUIManager.Instance.OpenChooseSkillPopup();
             }
             else
             {
@@ -263,7 +271,7 @@ public class Player2D : MonoBehaviour
 
     public void PlayerDie()
     {
-        // bool _isAlive = false;
+        _isPlayerAlive = false;
     }
     public void BindOnStatChangedEvent(Action<int, int> hpChangeCallback, Action<int, int> mpChangeCallback)
     {

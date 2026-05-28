@@ -35,10 +35,7 @@ public class Monster2D : DaniTech_MonsterBase
     private void Start()
     {
         currentDamageTimer = _damageInterval;
-        if (_monsterType == "Elite")
-        {
-            DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
-        }
+        
         _playerTransform = DaniTechGameManager.Inst.GetPlayerTransform();
         SpriteRenderer_MonsterSprite = GetComponentInChildren<SpriteRenderer>();
     }
@@ -79,6 +76,11 @@ public class Monster2D : DaniTech_MonsterBase
         }
 
         _maxHp = _baseHp;
+
+        if (_monsterType == "Elite")
+        {
+            DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
+        }
     }
 
     private void Flip()

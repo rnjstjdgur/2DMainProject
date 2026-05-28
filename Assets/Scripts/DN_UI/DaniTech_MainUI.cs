@@ -50,6 +50,10 @@ public class DaniTech_MainUI : DaniTechUIBase
         DaniTechUIManager.Instance.OpenInventoryPopup();
         DaniTechGameManager.Inst.SaveData();
     }
+    public void OpenChooseSkill()
+    {
+        DaniTechUIManager.Instance.OpenChooseSkillPopup();
+    }
 
     public void OnClick_OpenGameBook()
     {

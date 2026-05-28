@@ -8,7 +8,6 @@ public class HudUI : DaniTechUIBase
     [SerializeField] private GameObject Prefab_MPHudSlot;
     [SerializeField] private Transform Transform_SlotRoot;
 
-    private Dictionary<int, HudSlotUI> _hudSlotList = new Dictionary<int, HudSlotUI>();
     private Dictionary<int, List<GameObject>> _hudSlotMap = new Dictionary<int, List<GameObject>>();
 
     public void AddHudSlot(int instanceId, Transform targetTransform)
@@ -73,13 +72,24 @@ public class HudUI : DaniTechUIBase
 
     public void RemoveHudSlot(int instanceId)
     {
-        if (_hudSlotList.ContainsKey(instanceId) == true)
+        if (_hudSlotMap.TryGetValue(instanceId, out List<GameObject> createdObjects))
         {
-            var slot = _hudSlotList[instanceId];
-            // Destroy는 컴포넌트인 slot이 아니라 slot.gameObject
-            Destroy(slot.gameObject);
+            foreach (var gObj in createdObjects)
+            {
+                if (gObj != null)
+                {
+                    Destroy(gObj);
+                }
+            }
 
-            _hudSlotList.Remove(instanceId);
+            // 3. 찌꺼기가 남지 않도록 딕셔너리에서도 완전히 키값을 제거
+            _hudSlotMap.Remove(instanceId);
+
+            Debug.Log($"[HudUI] {instanceId}번 HUD 슬롯 파괴 완료 (오브젝트 및 맵 데이터 제거)");
+        }
+        else
+        {
+            Debug.LogWarning($"[HudUI] {instanceId}번에 해당하는 HUD 슬롯 리스트를 맵에서 찾을 수 없습니다.");
         }
     }
 }

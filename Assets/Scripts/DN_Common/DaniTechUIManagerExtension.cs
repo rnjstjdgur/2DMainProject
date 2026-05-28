@@ -23,7 +23,8 @@ public enum DaniTechUIType
     RobbyUI,
     SettingPopup,
     GameBookUI,
-    HudUI
+    HudUI,
+    ChooseSkillUI
 }
 
 public static class DaniTechUIManagerExtension
@@ -84,6 +85,16 @@ public static class DaniTechUIManagerExtension
     public static void OpenInventoryPopup(this DaniTechUIManager uiManger)
     {
         var uiBase = uiManger.OpenContentUI(DaniTechUIType.DNInventory);
+        if (uiBase == null)
+        {
+            Debug.LogWarning($"UI가 생성되지 않았습니다");
+            return;
+        }
+    }
+
+    public static void OpenChooseSkillPopup(this DaniTechUIManager uiManger)
+    {
+        var uiBase = uiManger.OpenContentUI(DaniTechUIType.ChooseSkillUI);
         if (uiBase == null)
         {
             Debug.LogWarning($"UI가 생성되지 않았습니다");

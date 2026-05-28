@@ -65,7 +65,7 @@ public class Player2D : MonoBehaviour
     {
         if (_isPlayerAlive == false)
         {
-            Time.timeScale = 0f;
+            TimeManager.instance.TimeStop();
         }
 
         bool isGameStart = DaniTechGameManager.Inst.IsGameStart();

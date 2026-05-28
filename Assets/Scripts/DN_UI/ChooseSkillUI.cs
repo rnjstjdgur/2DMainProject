@@ -13,7 +13,7 @@ public class ChooseSkillUI : DaniTechUIBase
 
     private void OnEnable()
     {
-        Time.timeScale = 0f;
+        TimeManager.instance.TimeStop();
         Button_CloseSelfAllArea.BindOnClickButtonEvent(OnClick_ClosePopup);
         SetSkillSlotOnEnable();
     }
@@ -55,7 +55,7 @@ public class ChooseSkillUI : DaniTechUIBase
     public void OnClick_ClosePopup()
     {
         DaniTechUIManager.Instance.CloseContentUI(DaniTechUIType.ChooseSkillUI);
-        Time.timeScale = 1f;
+        TimeManager.instance.TimeStart();
     }
 
 

@@ -10,7 +10,8 @@
     ],
     "DropItemDataId": "Item_Corn_1",
     "IconPath": null,
-    "PrefabPath": "2DPrefab/Harvest_Corn"
+    "PrefabPath": "2DPrefab/Harvest_Corn",
+    "ManaPoints": null
   },
   {
     "Id": "dropItem_gold_1",
@@ -23,7 +24,8 @@
     ],
     "DropItemDataId": "Item_Gold_1",
     "IconPath": null,
-    "PrefabPath": "2DPrefab/DropItem_Gold"
+    "PrefabPath": "2DPrefab/DropItem_Gold",
+    "ManaPoints": null
   },
   {
     "Id": "harv_potate_1",
@@ -36,6 +38,40 @@
     ],
     "DropItemDataId": "Item_Potato_1",
     "IconPath": null,
-    "PrefabPath": "2DPrefab/Harvest_Potato"
+    "PrefabPath": "2DPrefab/Harvest_Potato",
+    "ManaPoints": null
+  },
+  {
+    "Id": "dropItem_manaballblue_1",
+    "FieldObjectType": "DropItem",
+    "Name": "파랑경험치볼",
+    "Description": "소량 경험치",
+    "DropCountRange": null,
+    "DropItemDataId": "Item_ManaBallBlue_1",
+    "IconPath": null,
+    "PrefabPath": "2DPrefab/DropItem_ManaBallBlue",
+    "ManaPoints": 10
+  },
+  {
+    "Id": "dropItem_manaballorange_1",
+    "FieldObjectType": "DropItem",
+    "Name": "주황경험치볼",
+    "Description": "중량 경험치",
+    "DropCountRange": null,
+    "DropItemDataId": "Item_ManaBallOrange_1",
+    "IconPath": null,
+    "PrefabPath": "2DPrefab/DropItem_ManaBallOrange",
+    "ManaPoints": 50
+  },
+  {
+    "Id": "dropItem_manaballpink_1",
+    "FieldObjectType": "DropItem",
+    "Name": "분홍경험치볼",
+    "Description": "대량 경험치",
+    "DropCountRange": null,
+    "DropItemDataId": "Item_ManaBallPink_1",
+    "IconPath": null,
+    "PrefabPath": "2DPrefab/DropItem_ManaBallPink",
+    "ManaPoints": 100
   }
 ]

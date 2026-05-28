@@ -101,6 +101,7 @@ public class Monster2D : DaniTech_MonsterBase
 
     private void OnBattleUnitDie()
     {
+        _isAlive = false;
         DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
         Destroy(this.gameObject);
     }

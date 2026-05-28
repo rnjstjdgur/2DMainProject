@@ -84,6 +84,7 @@ public class DNFieldObjectData : GameDataBase
     public string DropItemDataId;
     public string IconPath;
     public string PrefabPath;
+    public int ManaPoints;
 }
 
 [System.Serializable]

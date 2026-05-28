@@ -96,7 +96,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e4e6a12adbd046c4e8de9df945e4c707
-    m_Address: 2DPrefab/Harvest_ManaBallPink
+    m_Address: 2DPrefab/DropItem_ManaBallPink
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

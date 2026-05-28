@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets.Initialization;
 
 [System.Serializable]
 public class WaveData
@@ -13,19 +14,39 @@ public class WaveData
     public int spawnCountPerTime;
 }
 
+[System.Serializable]
+public class LevelData
+{
+    public string manaBallDataId;
+    public string manaSpawnWaveName;
+    public int startLevel;
+    public int endLevel;
+    public float manaSpawnInterval;
+    public int manaSpawnCountPerTime;
+}
+
 public class WaveSpawnManager : MonoBehaviour
 {
-    [Header("웨이브 타임라인 설정")]
+    [Header("몬스터 웨이브 타임라인 설정")]
     [SerializeField] private List<WaveData> _waveTimeline;
+
+    [Header("레벨별 마나볼 스폰 설정")]
+    [SerializeField] private List<LevelData> _manaTimeLine;
 
     [Header("스폰 반경 세팅")]
     [SerializeField] private float _spawnRadius = 12f;
+    [SerializeField] private float _manaSpawnRadius = 10f;
 
     public static WaveSpawnManager instance;
 
+    private Player2D _localPlayer;
+    private int _playerLevel;
     private float _gameTimer = 0f;
-    private Dictionary<WaveData, float> _waveTimers = new Dictionary<WaveData, float>();
+
     private bool _isGameActive = true;
+
+    private Dictionary<WaveData, float> _waveTimers = new Dictionary<WaveData, float>();
+    private Dictionary<LevelData, float> _manaTimers = new Dictionary<LevelData, float>();
 
     private void Awake()
     {
@@ -34,20 +55,34 @@ public class WaveSpawnManager : MonoBehaviour
 
     void Start()
     {
+        _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
         // 각 웨이브마다 독립적으로 작동할 주기 타이머 공간 초기화
         foreach (var wave in _waveTimeline)
         {
             _waveTimers.Add(wave, 0f);
         }
+        
+        foreach (var levelData in _manaTimeLine)
+        {
+            _manaTimers.Add(levelData, 0f);
+        }
     }
 
     void Update()
     {
-        if (!_isGameActive) return;
+        if (!_isGameActive || _localPlayer == null) return;
+
+        _playerLevel = _localPlayer.GetPlayerLevel();
 
         // 1. 전체 게임 시간 흘러감
         _gameTimer += Time.deltaTime;
 
+        HandleMonsterSpawn();
+        HandleManaSpawn();
+    }
+
+    private void HandleMonsterSpawn()
+    {
         // 2. 타임라인에 등록된 모든 웨이브 조건을 검사
         foreach (var wave in _waveTimeline)
         {
@@ -63,33 +98,55 @@ public class WaveSpawnManager : MonoBehaviour
                     _waveTimers[wave] = 0f; // 타이머 리셋
 
                     // 설정된 마릿수만큼 화면 밖 랜덤 소환 실행
-                    SpawnWaveGroup(wave.monsterDataId, wave.spawnCountPerTime);
+                    SpawnWaveGroup(wave.monsterDataId, wave.spawnCountPerTime, _spawnRadius, false);
                 }
             }
         }
     }
 
-    private void SpawnWaveGroup(string monsterDataId, int count)
+    private void HandleManaSpawn()
+    {
+        foreach (var manaData in _manaTimeLine)
+        {
+            if (_playerLevel >= manaData.startLevel && _playerLevel <= manaData.endLevel)
+            {
+                _manaTimers[manaData] += Time.deltaTime;
+
+                if (_manaTimers[manaData] >= manaData.manaSpawnInterval)
+                {
+                    _manaTimers[manaData] = 0f;
+
+                    SpawnWaveGroup(manaData.manaBallDataId, manaData.manaSpawnCountPerTime, _manaSpawnRadius, true);
+                }
+            }
+        }
+    }
+
+    private void SpawnWaveGroup(string dataId, int count, float radius, bool isMana = false)
     {
         // 1. 이미 검증된 게임오브젝트 매니저에서 플레이어 위치 가져오기
-        var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
-        if (player == null) return;
+        if (_localPlayer == null) return;
 
-        Vector3 playerPos = player.transform.position;
+        Vector3 playerPos = _localPlayer.transform.position;
 
         for (int i = 0; i < count; i++)
         {
             // 2. 플레이어 중심의 화면 밖 무작위 원형 좌표 계산 (삼각함수 활용)
             float randomAngle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
-            Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * _spawnRadius;
+            Vector3 spawnOffset = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0f) * radius;
             Vector3 finalSpawnPosition = playerPos + spawnOffset;
 
             // 3. 기존 DaniTechGameObjectManager 구조가 'Transform'을 요구하므로
             // 이 매니저 스크립트가 붙은 오브젝트의 위치를 소환 위치로 잠시 순간이동 시켜서 넘겨줌
             this.transform.position = finalSpawnPosition;
 
+            if (isMana)
+            {
+                DaniTechGameObjectManager.Inst.CreateFieldObject(dataId, this.transform).Forget();
+            }
+
             // 4. 매니저 함수 그대로 사용
-            DaniTechGameObjectManager.Inst.CreateMonsterObject(monsterDataId, this.transform).Forget();
+            DaniTechGameObjectManager.Inst.CreateMonsterObject(dataId, this.transform).Forget();
         }
     }
 
@@ -101,7 +158,7 @@ public class WaveSpawnManager : MonoBehaviour
         if (duration <= 0f)
         {
             Debug.Log($"[이벤트 웨이브]: {monsterDataId} 몬스터 {totalCount}마리 즉시 스폰");
-            SpawnWaveGroup(monsterDataId, totalCount);
+            SpawnWaveGroup(monsterDataId, totalCount, _spawnRadius, false);
         }
         // 2. duration이 지정되어 있다면? 그 시간 동안 쪼개서 스폰 (지속형 이벤트)
         else
@@ -118,7 +175,7 @@ public class WaveSpawnManager : MonoBehaviour
 
         for (int i = 0; i < totalCount; i++)
         {
-            SpawnWaveGroup(monsterDataId, 1);
+            SpawnWaveGroup(monsterDataId, 1, _spawnRadius, false);
 
             // 다음 마리 소환 전까지 대기
             await UniTask.Delay(System.TimeSpan.FromSeconds(interval));
@@ -140,6 +197,9 @@ public class WaveSpawnManager : MonoBehaviour
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(player.transform.position, _spawnRadius);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(player.transform.position, _manaSpawnRadius);
         }
     }
 }

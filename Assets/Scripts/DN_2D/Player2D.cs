@@ -16,6 +16,7 @@ public class Player2D : MonoBehaviour
     [SerializeField] private int _maxHp;
     [SerializeField] private int _playerHp = 1000;
     [SerializeField] private int _playerMp = 0;
+    [SerializeField] private int _playerLevel = 1;
     [SerializeField] private int _maxMp;
     [SerializeField] private int _playerBaseAtk = 100;
     // 스킬 관련 =======================================================
@@ -78,12 +79,22 @@ public class Player2D : MonoBehaviour
 
         transform.Translate(Move_Direction * Move_Speed * Time.deltaTime);
     }
+
+    // 이동 관련 ========================================================
+
     void Flip()
     {
         _lookRight = !_lookRight;
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         transform.localScale = scaler;
+    }
+
+    // 레벨 관련 ========================================================
+
+    public int GetPlayerLevel()
+    {
+        return _playerLevel;
     }
 
     // 스킬 ====================================================

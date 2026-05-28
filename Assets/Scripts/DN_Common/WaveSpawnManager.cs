@@ -55,7 +55,6 @@ public class WaveSpawnManager : MonoBehaviour
 
     void Start()
     {
-        _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
         // 각 웨이브마다 독립적으로 작동할 주기 타이머 공간 초기화
         foreach (var wave in _waveTimeline)
         {
@@ -72,6 +71,7 @@ public class WaveSpawnManager : MonoBehaviour
     {
         if (!_isGameActive || _localPlayer == null) return;
 
+        _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
         _playerLevel = _localPlayer.GetPlayerLevel();
 
         // 1. 전체 게임 시간 흘러감
@@ -144,9 +144,10 @@ public class WaveSpawnManager : MonoBehaviour
             {
                 DaniTechGameObjectManager.Inst.CreateFieldObject(dataId, this.transform).Forget();
             }
-
-            // 4. 매니저 함수 그대로 사용
-            DaniTechGameObjectManager.Inst.CreateMonsterObject(dataId, this.transform).Forget();
+            else
+            {
+                DaniTechGameObjectManager.Inst.CreateMonsterObject(dataId, this.transform).Forget();
+            }
         }
     }
 

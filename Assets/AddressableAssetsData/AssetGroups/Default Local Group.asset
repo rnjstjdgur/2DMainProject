@@ -70,8 +70,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3ed138b711d71c408a6fdab50726c15
+    m_Address: 2DPrefab/Harvest_ManaBallBlue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bab0dab329b3a2e45bff7ba9f9c889b4
     m_Address: Sound/Pugmia_Bgm_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c5745680424092543ab85090ee80065b
+    m_Address: 2DPrefab/Harvest_ManaBallOrange
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -82,6 +92,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d8d61a3cf509c944a9072703554e32fb
     m_Address: Sound/Voice_Pug_1_success
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4e6a12adbd046c4e8de9df945e4c707
+    m_Address: Assets/Prefabs/0_Sample/ManaBall_Pink.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

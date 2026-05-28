@@ -146,10 +146,22 @@ public class Player2D : MonoBehaviour
         }
 
         _playerMp += exp;
-        Debug.Log($"[경험치 획득] +{exp} | 현재 경험치: {_playerMp} / 필요 경험치: {_expTable[_playerLevel]}");
+        Debug.Log($"[경험치 획득] +{exp} | 현재 경험치: {_playerMp} / 다음 레벨 필요 경험치: {_expTable[_playerLevel]}");
 
         CheckPlayerLevelUp();
+
+        InvokeStatChangedEvent();
+
         return _playerMp;
+    }
+
+    public int GetRequiredExpForCurrentLevel()
+    {
+        if (_playerLevel < _expTable.Length)
+        {
+            return _expTable[_playerLevel];
+        }
+        return 1; // 만렙 시 에러 방지용 기본값
     }
 
     // 스킬 ====================================================
@@ -269,7 +281,8 @@ public class Player2D : MonoBehaviour
     {
         // 우선 HP든 MP든 하나라도 바뀌면 다 호출해준다
         _onHpChanged?.Invoke(_playerHp, _maxHp);
-         _onMpChanged?.Invoke(_playerMp, _maxMp);
+        int currentLevelExpRequired = (_playerLevel < _expTable.Length) ? _expTable[_playerLevel] : 1;
+        _onMpChanged?.Invoke(_playerMp, currentLevelExpRequired);
     }
 
     private void OnDrawGizmos()

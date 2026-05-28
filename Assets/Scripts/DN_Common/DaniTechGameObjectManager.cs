@@ -133,7 +133,6 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public async UniTaskVoid CreateMonsterObject(string monsterDataId, Transform spawnSpot)
     {
-        Debug.Log($"[스폰 요청] {monsterDataId} 생성 시도 시작");
         var monsterData = DaniTechGameDataManager.Instance.GetDNMonsterData(monsterDataId);
         if (monsterData == null)
         {

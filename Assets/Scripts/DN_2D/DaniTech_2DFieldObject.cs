@@ -48,14 +48,6 @@ public class DaniTech_2DFieldObject : MonoBehaviour
             {
                 DaniTechGameManager.Inst.IncreasePlayerExp(fieldObjectData.ManaPoints);
 
-                //var playerData = DaniTechNetworkManager.Inst.GetDefaultPlayerData();
-                //if (playerData == null) return;
-
-                //int playerTotalExp = playerData.PlayerTotalExp;
-                int playerTotalExp = player.GetPlayerMp();
-
-                Debug.LogWarning($"플레이어가 {fieldObjectData.ManaPoints} 경험치를 획득하였습니다. 총 경험치: {playerTotalExp}");
-
                 DaniTechGameObjectManager.Inst.RequestDestroyFieldObject(_fieldObjectInstanceId);
             }
 

@@ -6,7 +6,6 @@ public class HudSlotUI : MonoBehaviour
     [SerializeField] private int SlotOffsetY;
 
     [SerializeField] private Slider Slider_Hp;
-    [SerializeField] private Slider Slider_Mp;
 
 
     private int _instanceId;
@@ -36,7 +35,6 @@ public class HudSlotUI : MonoBehaviour
         var monster = gObj.GetComponent<Monster2D>();
         if (monster != null)
         {
-            Slider_Mp.gameObject.SetActive(false);
             monster.BindOnStatChangedEvent(OnTargetEntityHpChanged);
             return;
         }
@@ -48,7 +46,6 @@ public class HudSlotUI : MonoBehaviour
 
     private void OnTargetEntityMpChanged(int curMp, int maxMp)
     {
-        Slider_Mp.value = (curMp / (float)maxMp);
     }
 
     private void Update()

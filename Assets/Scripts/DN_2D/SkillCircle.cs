@@ -9,8 +9,6 @@ public class SkillCircle : MonoBehaviour, ISkillObject
     [SerializeField] private string _skillDataId = "skill_fire_01";
 
     [Header("스킬 기본 설정")]
-    [SerializeField] private float _overlapRadius = 1.2f;
-    [SerializeField] private Vector2 _offsetPosition = new Vector2(1.5f, 0f); // 플레이어 앞 여백
 
     private float _skillCoolTime;
     private float _skillDuration;
@@ -20,6 +18,19 @@ public class SkillCircle : MonoBehaviour, ISkillObject
     private Action<SkillCollisionInfo> _collisionCallback;
 
     private Player2D _localPlayer;
+    private Animator _animator;
+    private BoxCollider2D _boxCollider;
+
+    private Dictionary<GameObject, float> _targetHitHistory = new Dictionary<GameObject, float>();
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        _boxCollider = GetComponent<BoxCollider2D>();
+
+        // 물리 연산을 트리거 형태로 사용하기 위해 설정 강제
+        _boxCollider.isTrigger = true;
+    }
 
     // 인터페이스 멤버 ============================================
     public float GetSkillCoolTime()
@@ -34,8 +45,10 @@ public class SkillCircle : MonoBehaviour, ISkillObject
         _ownerInstanceId = ownerInstanceId;
         _skillDirection = direction;
         _collisionCallback = collisionCallback;
-
         _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+
+        // 히트 기록 초기화
+        _targetHitHistory.Clear();
 
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         if (skillData != null)
@@ -43,92 +56,92 @@ public class SkillCircle : MonoBehaviour, ISkillObject
             _skillCoolTime = skillData.SkillCoolTime;
             _skillDuration = skillData.SkillDuration;
             _skillDamageInterval = skillData.SkillDamageInterval;
-            Debug.Log($"[SkillCircle] '{_skillDataId}' 데이터 연동 완료! (기획 데이터 쿨타임: {_skillCoolTime}s)");
+
+            // [데이터 드리븐] 애니메이터 경로를 받아와서 동적 로드 및 변경
+            // 예시: skillData.AnimatorPath 변수명이 다를 경우 해당 변수명으로 변경해주세요.
+            string animPath = skillData.AnimControllerPath;
+            if (!string.IsNullOrEmpty(animPath))
+            {
+                RuntimeAnimatorController newController = Resources.Load<RuntimeAnimatorController>(animPath);
+                if (newController != null)
+                {
+                    _animator.runtimeAnimatorController = newController;
+                    Debug.Log($"[SkillCircle] 애니메이터 변경 완료: {animPath}");
+                }
+                else
+                {
+                    Debug.LogError($"[SkillCircle] Resources 폴더에서 애니메이터를 찾을 수 없습니다: {animPath}");
+                }
+            }
+
+            Debug.Log($"[SkillCircle] '{_skillDataId}' 데이터 연동 완료!");
         }
         else
         {
             _skillCoolTime = 3.0f;
             _skillDuration = 1.5f;
             _skillDamageInterval = 0.3f;
-            Debug.LogWarning($"[SkillCircle] '{_skillDataId}' 데이터를 찾지 못해 기본 쿨타임으로 작동합니다.");
+            Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못해 기본값으로 작동합니다.");
         }
 
-        StartCoroutine(CoSkillDurationRoutine());
+        // 스킬 지속시간 및 방향 동기화를 제어하는 코루틴 시작
+        StartCoroutine(CoSkillLifecycleRoutine());
     }
 
-    private IEnumerator CoSkillDurationRoutine()
+    // ==============================================================
+
+
+
+    private IEnumerator CoSkillLifecycleRoutine()
     {
         float elapsed = 0f;
 
-        // 다단히트 시 무한 연타로 몬스터가 1프레임만에 녹는 것을 방지하기 위한 타격 기록 필터
-        Dictionary<GameObject, float> targetHitHistory = new Dictionary<GameObject, float>();
-
-        var playerTarget = DaniTechGameObjectManager.Inst.GetLocalPlayer();
-
-        // 기획된 지속시간(_duration) 동안 루프 가동
         while (elapsed < _skillDuration)
         {
-            _skillDirection = _localPlayer.GetLookDirection();
-            Vector2 lookDir = new Vector2(_skillDirection.x, _skillDirection.y).normalized;
-            Vector2 rightOffset = lookDir * _offsetPosition.x;
-            Vector2 upOffset = new Vector2(-lookDir.y, lookDir.x) * _offsetPosition.y;
-
-            // 부모(플레이어)의 위치를 따라 실시간 추적하며 중앙 좌표 갱신
-            Vector2 originPos = playerTarget != null ? (Vector2)playerTarget.transform.position : (Vector2)transform.position;
-            Vector2 center = (Vector2)transform.position + rightOffset + upOffset;
-
-            if (playerTarget != null)
+            if (_localPlayer != null)
             {
-                transform.position = playerTarget.transform.position;
-            }
+                // 플레이어 위치 실시간 추적
+                transform.position = _localPlayer.transform.position;
+                _skillDirection = _localPlayer.GetLookDirection();
 
-            // 지정한 범위 내 레이아웃의 모든 콜라이더 수집
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, _overlapRadius);
-
-            foreach (Collider2D collision in hitColliders)
-            {
-                if (collision.CompareTag("Player")) continue; // 자기자신 혹은 플레이어 제외
-
-                GameObject targetObj = collision.gameObject;
-
-                // 타격 제한 시간 검사 (마지막 대미지 기록 후 주기 계산)
-                if (targetHitHistory.TryGetValue(targetObj, out float lastHitTime))
+                // 플레이어가 바라보는 방향에 맞춰 스킬 오브젝트(콜라이더+이펙트) 전체를 회전시킴
+                Vector2 lookDir = new Vector2(_skillDirection.x, _skillDirection.y).normalized;
+                if (lookDir != Vector2.zero)
                 {
-                    if (Time.time < lastHitTime + _skillDamageInterval) continue; // 쿨타임 안 지났으면 스킵
+                    float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0, 0, angle);
                 }
-
-                if (_collisionCallback != null)
-                {
-                    SkillCollisionInfo info = new SkillCollisionInfo(_skillDataId, collision);
-                    _collisionCallback.Invoke(info);
-                }
-
-                // 타격 시간 갱신
-                targetHitHistory[targetObj] = Time.time;
             }
 
             elapsed += Time.deltaTime;
-            yield return null; // 다음 프레임까지 대기
+            yield return null;
         }
 
-        // 지속시간이 다 끝났으므로 스스로 파괴(꺼짐)
+        // 지속시간 종료 시 삭제
         Destroy(this.gameObject);
     }
 
-    // 범위 체크용 기즈모 에디터 시각화
-    private void OnDrawGizmosSelected()
+    // ★ 핵심: 콜라이더 범위 안에 적이 들어와 있는 동안 매 프레임/물리 주기마다 체크
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        Gizmos.color = Color.green;
+        if (collision.CompareTag("Player")) return; // 플레이어 제외
 
-        Vector3 currentDir = _localPlayer != null ? _localPlayer.GetLookDirection() : _skillDirection;
-        Vector2 lookDir = currentDir == Vector3.zero ? Vector2.right : (Vector2)currentDir.normalized;
+        GameObject targetObj = collision.gameObject;
 
-        Vector2 rightOffset = lookDir * _offsetPosition.x;
-        Vector2 upOffset = new Vector2(-lookDir.y, lookDir.x) * _offsetPosition.y;
+        // 타격 제한 시간(인터벌) 검사
+        if (_targetHitHistory.TryGetValue(targetObj, out float lastHitTime))
+        {
+            if (Time.time < lastHitTime + _skillDamageInterval) return; // 주기 안 지났으면 대미지 안 줌
+        }
 
-        Vector3 basePos = _localPlayer != null ? _localPlayer.transform.position : transform.position;
-        Vector3 center = basePos + (Vector3)(rightOffset + upOffset);
+        // 데미지 콜백 실행
+        if (_collisionCallback != null)
+        {
+            SkillCollisionInfo info = new SkillCollisionInfo(_skillDataId, collision);
+            _collisionCallback.Invoke(info);
+        }
 
-        Gizmos.DrawWireSphere(center, _overlapRadius);
+        // 타격 시간 갱신
+        _targetHitHistory[targetObj] = Time.time;
     }
 }

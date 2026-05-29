@@ -1,6 +1,18 @@
 ﻿using System;
 using UnityEngine;
 
+public struct SkillCollisionInfo
+{
+    public string SkillDataId;
+    public Collider2D TargetCollider;
+
+    public SkillCollisionInfo(string skillId, Collider2D targetCollider)
+    {
+        SkillDataId = skillId;
+        TargetCollider = targetCollider;
+    }
+}
+
 public interface ISkillObject
 {
     float GetSkillCoolTime();

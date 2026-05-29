@@ -32,22 +32,18 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
     // 인터페이스 멤버 ============================================
     public float GetSkillCoolTime()
     {
-        return _skillCoolTime; // 기존에 쓰시던 SkillCoolTime() 메서드 역할을 대신합니다.
+        return _skillCoolTime;
     }
 
-    // 인터페이스 규칙 구현 2 (기존 InitSkillObject 구조 그대로 유지 가능)
     public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<GameObject, Collider2D> collisionCallback)
     {
     }
 
+    // 생성, 물리 관련 ==============================================================
+
     private void OnDisable()
     {
         _onSkillCollision = null;
-    }
-
-    public float SkillCoolTime()
-    {
-        return _skillCoolTime;
     }
 
     public void InitSkillObject(int ownerInstanceId, Vector3 launchDirection, string parentTag, Action<int, int> onSkillCollision = null)

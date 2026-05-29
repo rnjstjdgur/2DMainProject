@@ -7,6 +7,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 {
     [Header("프리팹")]
     [SerializeField] private GameObject Prefab_SkillProjectile;
+    [SerializeField] private GameObject Prefab_SkillCircle;
     [SerializeField] private GameObject Prefab_Enemy;
     [SerializeField] private GameObject Prefab_Player;
 
@@ -14,11 +15,15 @@ public class DaniTechGameObjectManager : MonoBehaviour
     [SerializeField] private Transform Transform_EnemyRoot;
     [SerializeField] private Transform Transform_ManaBallRoot;
     [SerializeField] private Transform Transform_ProjectileSkillRoot;
+    [SerializeField] private Transform Transform_CircleSkillRoot;
 
     public static DaniTechGameObjectManager Inst { get; set; }
 
     // 생성된 오브젝트의 키가 됨
     private int _objectInstanceKeyGenerator = 0;
+
+    private Vector2 _lastOverlapOffset = Vector2.zero;
+    private float _lastOverlapRadius = 1f;
 
     // 생성된 오브젝트의 생명을 보관
     private Dictionary<int, GameObject> _createdGameObjectContainer = new Dictionary<int, GameObject>();
@@ -197,6 +202,34 @@ public class DaniTechGameObjectManager : MonoBehaviour
     public void StartAutoProjectileSkillLoop()
     {
         AutoSkillLoop(Prefab_SkillProjectile, Transform_ProjectileSkillRoot).Forget();
+    }
+
+    public void StartCircleSkillLoop(float skillRange, float skillRadius)
+    {
+        UseOverlapSkill(new Vector2(skillRange, 0.0f), skillRadius);
+    }
+
+    public void UseOverlapSkill(Vector2 offsetPosition, float radius)
+    {
+        _lastOverlapOffset = offsetPosition;
+        _lastOverlapRadius = radius;
+
+        Vector2 lookDir = _localPlayer.GetAdjusedDirection(_localPlayer.GetPlayerLookDirection());
+
+        Vector2 rightOffset = lookDir * offsetPosition.x;
+        Vector2 upOffset = new Vector2(-lookDir.y, lookDir.x) * offsetPosition.y;
+
+        Vector2 center = (Vector2)transform.position + rightOffset + upOffset;
+
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius);
+
+        foreach (Collider2D col in hitColliders)
+        {
+            if (col != null && col.gameObject != this.gameObject)
+            {
+                Debug.Log($"오버랩 스킬 적중: {col.name}");
+            }
+        }
     }
 
     private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root)

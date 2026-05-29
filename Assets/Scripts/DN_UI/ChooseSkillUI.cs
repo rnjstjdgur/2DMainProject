@@ -53,24 +53,10 @@ public class ChooseSkillUI : DaniTechUIBase
         }
     }
 
-
-    private void OnDisable()
-    {
-        // 소멸이니까 나중에 신경써주셔도 되요
-        // _itemSlotList.Clear();
-        // Destroy
-    }
-
     public void OnClick_ClosePopup()
     {
         DaniTechUIManager.Instance.CloseContentUI(DaniTechUIType.ChooseSkillUI);
         TimeManager.instance.TimeStart();
-    }
-
-
-    public void OnClick_CreateSlotTest()
-    {
-        // CreateSlot();
     }
 
     private void CreateSlot(string skillDataId, string skillName)

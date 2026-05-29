@@ -221,9 +221,14 @@ public class Player2D : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         Collider_PlayerNormalAttack.gameObject.SetActive(false);
     }
+
+    public Vector2 GetPlayerLookDirection()
+    {
+        return _lookDirection;
+    }
     
 
-    private Vector2 GetAdjusedDirection(Vector2 rawDir)
+    public Vector2 GetAdjusedDirection(Vector2 rawDir)
     {
         switch (_currentView)
         {

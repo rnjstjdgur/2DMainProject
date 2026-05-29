@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class ChooseSkillSlotUI : MonoBehaviour
 {
-    [SerializeField] private Text Text_SkillLevel;
+    [SerializeField] private Text Text_SkillName;
+    [SerializeField] private Text Text_SkillDescription;
     [SerializeField] private DaniTechUIButton Button_Slot;
     [SerializeField] private Image Image_Icon;
     [SerializeField] private Image Image_Frame;
@@ -19,7 +20,7 @@ public class ChooseSkillSlotUI : MonoBehaviour
         Button_Slot.BindOnClickButtonEvent(OnClick_SelectItem);
     }
 
-    public void SetIcon(string skillDataId, int skillLevel)
+    public void SetIcon(string skillDataId, string skillName)
     {
         var skillData = DaniTechGameDataManager.Instance.GetSkill(skillDataId);
         if (skillData == null)
@@ -50,7 +51,8 @@ public class ChooseSkillSlotUI : MonoBehaviour
         //}
         //Image_Icon.sprite = sprite;
 
-        Text_SkillLevel.text = $"{skillLevel}";
+        Text_SkillName.text = $"{skillName}";
+        Text_SkillDescription.text = $"{skillData.Description}";
     }
 
     private void OnDisable()
@@ -58,10 +60,10 @@ public class ChooseSkillSlotUI : MonoBehaviour
         OnSelectEvent = null;
     }
 
-    public void InitSlot(int slotInstanceId, string skillDataId, int skillLevel)
+    public void InitSlot(int slotInstanceId, string skillDataId, string skillName)
     {
         SlotInstanceId = slotInstanceId;
-        SetIcon(skillDataId, skillLevel);
+        SetIcon(skillDataId, skillName);
         // Text_StackCount.text = slotInstanceId.ToString();
     }
 

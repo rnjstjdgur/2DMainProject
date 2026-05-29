@@ -26,7 +26,7 @@ public static class GameDataTester
         }
 
         // 2. 데이터 사용 (어디서나 호출 가능)
-        var myHero = DaniTechGameDataManager.Instance.GetCharacterData("character_hellena_01");
+        var myHero = DaniTechGameDataManager.Instance.GetCharacterData("character_basic_01");
 
         if (myHero != null)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 
@@ -33,6 +34,8 @@ public class Player2D : MonoBehaviour
     private bool _isPlayerLevelUp = false;
     private bool _isPlayerAlive = true;
 
+    private List<DNSkillData> _skillDataList = new List<DNSkillData>();
+
     private readonly int[] _expTable = { 0, 100, 200, 400, 800, 1600, 2400, 3200, 4000, 5000, 6000, 7000, 8000, 9000, 10000 };
 
     private event Action<int, int> _onHpChanged;
@@ -50,6 +53,7 @@ public class Player2D : MonoBehaviour
     {
         _playerData = DaniTechGameDataManager.Instance.GetCharacterData("character_basic_01");
         _playerLevel = _playerData.PlayerLevel;
+        LoadSkill();
 
         DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
         DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
@@ -173,6 +177,30 @@ public class Player2D : MonoBehaviour
     }
 
     // 스킬 ====================================================
+
+    private void LoadSkill()
+    {
+        _skillDataList.Clear();
+
+        var myHero = DaniTechGameDataManager.Instance.GetCharacterData("character_basic_01");
+        if (myHero == null) return;
+
+
+        // 스킬 정보가 있다면
+        if (myHero.SkillList != string.Empty)
+        {
+            string[] SkillList = myHero.SkillList.Split(',');
+
+            foreach (string skillName in SkillList)
+            {
+                var data = DaniTechGameDataManager.Instance.GetSkill(skillName);
+                if (data == null) return;
+                _skillDataList.Add(data);
+                Debug.Log($"[Player2D] 스킬 데이터 로드 완료: {data.Name} (ID: {data.Id})");
+            }
+            Debug.Log($"[Player2D] 총 {_skillDataList.Count}개의 스킬 데이터를 성공적으로 인계받았습니다.");
+        }
+    }
 
     public void UseNormalAttack()
     {

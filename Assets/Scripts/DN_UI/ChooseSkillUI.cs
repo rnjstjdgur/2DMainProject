@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ChooseSkillUI : DaniTechUIBase
@@ -23,24 +24,32 @@ public class ChooseSkillUI : DaniTechUIBase
         // 슬롯 정리 - 혹시 오픈 시점에 다른 슬롯들이 있다면 제거하자
         if (_skillSlotList.Count > 0)
         {
-            foreach (var slot in _skillSlotList)
+            foreach (Transform child in Transform_UISlotRoot)
             {
-                DestroyImmediate(slot.Value.gameObject);
+                Destroy(child.gameObject);
             }
             _skillSlotList.Clear();
         }
 
-        //인벤오픈 1-1) 인벤토리가 열릴때 플레이어가 보유한 모든 아이템을 출력하는 로직을 넣어봅시다
-        var skillList = DaniTechGameManager.Inst.GetPlayerSkillList();
-        if (skillList == null || skillList.Count == 0)
-        {
-            Debug.LogWarning("보유한 아이템이 없습니다!");
-            return;
-        }
+        var myHero = DaniTechGameDataManager.Instance.GetCharacterData("character_basic_01");
+        if (myHero == null) return;
 
-        foreach (var skillModel in skillList)
+
+        // 스킬 정보가 있다면
+        if (myHero.SkillList != string.Empty)
         {
-            CreateSlot(skillModel.SkillDataId, skillModel.SkillLevel);
+            string[] fullSkillList = myHero.SkillList.Split(',');
+
+            var randomThreeSkills = fullSkillList.OrderBy(x => Random.value).Take(3);
+
+            foreach (string skillName in randomThreeSkills)
+            {
+                var skillData = DaniTechGameDataManager.Instance.GetSkill(skillName);
+                if (skillData != null)
+                {
+                    CreateSlot(skillData.Id, skillData.Name);
+                }
+            }
         }
     }
 
@@ -64,7 +73,7 @@ public class ChooseSkillUI : DaniTechUIBase
         // CreateSlot();
     }
 
-    private void CreateSlot(string skillDataId, int skillLevel)
+    private void CreateSlot(string skillDataId, string skillName)
     {
         // 1-1 수동 SetParant가 뒤에 지금은 자동으로 해주고 있다
         var gObj = Instantiate(Prefab_Slot, Transform_UISlotRoot);
@@ -77,7 +86,7 @@ public class ChooseSkillUI : DaniTechUIBase
         _generatedKey++;
 
         // 1-3 여기서 slotComponent가지고 뭔가를 하는 겁니다!
-        slotComponent.InitSlot(_generatedKey, skillDataId, skillLevel);
+        slotComponent.InitSlot(_generatedKey, skillDataId, skillName);
         slotComponent.gameObject.name = $"SkillSlot : {slotComponent.SlotInstanceId}";
 
         // 1-4 중복체크 해주면 좋긴 하지만, 일단 쉽게 컴포넌트(컴포넌트로 게임오브젝트는 받을 수 있으므로)를 보관해보자

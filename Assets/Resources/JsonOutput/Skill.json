@@ -7,7 +7,8 @@
     "SkillLevel": 1,
     "SkillDamage": 120,
     "_skillDistance": 10,
-    "_skillCoolTime": 1
+    "_skillCoolTime": 1,
+    "AnimControllerPath": "Anim/AnimController_MagicArrow"
   },
   {
     "Id": "skill_fire_01",
@@ -17,7 +18,8 @@
     "SkillLevel": 1,
     "SkillDamage": 200,
     "_skillDistance": 8,
-    "_skillCoolTime": 10
+    "_skillCoolTime": 10,
+    "AnimControllerPath": "Anim/AnimController_Fire"
   },
   {
     "Id": "skill_ice_01",
@@ -27,7 +29,8 @@
     "SkillLevel": 1,
     "SkillDamage": 100,
     "_skillDistance": 15,
-    "_skillCoolTime": 8
+    "_skillCoolTime": 8,
+    "AnimControllerPath": "Anim/AnimController_Ice"
   },
   {
     "Id": "skill_lightning_01",
@@ -37,6 +40,7 @@
     "SkillLevel": 1,
     "SkillDamage": 150,
     "_skillDistance": 8,
-    "_skillCoolTime": 5
+    "_skillCoolTime": 5,
+    "AnimControllerPath": "Anim/AnimController_Lightning"
   }
 ]

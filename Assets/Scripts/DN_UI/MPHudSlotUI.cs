@@ -33,7 +33,5 @@ public class MPHudSlotUI : MonoBehaviour
 
         float ratio = (curMp / (float)maxMp);
         Slider_Mp.value = ratio;
-
-        Debug.Log($"[UI 갱신] 슬라이더 값 변경됨 -> {curMp} / {maxMp} (비율: {ratio})");
     }
 }

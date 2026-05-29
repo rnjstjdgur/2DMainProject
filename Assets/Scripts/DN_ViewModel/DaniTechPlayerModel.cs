@@ -11,8 +11,10 @@ public class DaniTechItemModel
     public int ItemStackCount;
 }
 
+[Serializable]
 public class SkillModel
 {
+    public long SkillUniqueId;
     public string SkillDataId;
     public string SkillName;
     public string SkillDescription;

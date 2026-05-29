@@ -87,7 +87,7 @@ public class DaniTechGameManager : MonoBehaviour
 
     public List<SkillModel> GetPlayerSkillList()
     {
-        // _playerModel이 Private이므로 외부에서 ItemList를 받아올 수 있게 Get함수를 사용한다
+        // _playerModel이 Private이므로 외부에서 skillList 받아올 수 있게 Get함수를 사용한다
         return _playerModel.SkillList;
     }
 }

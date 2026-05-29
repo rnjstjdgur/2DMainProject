@@ -28,7 +28,10 @@ public class DNSkillData : GameDataBase
     public string Name;
     public string Description;
     public string IconPath;
-
+    public int SkillLevel;
+    public int SkillDamage;
+    public float SkillDistance;
+    public float SkillCoolTime;
 }
 
 [System.Serializable]

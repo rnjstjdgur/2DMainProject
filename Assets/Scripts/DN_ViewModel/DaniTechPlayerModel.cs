@@ -14,8 +14,12 @@ public class DaniTechItemModel
 public class SkillModel
 {
     public string SkillDataId;
+    public string SkillName;
     public string SkillDescription;
     public int SkillLevel;
+    public int SkillDamage;
+    public float SkillDistance;
+    public float SkillCoolTime;
 }
 
 // 1) 플레이어 데이터를 만들어보자

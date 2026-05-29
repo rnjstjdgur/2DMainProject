@@ -68,6 +68,8 @@ public class WaveSpawnManager : MonoBehaviour
 
     void Update()
     {
+        if (DaniTechGameManager.Inst.IsGameStart() == false) return;
+
         if (!_isGameActive) return;
 
         // 1. 전체 게임 시간 흘러감

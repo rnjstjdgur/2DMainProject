@@ -14,8 +14,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     [Header("트랜스폼")]
     [SerializeField] private Transform Transform_EnemyRoot;
     [SerializeField] private Transform Transform_ManaBallRoot;
-    [SerializeField] private Transform Transform_ProjectileSkillRoot;
-    [SerializeField] private Transform Transform_CircleSkillRoot;
+    [SerializeField] private Transform Transform_SkillObjectRoot;
 
     public static DaniTechGameObjectManager Inst { get; set; }
 
@@ -201,36 +200,36 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public void StartAutoProjectileSkillLoop()
     {
-        AutoSkillLoop(Prefab_SkillProjectile, Transform_ProjectileSkillRoot).Forget();
+        AutoSkillLoop(Prefab_SkillProjectile, Transform_SkillObjectRoot).Forget();
     }
 
-    public void StartCircleSkillLoop(float skillRange, float skillRadius)
+    public void StartAutoCircleSkillLoop()
     {
-        UseOverlapSkill(new Vector2(skillRange, 0.0f), skillRadius);
+        AutoSkillLoop(Prefab_SkillCircle, Transform_SkillObjectRoot).Forget();
     }
 
-    public void UseOverlapSkill(Vector2 offsetPosition, float radius)
-    {
-        _lastOverlapOffset = offsetPosition;
-        _lastOverlapRadius = radius;
+    //public void UseOverlapSkill(Vector2 offsetPosition, float radius)
+    //{
+    //    _lastOverlapOffset = offsetPosition;
+    //    _lastOverlapRadius = radius;
 
-        Vector2 lookDir = _localPlayer.GetAdjusedDirection(_localPlayer.GetPlayerLookDirection());
+    //    Vector2 lookDir = _localPlayer.GetAdjusedDirection(_localPlayer.GetPlayerLookDirection());
 
-        Vector2 rightOffset = lookDir * offsetPosition.x;
-        Vector2 upOffset = new Vector2(-lookDir.y, lookDir.x) * offsetPosition.y;
+    //    Vector2 rightOffset = lookDir * offsetPosition.x;
+    //    Vector2 upOffset = new Vector2(-lookDir.y, lookDir.x) * offsetPosition.y;
 
-        Vector2 center = (Vector2)transform.position + rightOffset + upOffset;
+    //    Vector2 center = (Vector2)transform.position + rightOffset + upOffset;
 
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius);
+    //    Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius);
 
-        foreach (Collider2D col in hitColliders)
-        {
-            if (col != null && col.gameObject != this.gameObject)
-            {
-                Debug.Log($"오버랩 스킬 적중: {col.name}");
-            }
-        }
-    }
+    //    foreach (Collider2D col in hitColliders)
+    //    {
+    //        if (col != null && col.gameObject != this.gameObject)
+    //        {
+    //            Debug.Log($"오버랩 스킬 적중: {col.name}");
+    //        }
+    //    }
+    //}
 
     private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root)
     {
@@ -272,12 +271,34 @@ public class DaniTechGameObjectManager : MonoBehaviour
         }
     }
 
-    public void onSkillCollision(int colliedObjectInstanceId, int damage)
+    public void onSkillCollision(SkillCollisionInfo info)
     {
-        if (colliedObjectInstanceId == 0)
+        if (info.TargetCollider == null) return;
+
+        int calculatedDamage = 0;
+        var skillTableData = DaniTechGameDataManager.Instance.GetSkill(info.SkillDataId);
+
+        if (skillTableData != null)
         {
-            var player = GetLocalPlayer();
-            player.TakeDamage(damage);
+            calculatedDamage = skillTableData.SkillDamage;
+        }
+        else
+        {
+            calculatedDamage = 0;
+        }
+
+        var player = info.TargetCollider.GetComponent<Player2D>();
+        if (player != null)
+        {
+            player.TakeDamage(calculatedDamage);
+            return;
+        }
+
+        var monster = info.TargetCollider.GetComponent<Monster2D>();
+        if (monster != null)
+        {
+            monster.TakeDamage(calculatedDamage);
+            Debug.Log($"[매니저] 몬스터 {monster.name}에게 스킬 {info.SkillDataId}로 대미지 {calculatedDamage} 전달!");
         }
     }
 

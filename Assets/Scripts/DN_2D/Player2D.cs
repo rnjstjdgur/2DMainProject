@@ -57,6 +57,7 @@ public class Player2D : MonoBehaviour
 
         DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
         DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
+        DaniTechGameObjectManager.Inst.StartAutoCircleSkillLoop();
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
     }
 
@@ -69,6 +70,7 @@ public class Player2D : MonoBehaviour
     {
         if (_isPlayerAlive == false)
         {
+            DaniTechUIManager.Instance.OpenSimplePopup("게임오버");
             TimeManager.instance.TimeStop();
         }
 

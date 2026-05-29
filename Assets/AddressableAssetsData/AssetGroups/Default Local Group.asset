@@ -45,6 +45,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 46eb125e16bff034fb5c5512f494efcc
+    m_Address: Anim/AnimController_Fire
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4fcb57a277d8ed943b22e0b0ba31911b
     m_Address: 2DObject/Monster_Bear
     m_ReadOnly: 0

@@ -6,9 +6,11 @@
     "IconPath": "Icon/Icon_Item_MagicArrow",
     "SkillLevel": 1,
     "SkillDamage": 120,
-    "_skillDistance": 10,
-    "_skillCoolTime": 1,
-    "AnimControllerPath": "Anim/AnimController_MagicArrow"
+    "SkillDistance": 10,
+    "SkillCoolTime": 1,
+    "AnimControllerPath": "Anim/AnimController_MagicArrow",
+    "SkillDuration": null,
+    "SkillDamageInterval": null
   },
   {
     "Id": "skill_fire_01",
@@ -17,9 +19,11 @@
     "IconPath": "Icon/Icon_Item_Fire",
     "SkillLevel": 1,
     "SkillDamage": 200,
-    "_skillDistance": 8,
-    "_skillCoolTime": 10,
-    "AnimControllerPath": "Anim/AnimController_Fire"
+    "SkillDistance": 8,
+    "SkillCoolTime": 10,
+    "AnimControllerPath": "Anim/AnimController_Fire",
+    "SkillDuration": 1.5,
+    "SkillDamageInterval": 1.2
   },
   {
     "Id": "skill_ice_01",
@@ -28,9 +32,11 @@
     "IconPath": "Icon/Icon_Item_Ice",
     "SkillLevel": 1,
     "SkillDamage": 100,
-    "_skillDistance": 15,
-    "_skillCoolTime": 8,
-    "AnimControllerPath": "Anim/AnimController_Ice"
+    "SkillDistance": 15,
+    "SkillCoolTime": 8,
+    "AnimControllerPath": "Anim/AnimController_Ice",
+    "SkillDuration": 1,
+    "SkillDamageInterval": null
   },
   {
     "Id": "skill_lightning_01",
@@ -39,8 +45,10 @@
     "IconPath": "Icon/Icon_Item_Lightning",
     "SkillLevel": 1,
     "SkillDamage": 150,
-    "_skillDistance": 8,
-    "_skillCoolTime": 5,
-    "AnimControllerPath": "Anim/AnimController_Lightning"
+    "SkillDistance": 8,
+    "SkillCoolTime": 5,
+    "AnimControllerPath": "Anim/AnimController_Lightning",
+    "SkillDuration": null,
+    "SkillDamageInterval": null
   }
 ]

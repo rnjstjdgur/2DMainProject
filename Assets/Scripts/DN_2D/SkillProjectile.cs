@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 public class SkillProjectile : DaniTech_SkillBase, ISkillObject
 {
+    [Header("스킬 고유 ID")]
+    [SerializeField] private string _skillDataId = "skill_magicArrow_01";
+
     [Header("Sprite Renderer")]
     [SerializeField] private SpriteRenderer spriteRenderer_Effect;
 
@@ -18,11 +21,11 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
     [SerializeField] private float _skillCoolTime = 1.0f;
 
     private int _damage = 100;
-
     private int _ownerInstanceId;
 
-    private Vector3 _fireDirection;
-    //private Vector3 _moveDirection = Vector3.right;   // 이동방향으로 나가는 스킬
+    private Action<SkillCollisionInfo> _collisionCallback;
+
+    private Vector3 _moveDirection;
     private float _skillDurationTime = 3.0f;    // [ToDo] 나중에 데이터로 받아와서 스킬의 유지시간을 대입하자 (스킬이 강화되면 유지시간이 늘어나는식)
 
 
@@ -35,8 +38,52 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
         return _skillCoolTime;
     }
 
-    public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<GameObject, Collider2D> collisionCallback)
+    public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<SkillCollisionInfo> collisionCallback)
     {
+        _ownerInstanceId = ownerInstanceId;
+        _collisionCallback = collisionCallback;
+        this.gameObject.tag = targetTag; // 필요시 태그 부여
+
+        // 1. 기획 데이터 테이블 연동
+        DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
+        if (skillData != null)
+        {
+            _skillCoolTime = skillData.SkillCoolTime;
+            _damage = skillData.SkillDamage;
+            // _skillMoveSpeed = skillData.SkillSpeed; 
+        }
+        else
+        {
+            _skillCoolTime = 1.0f;
+            Debug.LogWarning($"[SkillProjectile] '{_skillDataId}' 데이터를 찾지 못해 인스펙터 기본값으로 작동합니다.");
+        }
+
+        // 2. 타겟팅 유도 시스템 가동 (주변에 가장 가까운 적 찾기)
+        Transform targetEnemy = GetClosestEnemy();
+
+        if (targetEnemy != null)
+        {
+            // 가장 가까운 몬스터 방향 벡터 계산 (목적지 - 출발지)
+            _moveDirection = (targetEnemy.position - transform.position).normalized;
+        }
+        else
+        {
+            // 주변에 적이 없다면 매니저가 넘겨준 플레이어가 바라보는 방향 사용
+            _moveDirection = direction.normalized;
+        }
+
+        // 3. 만약 어떤 방향도 구하지 못했다면 (플레이어가 멈춰있고 적도 없다면) 우측 발사 방어코드
+        if (_moveDirection == Vector3.zero)
+        {
+            _moveDirection = Vector3.right;
+        }
+
+        // 4. 날아갈 방향에 맞게 투사체 회전 세팅
+        float angle = Mathf.Atan2(_moveDirection.y, _moveDirection.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // 5. 🌟 [치명적 버그 수정] 시간을 카운트하여 스스로 삭제되는 코루틴을 반드시 켜줍니다!
+        StartCoroutine(DestroySkillAfterDelay());
     }
 
     // 생성, 물리 관련 ==============================================================
@@ -46,44 +93,9 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
         _onSkillCollision = null;
     }
 
-    public void InitSkillObject(int ownerInstanceId, Vector3 launchDirection, string parentTag, Action<int, int> onSkillCollision = null)
-    {
-        //_moveDirection = launchDirection.normalized;   // 이동방향으로 나가는 스킬
-
-        // [ToDo] 데이터로 스킬 스프라이트를 받아와서 스킬별로 다른 이미지가 생성됨
-        //var skillData = DaniTechGameDataManager.Instance.GetSkill();
-        //Sprite skillSprite = DaniTechResourceManager.Inst.LoadSprite(skillData.spritePath);
-        //spriteRenderer_Effect.sprite = skillSprite;
-
-        _ownerInstanceId = ownerInstanceId;
-        Transform targetEnemy = GetClosestEnemy();
-
-        if (targetEnemy != null)
-        {
-            // 가장 가까운 몬스터가 있으면 ➡️ 몬스터 방향 벡터 계산 (목적지 - 출발지)
-            _fireDirection = (targetEnemy.position - transform.position).normalized;
-        }
-        else
-        {
-            // 주변에 몬스터가 한 마리도 없다면 ➡️ 기본적으로 플레이어가 바라보는 방향(혹은 기본 앞방향)으로 발사
-            _fireDirection = transform.right;
-        }
-
-        this.gameObject.tag = parentTag;
-
-        _onSkillCollision = onSkillCollision;
-
-        float angle = Mathf.Atan2(_fireDirection.y, _fireDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        //float angle = Mathf.Atan2(_moveDirection.y, _moveDirection.x) * Mathf.Rad2Deg;   // 이동방향으로 나가는 스킬
-        //transform.rotation = Quaternion.Euler(0, 0, angle);
-        StartCoroutine(DestroySkillAfterDelay());
-    }
-
     void Update()
     {
-        transform.position += _fireDirection * _skillMoveSpeed * Time.deltaTime;   // 이동방향으로 나가는 스킬
+        transform.position += _moveDirection * _skillMoveSpeed * Time.deltaTime;   // 이동방향으로 나가는 스킬
     }
 
     IEnumerator DestroySkillAfterDelay()
@@ -115,15 +127,8 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
         }
         else if (collision.CompareTag("Enemy") && (isOwnerPlayer))
         {
-            var gObj = collision.gameObject;
-            if (gObj == null) return;
-
-            var monsterComponent = gObj.GetComponent<Monster2D>();
-            if (monsterComponent == null) return;
-
-            monsterComponent.TakeDamage(_damage);
-
-            int instId = monsterComponent.GetMonsterInstanceId();
+            var info = new SkillCollisionInfo(_skillDataId, collision);
+            _collisionCallback.Invoke(info);
 
             Destroy(this.gameObject);
         }

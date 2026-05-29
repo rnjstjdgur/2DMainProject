@@ -186,6 +186,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9124186025880486968, guid: 2c24543d408afbf49baabb8ff69bba97, type: 3}
     - target: {fileID: 6214429790470533906, guid: ab8976ca7e823c048b1ad65f7b8d5d57, type: 3}
+      propertyPath: Prefab_SkillCircle
+      value: 
+      objectReference: {fileID: 3601178608979350394, guid: 6c3299d8f3a931f42bee258d41e3acba, type: 3}
+    - target: {fileID: 6214429790470533906, guid: ab8976ca7e823c048b1ad65f7b8d5d57, type: 3}
       propertyPath: Transform_EnemyRoot
       value: 
       objectReference: {fileID: 7328812883799438056}
@@ -193,6 +197,14 @@ PrefabInstance:
       propertyPath: Transform_ManaBallRoot
       value: 
       objectReference: {fileID: 8959211280613825280}
+    - target: {fileID: 6214429790470533906, guid: ab8976ca7e823c048b1ad65f7b8d5d57, type: 3}
+      propertyPath: Transform_SkillObjectRoot
+      value: 
+      objectReference: {fileID: 3382480039768506328}
+    - target: {fileID: 6214429790470533906, guid: ab8976ca7e823c048b1ad65f7b8d5d57, type: 3}
+      propertyPath: Transform_ProjectileSkillRoot
+      value: 
+      objectReference: {fileID: 3382480039768506328}
     - target: {fileID: 7737818265192872857, guid: ab8976ca7e823c048b1ad65f7b8d5d57, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1109.0981
@@ -244,6 +256,11 @@ PrefabInstance:
       addedObject: {fileID: 8959211280613825280}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab8976ca7e823c048b1ad65f7b8d5d57, type: 3}
+--- !u!4 &3382480039768506328 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1064879135952590158, guid: ab8976ca7e823c048b1ad65f7b8d5d57, type: 3}
+  m_PrefabInstance: {fileID: 2321550917631863446}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5428402109927411983 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7737818265192872857, guid: ab8976ca7e823c048b1ad65f7b8d5d57, type: 3}

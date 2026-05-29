@@ -13,7 +13,6 @@ public class DaniTech_MainUI : DaniTechUIBase
     [SerializeField] private DaniTechUIButton Btn_NormalAttack;
     [SerializeField] private DaniTechUIButton Btn_CircleSkill;
     [SerializeField] private DaniTechUIButton Btn_RaySkill;
-    [SerializeField] private DaniTechUIButton Btn_ProjectileSkill;
 
     private void OnEnable()
     {
@@ -26,7 +25,6 @@ public class DaniTech_MainUI : DaniTechUIBase
         // 스킬
         Btn_NormalAttack.BindOnClickButtonEvent(OnClick_UseNormalSkill);
         Btn_CircleSkill.BindOnClickButtonEvent(OnClick_UseCircleSkill);
-        Btn_ProjectileSkill.BindOnClickButtonEvent(OnClick_UseProjectileSkill);
     }
 
     public void OnClick_UseNormalSkill()
@@ -37,12 +35,7 @@ public class DaniTech_MainUI : DaniTechUIBase
     public void OnClick_UseCircleSkill()
     {
         // [ToDo] 나중에 사거리, 범위를 데이터에서 받아오자
-        DaniTechGameObjectManager.Inst.GetLocalPlayer().UseCircleSkill(1.0f, 3f);
-    }
-
-    public void OnClick_UseProjectileSkill()
-    {
-        DaniTechGameObjectManager.Inst.GetLocalPlayer().UseProjectileSkill();
+        DaniTechGameObjectManager.Inst.GetLocalPlayer().UseCircleSkill(3.0f, 3f);
     }
 
     public void OnClick_OpenInventory()

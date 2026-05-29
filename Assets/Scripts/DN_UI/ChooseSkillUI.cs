@@ -99,5 +99,6 @@ public class ChooseSkillUI : DaniTechUIBase
     private void OnChildSlotSelected(int selectedSlotInstanceId)
     {
         Debug.LogWarning($"자식 슬롯 {selectedSlotInstanceId} 선택됨!");
+        OnClick_ClosePopup();
     }
 }

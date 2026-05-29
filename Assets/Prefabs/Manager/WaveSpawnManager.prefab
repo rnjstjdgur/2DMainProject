@@ -47,7 +47,7 @@ MonoBehaviour:
   _waveTimeline:
   - waveName: "\uC2AC\uB77C\uC784 \uB5BC"
     startTime: 0
-    endTime: 60
+    endTime: 0
     monsterDataId: 'mob_slim_1 '
     spawnInterval: 2
     spawnCountPerTime: 5

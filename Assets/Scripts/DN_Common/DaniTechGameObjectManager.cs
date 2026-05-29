@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DaniTechGameObjectManager : MonoBehaviour
 {
-    // 생성할 몬스터의 프리팹
     [Header("프리팹")]
     [SerializeField] private GameObject Prefab_SkillProjectile;
     [SerializeField] private GameObject Prefab_Enemy;
@@ -14,7 +13,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     [Header("트랜스폼")]
     [SerializeField] private Transform Transform_EnemyRoot;
     [SerializeField] private Transform Transform_ManaBallRoot;
-    [SerializeField] private Transform Tranform_ProjectileSkillRoot;
+    [SerializeField] private Transform Transform_ProjectileSkillRoot;
 
     public static DaniTechGameObjectManager Inst { get; set; }
 
@@ -173,42 +172,41 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     //[필드 오브젝트] ====================================================================================================
 
-    public void CreateProjectileSkillObjectByPlayer()
-    {
-        var player = GetLocalPlayer();
-        if (player == null) return;
+    //public void CreateProjectileSkillObjectByPlayer()
+    //{
+    //    var player = GetLocalPlayer();
+    //    if (player == null) return;
 
-        bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
+    //    bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
 
-        var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Tranform_ProjectileSkillRoot);
-        if (skillObj == null) return;
+    //    var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Transform_ProjectileSkillRoot);
+    //    if (skillObj == null) return;
 
-        SkillProjectile skillProjectileComponent = skillObj.GetComponent<SkillProjectile>();
-        if (skillProjectileComponent == null) return;
+    //    SkillProjectile skillProjectileComponent = skillObj.GetComponent<SkillProjectile>();
+    //    if (skillProjectileComponent == null) return;
 
-        Vector3 playerDir = player.GetLookDirection();
-        var playerId = player.GetPlayerInstanceId();
+    //    Vector3 playerDir = player.GetLookDirection();
+    //    var playerId = player.GetPlayerInstanceId();
 
-        var skillCoolTime = skillProjectileComponent.SkillCoolTime();
+    //    var skillCoolTime = skillProjectileComponent.SkillCoolTime();
 
-        skillProjectileComponent.InitSkillObject(playerId, playerDir, "Player", onSkillCollision);
+    //    skillProjectileComponent.InitSkillObject(playerId, playerDir, "Player", onSkillCollision);
             
-    }
+    //}
 
     public void StartAutoProjectileSkillLoop()
     {
-        AutoSkillLoop().Forget();
+        AutoSkillLoop(Prefab_SkillProjectile, Transform_ProjectileSkillRoot).Forget();
     }
 
-    private async UniTaskVoid AutoSkillLoop()
+    private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root)
     {
-        // 💡 팁: 최초 실행 시 프리팹에서 미리 컴포넌트를 한 번만 읽어와 쿨타임을 체크합니다.
-        if (Prefab_SkillProjectile == null) return;
-        SkillProjectile sampleComponent = Prefab_SkillProjectile.GetComponent<SkillProjectile>();
+        if (Prefab_Skill == null) return;
+
+        ISkillObject sampleComponent = Prefab_Skill.GetComponent<ISkillObject>();
         if (sampleComponent == null) return;
 
-        // 프리팹에 설정된 오리지널 쿨타임 가져오기 (예: 1.5초)
-        float coolTime = sampleComponent.SkillCoolTime();
+        float coolTime = sampleComponent.GetSkillCoolTime();
 
         // [무한 루프] 게임이 동작하는 동안 무한 반복
         while (true)
@@ -220,24 +218,23 @@ public class DaniTechGameObjectManager : MonoBehaviour
                 if (player != null)
                 {
                     // 2. 주기마다 실제 발사할 투사체 오브젝트 동적 생성 (Instantiate)
-                    var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Tranform_ProjectileSkillRoot);
+                    var skillObj = Instantiate(Prefab_Skill, player.transform.position, Quaternion.identity, Transform_Root);
 
                     if (skillObj != null)
                     {
-                        SkillProjectile skillProjectileComponent = skillObj.GetComponent<SkillProjectile>();
-                        if (skillProjectileComponent != null)
+                        ISkillObject skillComponent = skillObj.GetComponent<ISkillObject>();
+                        if (skillComponent != null)
                         {
                             Vector3 playerDir = player.GetLookDirection();
                             var playerId = player.GetPlayerInstanceId();
 
                             // 3. 생성된 투사체 날려보내기 초기화
-                            skillProjectileComponent.InitSkillObject(playerId, playerDir, "Player", onSkillCollision);
+                            skillComponent.InitSkillObject(playerId, playerDir, "Player", onSkillCollision);
                         }
                     }
                 }
             }
 
-            // 4. ⭐️ 핵심: 쿨타임(초)만큼 비동기로 정확히 대기합니다! (유니티 멈춤 현상 완전 해결)
             await UniTask.Delay(System.TimeSpan.FromSeconds(coolTime));
         }
     }

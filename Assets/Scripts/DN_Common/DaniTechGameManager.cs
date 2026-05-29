@@ -29,7 +29,6 @@ public class DaniTechGameManager : MonoBehaviour
     public void StartGame()
     {
         _IsGameStart = true;
-        DaniTechUIManager.Instance.OpenChooseSkillPopup();
     }
 
     public void SaveData()

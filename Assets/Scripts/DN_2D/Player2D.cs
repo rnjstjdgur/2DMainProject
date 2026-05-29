@@ -214,11 +214,6 @@ public class Player2D : MonoBehaviour
         UseOverlapSkill(new Vector2(skillRange, 0.0f), skillRadius);
     }
 
-    public void UseProjectileSkill()
-    {
-        DaniTechGameObjectManager.Inst.CreateProjectileSkillObjectByPlayer();
-    }
-
     // 기믹 관련 ====================================================================
 
     IEnumerator CoStartNormalAttack()

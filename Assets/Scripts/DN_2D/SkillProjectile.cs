@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SkillProjectile : DaniTech_SkillBase
+public class SkillProjectile : DaniTech_SkillBase, ISkillObject
 {
     [Header("Sprite Renderer")]
     [SerializeField] private SpriteRenderer spriteRenderer_Effect;
@@ -27,6 +27,18 @@ public class SkillProjectile : DaniTech_SkillBase
 
 
     private event Action<int, int> _onSkillCollision;
+
+
+    // 인터페이스 멤버 ============================================
+    public float GetSkillCoolTime()
+    {
+        return _skillCoolTime; // 기존에 쓰시던 SkillCoolTime() 메서드 역할을 대신합니다.
+    }
+
+    // 인터페이스 규칙 구현 2 (기존 InitSkillObject 구조 그대로 유지 가능)
+    public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<GameObject, Collider2D> collisionCallback)
+    {
+    }
 
     private void OnDisable()
     {

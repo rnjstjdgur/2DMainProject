@@ -10,8 +10,8 @@ public class ChooseSkillUI : DaniTechUIBase
 
     private int _generatedKey = 0;
     private Dictionary<int, ChooseSkillSlotUI> _skillSlotList = new Dictionary<int, ChooseSkillSlotUI>();
-
-
+    private Dictionary<int, string> _skillDataIdList = new Dictionary<int, string>();
+    private Dictionary<string, int> _selectedSkillList = new Dictionary<string, int>();
     private void OnEnable()
     {
         TimeManager.instance.TimeStop();
@@ -77,6 +77,7 @@ public class ChooseSkillUI : DaniTechUIBase
 
         // 1-4 중복체크 해주면 좋긴 하지만, 일단 쉽게 컴포넌트(컴포넌트로 게임오브젝트는 받을 수 있으므로)를 보관해보자
         _skillSlotList.Add(slotComponent.SlotInstanceId, slotComponent);
+        _skillDataIdList.Add(slotComponent.SlotInstanceId, skillDataId);
 
         slotComponent.BindSlotSelectEvent(OnChildSlotSelected);
     }
@@ -84,7 +85,26 @@ public class ChooseSkillUI : DaniTechUIBase
 
     private void OnChildSlotSelected(int selectedSlotInstanceId)
     {
-        Debug.LogWarning($"자식 슬롯 {selectedSlotInstanceId} 선택됨!");
+        if (_skillDataIdList.TryGetValue(selectedSlotInstanceId, out var selectedSkillDataId))
+        {
+            string skillDataId = selectedSkillDataId;
+
+            var skillData = DaniTechGameDataManager.Instance.GetSkill(skillDataId);
+            if (skillData == null)
+            {
+                Debug.LogWarning($"{skillDataId}의 스킬 데이터가 없습니다.");
+            }
+
+            if (_selectedSkillList.ContainsKey(skillDataId))
+            {
+                _selectedSkillList[skillDataId]++;
+                skillData.SkillLevel = _selectedSkillList[skillDataId];
+            }
+            else
+            {
+                _selectedSkillList.Add(skillDataId, 1);
+            }
+        }
         OnClick_ClosePopup();
     }
 }

@@ -211,11 +211,6 @@ public class Player2D : MonoBehaviour
         StartCoroutine(CoStartNormalAttack());
     }
 
-    public void UseCircleSkill(float skillRange, float skillRadius)
-    {
-        UseOverlapSkill(new Vector2(skillRange, 0.0f), skillRadius);
-    }
-
     // 기믹 관련 ====================================================================
 
     IEnumerator CoStartNormalAttack()
@@ -251,29 +246,6 @@ public class Player2D : MonoBehaviour
         return new Vector3(_lookDirection.x, _lookDirection.y, 0f);
     }
 
-    public void UseOverlapSkill(Vector2 offsetPosition, float radius)
-    {
-        _lastOverlapOffset = offsetPosition;
-        _lastOverlapRadius = radius;
-
-        Vector2 lookDir = GetAdjusedDirection(_lookDirection);
-
-        Vector2 rightOffset = lookDir * offsetPosition.x;
-        Vector2 upOffset = new Vector2(-lookDir.y, lookDir.x) * offsetPosition.y;
-
-        Vector2 center = (Vector2)transform.position + rightOffset + upOffset;
-
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius);
-
-        foreach (Collider2D col in hitColliders)
-        {
-            if (col != null && col.gameObject != this.gameObject)
-            {
-                Debug.Log($"오버랩 스킬 적중: {col.name}");
-            }
-        }
-    }
-
     // 전투 관련 =================================================
 
     public int Damage()
@@ -289,7 +261,7 @@ public class Player2D : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _playerHp -= damage;
-        Debug.LogError($"플레이어가 {damage} 데미지를 입었습니다. 현재체력: {_playerHp}");
+        Debug.Log($"플레이어가 {damage} 데미지를 입었습니다. 현재체력: {_playerHp}");
         InvokeStatChangedEvent();
 
         if (_playerHp < 0)

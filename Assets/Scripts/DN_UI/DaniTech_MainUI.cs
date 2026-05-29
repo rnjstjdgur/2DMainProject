@@ -24,18 +24,11 @@ public class DaniTech_MainUI : DaniTechUIBase
 
         // 스킬
         Btn_NormalAttack.BindOnClickButtonEvent(OnClick_UseNormalSkill);
-        Btn_CircleSkill.BindOnClickButtonEvent(OnClick_UseCircleSkill);
     }
 
     public void OnClick_UseNormalSkill()
     {
         DaniTechGameObjectManager.Inst.GetLocalPlayer().UseNormalAttack();
-    }
-
-    public void OnClick_UseCircleSkill()
-    {
-        // [ToDo] 나중에 사거리, 범위를 데이터에서 받아오자
-        DaniTechGameObjectManager.Inst.GetLocalPlayer().UseCircleSkill(3.0f, 3f);
     }
 
     public void OnClick_OpenInventory()

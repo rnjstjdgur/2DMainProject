@@ -72,8 +72,6 @@ public class ChooseSkillSlotUI : MonoBehaviour
         // 부모한테 알려주자
         OnSelectEvent?.Invoke(SlotInstanceId);
 
-
-        Debug.Log($"{SlotInstanceId}눌러졌다");
         // 나중에 툴팁, 팝업 다 여기서 띄워주면 된다
     }
 

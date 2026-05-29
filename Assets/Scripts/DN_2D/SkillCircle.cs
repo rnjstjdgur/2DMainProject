@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class SkillCircle : MonoBehaviour, ISkillObject
 {
@@ -23,12 +25,13 @@ public class SkillCircle : MonoBehaviour, ISkillObject
 
     private Dictionary<GameObject, float> _targetHitHistory = new Dictionary<GameObject, float>();
 
+    private AsyncOperationHandle<RuntimeAnimatorController> _animatorLoadHandle;
+
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
-        _boxCollider = GetComponent<BoxCollider2D>();
+        _animator = GetComponentInChildren<Animator>();
+        _boxCollider = GetComponentInChildren<BoxCollider2D>();
 
-        // 물리 연산을 트리거 형태로 사용하기 위해 설정 강제
         _boxCollider.isTrigger = true;
     }
 
@@ -58,20 +61,10 @@ public class SkillCircle : MonoBehaviour, ISkillObject
             _skillDamageInterval = skillData.SkillDamageInterval;
 
             // [데이터 드리븐] 애니메이터 경로를 받아와서 동적 로드 및 변경
-            // 예시: skillData.AnimatorPath 변수명이 다를 경우 해당 변수명으로 변경해주세요.
             string animPath = skillData.AnimControllerPath;
             if (!string.IsNullOrEmpty(animPath))
             {
-                RuntimeAnimatorController newController = Resources.Load<RuntimeAnimatorController>(animPath);
-                if (newController != null)
-                {
-                    _animator.runtimeAnimatorController = newController;
-                    Debug.Log($"[SkillCircle] 애니메이터 변경 완료: {animPath}");
-                }
-                else
-                {
-                    Debug.LogError($"[SkillCircle] Resources 폴더에서 애니메이터를 찾을 수 없습니다: {animPath}");
-                }
+                LoadAnimatorAddressable(animPath);
             }
 
             Debug.Log($"[SkillCircle] '{_skillDataId}' 데이터 연동 완료!");
@@ -86,6 +79,26 @@ public class SkillCircle : MonoBehaviour, ISkillObject
 
         // 스킬 지속시간 및 방향 동기화를 제어하는 코루틴 시작
         StartCoroutine(CoSkillLifecycleRoutine());
+    }
+
+    private void LoadAnimatorAddressable(string address)
+    {
+        // 비동기로 RuntimeAnimatorController 로드 시작
+        _animatorLoadHandle = Addressables.LoadAssetAsync<RuntimeAnimatorController>(address);
+
+        // 로드가 완료되었을 때 실행할 콜백 등록
+        _animatorLoadHandle.Completed += (handle) =>
+        {
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                _animator.runtimeAnimatorController = handle.Result;
+                Debug.Log($"[SkillCircle] Addressables 애니메이터 로드 및 교체 완료: {address}");
+            }
+            else
+            {
+                Debug.LogError($"[SkillCircle] Addressables 에셋 로드 실패. 주소를 확인하세요: {address}");
+            }
+        };
     }
 
     // ==============================================================
@@ -121,7 +134,6 @@ public class SkillCircle : MonoBehaviour, ISkillObject
         Destroy(this.gameObject);
     }
 
-    // ★ 핵심: 콜라이더 범위 안에 적이 들어와 있는 동안 매 프레임/물리 주기마다 체크
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) return; // 플레이어 제외
@@ -143,5 +155,12 @@ public class SkillCircle : MonoBehaviour, ISkillObject
 
         // 타격 시간 갱신
         _targetHitHistory[targetObj] = Time.time;
+    }
+    private void OnDestroy()
+    {
+        if (_animatorLoadHandle.IsValid())
+        {
+            Addressables.Release(_animatorLoadHandle);
+        }
     }
 }

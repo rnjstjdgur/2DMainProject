@@ -139,7 +139,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
         var monsterData = DaniTechGameDataManager.Instance.GetDNMonsterData(monsterDataId);
         if (monsterData == null)
         {
-            Debug.LogWarning($"[스폰 실패] 데이터 매니저에 '{monsterDataId}'에 대한 기획 데이터가 존재하지 않습니다!");
+            Debug.LogError($"[스폰 실패] 데이터 매니저에 '{monsterDataId}'에 대한 기획 데이터가 존재하지 않습니다!");
             return;
         }
 
@@ -176,28 +176,6 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     //[필드 오브젝트] ====================================================================================================
 
-    //public void CreateProjectileSkillObjectByPlayer()
-    //{
-    //    var player = GetLocalPlayer();
-    //    if (player == null) return;
-
-    //    bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
-
-    //    var skillObj = Instantiate(Prefab_SkillProjectile, player.transform.position, Quaternion.identity, Transform_ProjectileSkillRoot);
-    //    if (skillObj == null) return;
-
-    //    SkillProjectile skillProjectileComponent = skillObj.GetComponent<SkillProjectile>();
-    //    if (skillProjectileComponent == null) return;
-
-    //    Vector3 playerDir = player.GetLookDirection();
-    //    var playerId = player.GetPlayerInstanceId();
-
-    //    var skillCoolTime = skillProjectileComponent.SkillCoolTime();
-
-    //    skillProjectileComponent.InitSkillObject(playerId, playerDir, "Player", onSkillCollision);
-            
-    //}
-
     public void StartAutoProjectileSkillLoop()
     {
         AutoSkillLoop(Prefab_SkillProjectile, Transform_SkillObjectRoot).Forget();
@@ -207,29 +185,6 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         AutoSkillLoop(Prefab_SkillCircle, Transform_SkillObjectRoot).Forget();
     }
-
-    //public void UseOverlapSkill(Vector2 offsetPosition, float radius)
-    //{
-    //    _lastOverlapOffset = offsetPosition;
-    //    _lastOverlapRadius = radius;
-
-    //    Vector2 lookDir = _localPlayer.GetAdjusedDirection(_localPlayer.GetPlayerLookDirection());
-
-    //    Vector2 rightOffset = lookDir * offsetPosition.x;
-    //    Vector2 upOffset = new Vector2(-lookDir.y, lookDir.x) * offsetPosition.y;
-
-    //    Vector2 center = (Vector2)transform.position + rightOffset + upOffset;
-
-    //    Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius);
-
-    //    foreach (Collider2D col in hitColliders)
-    //    {
-    //        if (col != null && col.gameObject != this.gameObject)
-    //        {
-    //            Debug.Log($"오버랩 스킬 적중: {col.name}");
-    //        }
-    //    }
-    //}
 
     private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root)
     {

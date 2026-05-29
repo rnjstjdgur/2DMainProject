@@ -79,30 +79,9 @@ public class DaniTechGameManager : MonoBehaviour
         _playerModel.ItemList.Add(newItem);
     }
 
-    public void AddSkill(string skillDataId, int addSkillLevel)
-    {
-        // 저장할때 고유값 ID를 부여하기 위해 사용
-        long uniqueId = DaniTechGameUtil.GenerateUniqueId();
-
-        // TODO : 우선 쉽게 사용할 수 있도록 중복 처리는 빼두었다. 습득할때마다 아이템이 하나씩 추가되도록 해두고
-        // 추후에 중복값은 StackCount가 다 찰때까지 누적해줄 수 있도록 로직을 추가하자
-        var newSkill = new SkillModel();
-        newSkill.SkillUniqueId = uniqueId;
-        newSkill.SkillDataId = skillDataId;
-        newSkill.SkillLevel = addSkillLevel;
-
-    _playerModel.SkillList.Add(newSkill);
-    }
-
     public List<DaniTechItemModel> GetPlayerItemList()
     {
         // _playerModel이 Private이므로 외부에서 ItemList를 받아올 수 있게 Get함수를 사용한다
         return _playerModel.ItemList;
-    }
-
-    public List<SkillModel> GetPlayerSkillList()
-    {
-        // _playerModel이 Private이므로 외부에서 skillList 받아올 수 있게 Get함수를 사용한다
-        return _playerModel.SkillList;
     }
 }

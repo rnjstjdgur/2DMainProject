@@ -15,8 +15,8 @@ public class Monster2D : DaniTech_MonsterBase
 
     [Header("전투에서 필요한 데이터")]
     private DNMonsterData _thisMonsterData;
-    [SerializeField] private int _baseHp;
-    [SerializeField] private int _maxHp;
+    [SerializeField] private float _baseHp;
+    [SerializeField] private float _maxHp;
     [SerializeField] private int _baseAtk;
     [SerializeField] private bool _isAlive = true;
     [SerializeField] private float _damageInterval = 1.0f; // 데미지를 줄 주기
@@ -30,7 +30,7 @@ public class Monster2D : DaniTech_MonsterBase
 
     private Transform _playerTransform;
 
-    private event Action<int, int> _onHpChanged;
+    private event Action<float, float> _onHpChanged;
 
     private void Start()
     {
@@ -117,7 +117,7 @@ public class Monster2D : DaniTech_MonsterBase
     //{
     //    return (int)(baseAtk * skillMultiple);
     //}
-    public void BindOnStatChangedEvent(Action<int, int> hpChangeCallback)
+    public void BindOnStatChangedEvent(Action<float, float> hpChangeCallback)
     {
         _onHpChanged += hpChangeCallback;
     }
@@ -158,7 +158,7 @@ public class Monster2D : DaniTech_MonsterBase
         }
     }
 
-    public void TakeDamage(int playerDamage)
+    public void TakeDamage(float playerDamage)
     {
         _baseHp -= playerDamage;
         Debug.LogWarning($"몬스터 {_instanceId}가 플레이어의 공격을 받아 체력이 {_baseHp} / {_maxHp}가 되었습니다.");

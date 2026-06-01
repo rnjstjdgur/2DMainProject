@@ -35,6 +35,8 @@ public class DNSkillData : GameDataBase
     public string AnimControllerPath;
     public float SkillDuration;
     public float SkillDamageInterval;
+    public float DamagePerLevel;
+    public float CoolDownPerLevel;
 }
 
 [System.Serializable]

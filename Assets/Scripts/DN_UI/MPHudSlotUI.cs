@@ -5,6 +5,8 @@ public class MPHudSlotUI : MonoBehaviour
 {
     [SerializeField] private Slider Slider_Mp;
 
+    private Player2D _localPlayer;
+
     public void InitSlot(GameObject playerObj)
     {
         var player = playerObj.GetComponent<Player2D>();
@@ -31,7 +33,13 @@ public class MPHudSlotUI : MonoBehaviour
         if (Slider_Mp == null) return;
         if (maxMp <= 0) return;
 
+        _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
         float ratio = (curMp / (float)maxMp);
+
+        if (_localPlayer.GetPlayerLevel() == 15)
+        {
+            ratio = 1;
+        }
         Slider_Mp.value = ratio;
     }
 }

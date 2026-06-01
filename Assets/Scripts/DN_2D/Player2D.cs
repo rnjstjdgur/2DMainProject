@@ -14,8 +14,8 @@ public class Player2D : MonoBehaviour
     [SerializeField] private Collider2D Collider_PlayerNormalAttack;
 
     [Header("전투관련 정보")]     // 초기값 나중에 데이터로 받아오거나 에디터에서 수정하자
-    [SerializeField] private int _maxHp;
-    [SerializeField] private int _playerHp = 1000;
+    [SerializeField] private float _maxHp;
+    [SerializeField] private float _playerHp = 1000;
     [SerializeField] private int _playerMp = 0;
     [SerializeField] private int _playerLevel = 1;
     [SerializeField] private int _maxMp;
@@ -36,9 +36,9 @@ public class Player2D : MonoBehaviour
 
     private List<DNSkillData> _skillDataList = new List<DNSkillData>();
 
-    private readonly int[] _expTable = { 0, 100, 200, 400, 800, 1600, 2400, 3200, 4000, 5000, 6000, 7000, 8000, 9000, 10000 };
+    private readonly int[] _expTable = { 0, 100, 200, 400, 800, 1000, 1200, 1500, 2000, 2200, 2500, 3000, 4000, 5000, 7000, 10000 };
 
-    private event Action<int, int> _onHpChanged;
+    private event Action<float, float> _onHpChanged;
     private event Action<int, int> _onMpChanged;
 
     private void Awake()
@@ -133,8 +133,8 @@ public class Player2D : MonoBehaviour
                 _playerLevel++;                       // 레벨 상승
                 _isPlayerLevelUp = true;
 
-                Debug.LogWarning($"★ LEVEL UP! ★ 현재 레벨: {_playerLevel}");
                 if (_playerLevel == 1) return;
+                Debug.LogWarning($"★ LEVEL UP! ★ 현재 레벨: {_playerLevel}");
                 DaniTechUIManager.Instance.OpenChooseSkillPopup();
             }
             else
@@ -257,7 +257,7 @@ public class Player2D : MonoBehaviour
         return _instanceId;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         _playerHp -= damage;
         Debug.Log($"플레이어가 {damage} 데미지를 입었습니다. 현재체력: {_playerHp}");
@@ -274,7 +274,7 @@ public class Player2D : MonoBehaviour
     {
         _isPlayerAlive = false;
     }
-    public void BindOnStatChangedEvent(Action<int, int> hpChangeCallback, Action<int, int> mpChangeCallback)
+    public void BindOnStatChangedEvent(Action<float, float> hpChangeCallback, Action<int, int> mpChangeCallback)
     {
         _onHpChanged += hpChangeCallback;
         _onMpChanged += mpChangeCallback;

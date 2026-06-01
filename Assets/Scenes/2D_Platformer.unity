@@ -477,6 +477,126 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[0].endLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[1].endLevel
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[2].endLevel
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[3].endLevel
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[4].endLevel
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[5].endLevel
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[1].startLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[2].startLevel
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[3].startLevel
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[4].startLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[5].startLevel
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[1].manaBallDataId
+      value: dropItem_manaballblue_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[2].manaBallDataId
+      value: dropItem_manaballorange_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[3].manaBallDataId
+      value: dropItem_manaballorange_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[4].manaBallDataId
+      value: dropItem_manaballpink_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[5].manaBallDataId
+      value: dropItem_manaballpink_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[2].manaSpawnInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[2].manaSpawnWaveName
+      value: "3\uB819\uB9C8\uB098\uC2A4\uD3F0"
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[3].manaSpawnInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[3].manaSpawnWaveName
+      value: "4\uB819\uB9C8\uB098\uC2A4\uD3F0"
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[4].manaSpawnInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[4].manaSpawnWaveName
+      value: "5\uB819\uB9C8\uB098\uC2A4\uD3F0"
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[5].manaSpawnInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[5].manaSpawnWaveName
+      value: "\uB9CC\uB819\uB9C8\uB098\uC2A4\uD3F0"
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[1].manaSpawnCountPerTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[2].manaSpawnCountPerTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[3].manaSpawnCountPerTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[4].manaSpawnCountPerTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[5].manaSpawnCountPerTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1861007714871500051, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
       propertyPath: m_LocalPosition.x
       value: 999.36273

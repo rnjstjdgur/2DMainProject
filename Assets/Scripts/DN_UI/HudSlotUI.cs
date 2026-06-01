@@ -39,7 +39,7 @@ public class HudSlotUI : MonoBehaviour
             return;
         }
     }
-    private void OnTargetEntityHpChanged(int curHp, int maxHp)
+    private void OnTargetEntityHpChanged(float curHp, float maxHp)
     {
         Slider_Hp.value = (curHp / (float)maxHp);
     }

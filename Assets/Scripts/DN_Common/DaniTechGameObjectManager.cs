@@ -235,12 +235,15 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         if (info.TargetCollider == null) return;
 
-        int calculatedDamage = 0;
+        float calculatedDamage = 0;
         var skillTableData = DaniTechGameDataManager.Instance.GetSkill(info.SkillDataId);
 
         if (skillTableData != null)
         {
-            calculatedDamage = skillTableData.SkillDamage;
+            int currentLevel = GetSkillLevel(info.SkillDataId);
+            if (currentLevel < 1) currentLevel = 1;
+
+            calculatedDamage = skillTableData.SkillDamage + (skillTableData.DamagePerLevel * (currentLevel - 1));
         }
         else
         {

@@ -64,10 +64,10 @@ MonoBehaviour:
     endLevel: 2
     manaSpawnInterval: 1
     manaSpawnCountPerTime: 2
-  - manaBallDataId: dropItem_manaballblue_1
+  - manaBallDataId: dropItem_manaballpink_1
     manaSpawnWaveName: "2\uB819\uB9C8\uB098\uC2A4\uD3F0"
-    startLevel: 2
-    endLevel: 3
+    startLevel: 0
+    endLevel: 10
     manaSpawnInterval: 1
     manaSpawnCountPerTime: 3
   _spawnRadius: 12

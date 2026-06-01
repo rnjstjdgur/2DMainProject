@@ -40,10 +40,7 @@ public class SkillCircle : MonoBehaviour, ISkillObject
     {
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         if (skillData == null) return 1.0f;
-
-        int currentLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(_skillDataId);
-        if (currentLevel < 1) currentLevel = 1;
-        _skillCoolTime = Mathf.Max(0.5f/*최소값*/, skillData.SkillCoolTime - ((currentLevel - 1) * 0.2f)/*레벨당 0.2초씩 쿨타임 감소*/);
+        _skillCoolTime = skillData.SkillCoolTime;
         return _skillCoolTime;
     }
 
@@ -60,10 +57,7 @@ public class SkillCircle : MonoBehaviour, ISkillObject
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         if (skillData != null)
         {
-            int currentLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(_skillDataId);
-            if (currentLevel < 1) currentLevel = 1;
-
-            _skillDuration = skillData.SkillDuration + ((currentLevel - 1) * 0.3f/*레벨당 0.3초씩 지속시간 증가*/);
+            _skillDuration = skillData.SkillDuration;
             _skillDamageInterval = skillData.SkillDamageInterval;
 
             // [데이터 드리븐] 애니메이터 경로를 받아와서 동적 로드 및 변경

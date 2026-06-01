@@ -38,9 +38,7 @@ public class SkillCircle : MonoBehaviour, ISkillObject
     // 인터페이스 멤버 ============================================
     public float GetSkillCoolTime()
     {
-        DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
-        if (skillData == null) return 1.0f;
-        return skillData.SkillCoolTime;
+        return _skillCoolTime;
     }
 
     public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<SkillCollisionInfo> collisionCallback)

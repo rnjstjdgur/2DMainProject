@@ -11,7 +11,7 @@ public class ChooseSkillUI : DaniTechUIBase
     private int _generatedKey = 0;
     private Dictionary<int, ChooseSkillSlotUI> _skillSlotList = new Dictionary<int, ChooseSkillSlotUI>();
     private Dictionary<int, string> _skillDataIdList = new Dictionary<int, string>();
-    private Dictionary<string, int> _selectedSkillList = new Dictionary<string, int>();
+
     private void OnEnable()
     {
         TimeManager.instance.TimeStop();
@@ -29,6 +29,7 @@ public class ChooseSkillUI : DaniTechUIBase
                 Destroy(child.gameObject);
             }
             _skillSlotList.Clear();
+            _skillDataIdList.Clear();
         }
 
         var myHero = DaniTechGameDataManager.Instance.GetCharacterData("character_basic_01");
@@ -87,23 +88,7 @@ public class ChooseSkillUI : DaniTechUIBase
     {
         if (_skillDataIdList.TryGetValue(selectedSlotInstanceId, out var selectedSkillDataId))
         {
-            string skillDataId = selectedSkillDataId;
-
-            var skillData = DaniTechGameDataManager.Instance.GetSkill(skillDataId);
-            if (skillData == null)
-            {
-                Debug.LogWarning($"{skillDataId}의 스킬 데이터가 없습니다.");
-            }
-
-            if (_selectedSkillList.ContainsKey(skillDataId))
-            {
-                _selectedSkillList[skillDataId]++;
-                skillData.SkillLevel = _selectedSkillList[skillDataId];
-            }
-            else
-            {
-                _selectedSkillList.Add(skillDataId, 1);
-            }
+            DaniTechGameObjectManager.Inst.UpgradeSkillLevel(selectedSkillDataId);
         }
         OnClick_ClosePopup();
     }

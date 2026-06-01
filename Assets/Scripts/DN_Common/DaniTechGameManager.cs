@@ -21,6 +21,8 @@ public class DaniTechGameManager : MonoBehaviour
         LoadSaveData();
     }
 
+    // 게임 흐름 관련 =======================================================
+
     public bool IsGameStart()
     {
         return _IsGameStart;
@@ -31,11 +33,6 @@ public class DaniTechGameManager : MonoBehaviour
         _IsGameStart = true;
     }
 
-    public void SaveData()
-    {
-        DaniTechNetworkManager.Inst.RequstSaveData(_playerModel);
-    }
-
     public void SaveAndEndGame()
     {
         _IsGameStart = false;
@@ -43,10 +40,20 @@ public class DaniTechGameManager : MonoBehaviour
         Application.Quit();
     }
 
+    // 데이터 관련 ==========================================================
+
+    public void SaveData()
+    {
+        DaniTechNetworkManager.Inst.RequstSaveData(_playerModel);
+    }
+    
+
     private void LoadSaveData()
     {
         _playerModel = DaniTechNetworkManager.Inst.RequstLoadSaveData();
     }
+
+    // 플레이어 관련 ===========================================================
 
     public void IncreasePlayerExp(int exp)
     {
@@ -63,6 +70,8 @@ public class DaniTechGameManager : MonoBehaviour
         var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
         return player.transform;
     }
+
+    // 아이템 관련 =================================================================
 
     public void AddItem(string itemDataId, int addItemCount)
     {
@@ -83,5 +92,30 @@ public class DaniTechGameManager : MonoBehaviour
     {
         // _playerModel이 Private이므로 외부에서 ItemList를 받아올 수 있게 Get함수를 사용한다
         return _playerModel.ItemList;
+    }
+
+    // 스킬 관련 ======================================================
+
+    public Transform GetClosestEnemy(Vector3 thisPosition, float scanRadius, LayerMask enemyLayer, float skillDistance)
+    {
+        // 1. 플레이어 주변의 일정 반경 내에 있는 모든 몬스터의 Collider를 가져옵니다.
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(thisPosition, scanRadius, enemyLayer);
+
+        Transform closestEnemy = null;
+        float minDistance = skillDistance;
+
+        // 2. 찾은 몬스터들을 하나씩 순회하며 거리를 비교합니다.
+        foreach (Collider2D enemy in enemies)
+        {
+            float distance = Vector3.Distance(thisPosition, enemy.transform.position);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestEnemy = enemy.transform;
+            }
+        }
+
+        return closestEnemy;
     }
 }

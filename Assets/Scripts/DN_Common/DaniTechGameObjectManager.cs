@@ -28,9 +28,12 @@ public class DaniTechGameObjectManager : MonoBehaviour
     private Dictionary<int, GameObject> _createdGameObjectContainer = new Dictionary<int, GameObject>();
     private Dictionary<int, DaniTech_2DFieldObject> _fieldObjectContainer = new Dictionary<int, DaniTech_2DFieldObject>();
     private Dictionary<int, Monster2D> _monsterObjectContainer = new Dictionary<int, Monster2D>();
+    private Dictionary<string, int> _skillList = new Dictionary<string, int>();
 
     private Player2D _localPlayer;
     private Monster2D _monster;
+
+    private DNSkillData _circleSkillData;
 
     private void Awake()
     {
@@ -173,20 +176,19 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
 
 
-
-    //[필드 오브젝트] ====================================================================================================
+    // 스킬 관련 =============================================================
 
     public void StartAutoProjectileSkillLoop()
     {
-        AutoSkillLoop(Prefab_SkillProjectile, Transform_SkillObjectRoot).Forget();
+        AutoSkillLoop(Prefab_SkillProjectile, Transform_SkillObjectRoot, "skill_magicArrow_01").Forget();
     }
 
     public void StartAutoCircleSkillLoop()
     {
-        AutoSkillLoop(Prefab_SkillCircle, Transform_SkillObjectRoot).Forget();
+        AutoSkillLoop(Prefab_SkillCircle, Transform_SkillObjectRoot, "skill_fire_01").Forget();
     }
 
-    private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root)
+    private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root, string skillDataId)
     {
         if (Prefab_Skill == null) return;
 
@@ -204,19 +206,22 @@ public class DaniTechGameObjectManager : MonoBehaviour
                 var player = GetLocalPlayer();
                 if (player != null)
                 {
-                    // 2. 주기마다 실제 발사할 투사체 오브젝트 동적 생성 (Instantiate)
-                    var skillObj = Instantiate(Prefab_Skill, player.transform.position, Quaternion.identity, Transform_Root);
-
-                    if (skillObj != null)
+                    if (GetSkillLevel(skillDataId) >= 1)
                     {
-                        ISkillObject skillComponent = skillObj.GetComponent<ISkillObject>();
-                        if (skillComponent != null)
-                        {
-                            Vector3 playerDir = player.GetLookDirection();
-                            var playerId = player.GetPlayerInstanceId();
+                        // 2. 주기마다 실제 발사할 투사체 오브젝트 동적 생성 (Instantiate)
+                        var skillObj = Instantiate(Prefab_Skill, player.transform.position, Quaternion.identity, Transform_Root);
 
-                            // 3. 생성된 투사체 날려보내기 초기화
-                            skillComponent.InitSkillObject(playerId, playerDir, "Player", onSkillCollision);
+                        if (skillObj != null)
+                        {
+                            ISkillObject skillComponent = skillObj.GetComponent<ISkillObject>();
+                            if (skillComponent != null)
+                            {
+                                Vector3 playerDir = player.GetLookDirection();
+                                var playerId = player.GetPlayerInstanceId();
+
+                                // 3. 생성된 투사체 날려보내기 초기화
+                                skillComponent.InitSkillObject(playerId, playerDir, "Player", onSkillCollision);
+                            }
                         }
                     }
                 }
@@ -256,6 +261,50 @@ public class DaniTechGameObjectManager : MonoBehaviour
             Debug.Log($"[매니저] 몬스터 {monster.name}에게 스킬 {info.SkillDataId}로 대미지 {calculatedDamage} 전달!");
         }
     }
+
+    public void UpgradeSkillLevel(string skillDataId)
+    {
+        var skillData = DaniTechGameDataManager.Instance.GetSkill(skillDataId);
+        if (skillData == null)
+        {
+            Debug.LogWarning($"{skillDataId}의 스킬 데이터가 데이터 매니저에 없습니다.");
+            return;
+        }
+
+        if (_skillList.ContainsKey(skillDataId))
+        {
+            _skillList[skillDataId]++;
+            Debug.LogWarning($"스킬 {skillData.Name}의 레벨이 {_skillList[skillDataId]}로 올랐습니다");
+        }
+        else
+        {
+            _skillList.Add(skillDataId, 1);
+            Debug.LogWarning($"새로운 스킬 {skillData.Name}을 배웠습니다. 스킬레벨: {_skillList[skillDataId]}");
+        }
+
+        // 원본 데이터 혹은 세션 데이터의 레벨 갱신
+        skillData.SkillLevel = _skillList[skillDataId];
+    }
+
+    // 3. 기존의 GetSkillLevel 함수도 매니저의 딕셔너리를 기반으로 작동하도록 안전하게 변경
+    public int GetSkillLevel(string skillDataId)
+    {
+        if (_skillList.TryGetValue(skillDataId, out int level))
+        {
+            return level;
+        }
+
+        // 딕셔너리에 없다면(레벨업 전) 데이터에서 레벨을 확인 (기초마법을 사용하기 위함)
+        var skillData = DaniTechGameDataManager.Instance.GetSkill(skillDataId);
+        if (skillData != null)
+        {
+            return skillData.SkillLevel;
+        }
+        return 0; // 아직 배우지 않은 스킬은 레벨 0 반환
+    }
+
+
+    //[필드 오브젝트] ====================================================================================================
 
     public async UniTaskVoid CreateFieldObject(string fieldObjectDataId, Transform spawnSpot)
     {

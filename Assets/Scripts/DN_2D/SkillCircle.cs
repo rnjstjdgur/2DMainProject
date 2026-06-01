@@ -38,6 +38,9 @@ public class SkillCircle : MonoBehaviour, ISkillObject
     // 인터페이스 멤버 ============================================
     public float GetSkillCoolTime()
     {
+        DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
+        if (skillData == null) return 1.0f;
+        _skillCoolTime = skillData.SkillCoolTime;
         return _skillCoolTime;
     }
 
@@ -54,7 +57,6 @@ public class SkillCircle : MonoBehaviour, ISkillObject
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         if (skillData != null)
         {
-            _skillCoolTime = skillData.SkillCoolTime;
             _skillDuration = skillData.SkillDuration;
             _skillDamageInterval = skillData.SkillDamageInterval;
 
@@ -69,7 +71,6 @@ public class SkillCircle : MonoBehaviour, ISkillObject
         }
         else
         {
-            _skillCoolTime = 3.0f;
             _skillDuration = 1.5f;
             _skillDamageInterval = 0.3f;
             Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못해 기본값으로 작동합니다.");
@@ -112,7 +113,7 @@ public class SkillCircle : MonoBehaviour, ISkillObject
             if (_localPlayer != null)
             {
                 // 플레이어 위치 실시간 추적
-                transform.position = _localPlayer.transform.position;
+                this.transform.position = _localPlayer.transform.position;
                 _skillDirection = _localPlayer.GetLookDirection();
 
                 // 플레이어가 바라보는 방향에 맞춰 스킬 오브젝트(콜라이더+이펙트) 전체를 회전시킴

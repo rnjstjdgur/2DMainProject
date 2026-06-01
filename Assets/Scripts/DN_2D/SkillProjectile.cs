@@ -59,7 +59,7 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
         }
 
         // 2. 타겟팅 유도 시스템 가동 (주변에 가장 가까운 적 찾기)
-        Transform targetEnemy = GetClosestEnemy();
+        Transform targetEnemy = DaniTechGameManager.Inst.GetClosestEnemy(this.transform.position, _scanRadius, _enemyLayer, _skillDistance);
 
         if (targetEnemy != null)
         {
@@ -80,9 +80,8 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
 
         // 4. 날아갈 방향에 맞게 투사체 회전 세팅
         float angle = Mathf.Atan2(_moveDirection.y, _moveDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        this.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        // 5. 🌟 [치명적 버그 수정] 시간을 카운트하여 스스로 삭제되는 코루틴을 반드시 켜줍니다!
         StartCoroutine(DestroySkillAfterDelay());
     }
 
@@ -95,7 +94,7 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
 
     void Update()
     {
-        transform.position += _moveDirection * _skillMoveSpeed * Time.deltaTime;   // 이동방향으로 나가는 스킬
+        this.transform.position += _moveDirection * _skillMoveSpeed * Time.deltaTime;   // 이동방향으로 나가는 스킬
     }
 
     IEnumerator DestroySkillAfterDelay()
@@ -135,37 +134,17 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
     }
 
 
-    // 스킬 이동 관련 ============================================
-    private Transform GetClosestEnemy()
-    {
-        // 1. 플레이어 주변의 일정 반경 내에 있는 모든 몬스터의 Collider를 가져옵니다.
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, _scanRadius, _enemyLayer);
-
-        Transform closestEnemy = null;
-        float minDistance = _skillDistance;
-
-        // 2. 찾은 몬스터들을 하나씩 순회하며 거리를 비교합니다.
-        foreach (Collider2D enemy in enemies)
-        {
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
-
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                closestEnemy = enemy.transform;
-            }
-        }
-
-        return closestEnemy;
-    }
 
 
 
 
 
+
+    // 기즈모 ============================================
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _scanRadius);
+        Gizmos.DrawWireSphere(this.transform.position, _scanRadius);
     }
 }

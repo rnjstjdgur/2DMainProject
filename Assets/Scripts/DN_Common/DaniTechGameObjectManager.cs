@@ -8,6 +8,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     [Header("프리팹")]
     [SerializeField] private GameObject Prefab_SkillProjectile;
     [SerializeField] private GameObject Prefab_SkillCircle;
+    [SerializeField] private GameObject Prefab_SkillLightning;
     [SerializeField] private GameObject Prefab_Enemy;
     [SerializeField] private GameObject Prefab_Player;
 
@@ -229,6 +230,11 @@ public class DaniTechGameObjectManager : MonoBehaviour
         AutoSkillLoop(Prefab_SkillCircle, Transform_SkillObjectRoot, "skill_fire_01", _skillLoopCts.Token).Forget();
     }
 
+    public void StartAutoLightningSkillLoop()
+    {
+        AutoSkillLoop(Prefab_SkillLightning, Transform_SkillObjectRoot, "skill_lightning_01", _skillLoopCts.Token).Forget();
+    }
+
     private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root, string skillDataId, System.Threading.CancellationToken cancellationToken)
     {
         if (Prefab_Skill == null) return;
@@ -236,11 +242,11 @@ public class DaniTechGameObjectManager : MonoBehaviour
         ISkillObject sampleComponent = Prefab_Skill.GetComponent<ISkillObject>();
         if (sampleComponent == null) return;
 
-        float coolTime = sampleComponent.GetSkillCoolTime();
-
         // [무한 루프] 게임이 동작하는 동안 무한 반복
         while (true)
         {
+            float currentCoolTime = sampleComponent.GetSkillCoolTime();
+
             if (cancellationToken.IsCancellationRequested) return;
 
             // 1. 게임 매니저를 통해 현재 게임 상태가 '스타트'인지 매번 실시간으로 확인
@@ -270,7 +276,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
                 }
             }
 
-            bool isCanceled = await UniTask.Delay(System.TimeSpan.FromSeconds(coolTime), cancellationToken: cancellationToken).SuppressCancellationThrow();
+            bool isCanceled = await UniTask.Delay(System.TimeSpan.FromSeconds(currentCoolTime), cancellationToken: cancellationToken).SuppressCancellationThrow();
             if (isCanceled) return;
         }
     }

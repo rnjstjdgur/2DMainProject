@@ -164,7 +164,7 @@ public static class DaniTechUIManagerExtension
 
         if (uiBase is HudUI hudUi)
         {
-            hudUi.ClearAllHudSlots(); // HudUI 클래스 내부에 실제 청소 함수를 호출할 예정입니다.
+            hudUi.ClearAllHudSlots();
         }
     }
 }

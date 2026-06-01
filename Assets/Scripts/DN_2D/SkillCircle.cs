@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class SkillCircle : MonoBehaviour, ISkillObject
+public class SkillCircle : DaniTech_SkillBase, ISkillObject
 {
     [Header("스킬 고유 ID")]
     [SerializeField] private string _skillDataId = "skill_fire_01";
@@ -40,8 +40,7 @@ public class SkillCircle : MonoBehaviour, ISkillObject
     {
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         if (skillData == null) return 1.0f;
-        _skillCoolTime = skillData.SkillCoolTime;
-        return _skillCoolTime;
+        return CalculateCoolTime(_skillDataId, _skillCoolTime, skillData.CoolDownPerLevel);
     }
 
     public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<SkillCollisionInfo> collisionCallback)

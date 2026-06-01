@@ -57,6 +57,7 @@ public class Player2D : MonoBehaviour
         DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
         DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoCircleSkillLoop();
+        DaniTechGameObjectManager.Inst.StartAutoLightningSkillLoop();
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
     }
 
@@ -260,7 +261,7 @@ public class Player2D : MonoBehaviour
         if (_playerHp < 0)
         {
             // 죽음 처리 하기
-            PlayerDie();
+            //PlayerDie();
         }
     }
 

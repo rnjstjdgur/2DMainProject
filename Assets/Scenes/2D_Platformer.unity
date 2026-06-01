@@ -653,6 +653,10 @@ PrefabInstance:
       propertyPath: Prefab_Player
       value: 
       objectReference: {fileID: 9124186025880486968, guid: 2c24543d408afbf49baabb8ff69bba97, type: 3}
+    - target: {fileID: 8505567666318350724, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: Prefab_SkillLightning
+      value: 
+      objectReference: {fileID: 3601178608979350394, guid: ae282e3af9b055d4db62fe2d5ffbcae0, type: 3}
     m_RemovedComponents:
     - {fileID: 4775870533281097881, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
     - {fileID: 7833483547952060797, guid: d9614b341da396f43a8b38d13a069d93, type: 3}

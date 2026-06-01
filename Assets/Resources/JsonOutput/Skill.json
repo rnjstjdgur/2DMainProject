@@ -8,10 +8,10 @@
     "SkillDamage": 120,
     "SkillDistance": 10,
     "SkillCoolTime": 1,
-    "AnimControllerPath": "Anim/AnimController_MagicArrow",
+    "AnimControllerPath": null,
     "SkillDuration": null,
     "SkillDamageInterval": null,
-    "DamagePerLevel": 0.5,
+    "DamagePerLevel": 120,
     "CoolDownPerLevel": 0.2
   },
   {
@@ -26,7 +26,7 @@
     "AnimControllerPath": "Anim/AnimController_Fire",
     "SkillDuration": 1.5,
     "SkillDamageInterval": 1.2,
-    "DamagePerLevel": 0.3,
+    "DamagePerLevel": 200,
     "CoolDownPerLevel": 0.3
   },
   {
@@ -41,7 +41,7 @@
     "AnimControllerPath": null,
     "SkillDuration": 1,
     "SkillDamageInterval": null,
-    "DamagePerLevel": 0.5,
+    "DamagePerLevel": 100,
     "CoolDownPerLevel": 0.2
   },
   {
@@ -56,7 +56,7 @@
     "AnimControllerPath": "Anim/AnimController_Lightning",
     "SkillDuration": null,
     "SkillDamageInterval": null,
-    "DamagePerLevel": 0.3,
+    "DamagePerLevel": 50,
     "CoolDownPerLevel": 0.2
   }
 ]

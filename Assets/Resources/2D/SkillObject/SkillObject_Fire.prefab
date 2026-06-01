@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 7839752318737851819}
   - component: {fileID: 1417506317286532311}
   m_Layer: 0
-  m_Name: SpriteRenderer_Projectile
+  m_Name: SpriteRenderer_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

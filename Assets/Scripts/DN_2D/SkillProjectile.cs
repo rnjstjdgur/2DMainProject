@@ -18,9 +18,9 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
 
     [Header("스킬 전투 관련")]
     [SerializeField] private float _skillDistance = 10.0f;  // 스킬범위
-    [SerializeField] private float _skillCoolTime = 1.0f;
+    [SerializeField] private float _skillCoolTime;
 
-    private int _damage = 100;
+    private int _damage;
     private int _ownerInstanceId;
 
     private Action<SkillCollisionInfo> _collisionCallback;
@@ -35,7 +35,9 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
     // 인터페이스 멤버 ============================================
     public float GetSkillCoolTime()
     {
-        return _skillCoolTime;
+        DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
+        if (skillData == null) return 1.0f;
+        return CalculateCoolTime(_skillDataId, _skillCoolTime, skillData.CoolDownPerLevel);
     }
 
     public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<SkillCollisionInfo> collisionCallback)

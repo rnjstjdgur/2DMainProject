@@ -70,6 +70,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84f5e045b6682004b9b0a78c9a673e59
+    m_Address: Effect/LightningEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 988485599ab6ecb4db508e35e6b5086a
     m_Address: Sound/Pugmia_Bgm_Housing_1
     m_ReadOnly: 0

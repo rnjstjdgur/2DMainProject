@@ -63,11 +63,6 @@ public class DaniTechGameManager : MonoBehaviour
         }
 
         _IsGameStart = true;
-
-        if (DaniTechGameObjectManager.Inst != null)
-        {
-            DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
-        }
     }
 
     public void SaveAndEndGame()

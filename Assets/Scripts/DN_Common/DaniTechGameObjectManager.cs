@@ -284,6 +284,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
         // 원본 데이터 혹은 세션 데이터의 레벨 갱신
         skillData.SkillLevel = _skillList[skillDataId];
+        Debug.LogError($"스킬 {skillData.Name}의 데미지: {skillData.SkillDamage} | 쿨타임: {skillData.SkillCoolTime}");
     }
 
     // 3. 기존의 GetSkillLevel 함수도 매니저의 딕셔너리를 기반으로 작동하도록 안전하게 변경

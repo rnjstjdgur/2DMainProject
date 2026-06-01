@@ -10,7 +10,9 @@
     "SkillCoolTime": 1,
     "AnimControllerPath": "Anim/AnimController_MagicArrow",
     "SkillDuration": null,
-    "SkillDamageInterval": null
+    "SkillDamageInterval": null,
+    "DamagePerLevel": 0.5,
+    "CoolDownPerLevel": 0.2
   },
   {
     "Id": "skill_fire_01",
@@ -23,7 +25,9 @@
     "SkillCoolTime": 10,
     "AnimControllerPath": "Anim/AnimController_Fire",
     "SkillDuration": 1.5,
-    "SkillDamageInterval": 1.2
+    "SkillDamageInterval": 1.2,
+    "DamagePerLevel": 0.3,
+    "CoolDownPerLevel": 0.3
   },
   {
     "Id": "skill_ice_01",
@@ -36,7 +40,9 @@
     "SkillCoolTime": 8,
     "AnimControllerPath": null,
     "SkillDuration": 1,
-    "SkillDamageInterval": null
+    "SkillDamageInterval": null,
+    "DamagePerLevel": 0.5,
+    "CoolDownPerLevel": 0.2
   },
   {
     "Id": "skill_lightning_01",
@@ -49,6 +55,8 @@
     "SkillCoolTime": 5,
     "AnimControllerPath": "Anim/AnimController_Lightning",
     "SkillDuration": null,
-    "SkillDamageInterval": null
+    "SkillDamageInterval": null,
+    "DamagePerLevel": 0.3,
+    "CoolDownPerLevel": 0.2
   }
 ]

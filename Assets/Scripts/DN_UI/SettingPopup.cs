@@ -2,15 +2,15 @@
 
 public class SettingPopup : DaniTechUIBase
 {
-    [SerializeField] private DaniTechUIButton Button_Setting;
+    [SerializeField] private DaniTechUIButton Button_ClosePopup;
 
     private void OnEnable()
     {
-        Button_Setting.BindOnClickButtonEvent(OnClick_Setting);
+        Button_ClosePopup.BindOnClickButtonEvent(OnClick_ClosePopup);
     }
 
-    public void OnClick_Setting()
+    public void OnClick_ClosePopup()
     {
-        DaniTechUIManager.Instance.OpenPopupUI(DaniTechUIType.SettingPopup);
+        DaniTechUIManager.Instance.ClosePopupUI(DaniTechUIType.SettingPopup);
     }
 }

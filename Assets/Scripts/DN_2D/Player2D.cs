@@ -67,12 +67,6 @@ public class Player2D : MonoBehaviour
 
     private void Update()
     {
-        if (_isPlayerAlive == false)
-        {
-            DaniTechUIManager.Instance.OpenSimplePopup("게임오버");
-            TimeManager.instance.TimeStop();
-        }
-
         bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
         if (isGameStart == false) return;
 
@@ -273,6 +267,8 @@ public class Player2D : MonoBehaviour
     public void PlayerDie()
     {
         _isPlayerAlive = false;
+        TimeManager.instance.TimeStop();
+        DaniTechUIManager.Instance.OpenPopupUI(DaniTechUIType.GameOverPopup);
     }
     public void BindOnStatChangedEvent(Action<float, float> hpChangeCallback, Action<int, int> mpChangeCallback)
     {

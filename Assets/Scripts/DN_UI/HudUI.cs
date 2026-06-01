@@ -87,4 +87,24 @@ public class HudUI : DaniTechUIBase
             Debug.Log($"[HudUI] {instanceId}번 HUD 슬롯 파괴 완료 (오브젝트 및 맵 데이터 제거)");
         }
     }
+
+    public void ClearAllHudSlots()
+    {
+        foreach (var kvp in _hudSlotMap)
+        {
+            List<GameObject> slots = kvp.Value;
+            if (slots != null)
+            {
+                foreach (var gObj in slots)
+                {
+                    if (gObj != null)
+                    {
+                        Destroy(gObj);
+                    }
+                }
+            }
+        }
+
+        _hudSlotMap.Clear();
+    }
 }

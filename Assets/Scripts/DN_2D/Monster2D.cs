@@ -45,6 +45,8 @@ public class Monster2D : DaniTech_MonsterBase
         bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
         if (isGameStart == false) return;
 
+        if (_playerTransform == null) return;
+
         _direction = (_playerTransform.position - this.transform.position).normalized;
         transform.Translate(_direction * _moveSpeed * Time.deltaTime);
         Flip();
@@ -61,12 +63,19 @@ public class Monster2D : DaniTech_MonsterBase
         return _instanceId;
     }
 
+    public string GetMonsterDataId()
+    {
+        return _dataId;
+    }
+
     public void InitMonster(int instanceId, string dataId)
     {
         Debug.Log($"[Monster2D] 고유번호: {instanceId} / 데이터ID: {dataId} 스폰 완료! (재사용 여부: {gameObject.activeSelf})");
         _instanceId = instanceId;
         _dataId = dataId;
         _isAlive = true;
+
+        _playerTransform = DaniTechGameManager.Inst.GetPlayerTransform();
 
         var monsterData = DaniTechGameDataManager.Instance.GetDNMonsterData(dataId);
         if (monsterData != null)
@@ -109,6 +118,7 @@ public class Monster2D : DaniTech_MonsterBase
     {
         _isAlive = false;
         DaniTechGameObjectManager.Inst.RequestDespawnMonster(_instanceId, _dataId);
+        DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
     }
 
     //private int GetFinalNormalAtkDamage(int baseAtk, float normalAtkMultiple)

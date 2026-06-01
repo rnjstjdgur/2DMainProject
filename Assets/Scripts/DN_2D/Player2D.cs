@@ -269,6 +269,7 @@ public class Player2D : MonoBehaviour
         _isPlayerAlive = false;
         TimeManager.instance.TimeStop();
         DaniTechUIManager.Instance.OpenPopupUI(DaniTechUIType.GameOverPopup);
+        DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
     }
     public void BindOnStatChangedEvent(Action<float, float> hpChangeCallback, Action<int, int> mpChangeCallback)
     {

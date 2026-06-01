@@ -156,5 +156,16 @@ public static class DaniTechUIManagerExtension
             hudUi.RemoveHudSlot(instanceId);
         }
     }
+
+    public static void ClearAllHudSlot(this DaniTechUIManager uiManager)
+    {
+        var uiBase = uiManager.GetOpenedUI(DaniTechUIRootType.MainUI, DaniTechUIType.HudUI);
+        if (uiBase == null) return;
+
+        if (uiBase is HudUI hudUi)
+        {
+            hudUi.ClearAllHudSlots(); // HudUI 클래스 내부에 실제 청소 함수를 호출할 예정입니다.
+        }
+    }
 }
 

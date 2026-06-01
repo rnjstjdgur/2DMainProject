@@ -31,6 +31,43 @@ public class DaniTechGameManager : MonoBehaviour
     public void StartGame()
     {
         _IsGameStart = true;
+
+        DaniTechGameObjectManager.Inst.ResetObjectOnNewGame();
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        _IsGameStart = false;
+
+        if (DaniTechUIManager.Instance != null)
+        {
+            DaniTechUIManager.Instance.ClearAllHudSlot();
+        }
+
+        if (DaniTechGameObjectManager.Inst != null)
+        {
+            DaniTechGameObjectManager.Inst.ResetObjectOnNewGame();
+
+            var newPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+            if (newPlayer != null)
+            {
+                DaniTechGameObjectManager.Inst.RegisterLocalPlayer(newPlayer);
+                _localPlayer = newPlayer;
+            }
+        }
+
+        if (WaveSpawnManager.instance != null)
+        {
+            WaveSpawnManager.instance.ResetWaveManagerOnRestart();
+        }
+
+        _IsGameStart = true;
+
+        if (DaniTechGameObjectManager.Inst != null)
+        {
+            DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
+        }
     }
 
     public void SaveAndEndGame()

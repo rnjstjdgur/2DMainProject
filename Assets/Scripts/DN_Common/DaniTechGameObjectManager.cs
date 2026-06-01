@@ -24,6 +24,8 @@ public class DaniTechGameObjectManager : MonoBehaviour
     private Vector2 _lastOverlapOffset = Vector2.zero;
     private float _lastOverlapRadius = 1f;
 
+    private System.Threading.CancellationTokenSource _skillLoopCts;
+
     // 생성된 오브젝트의 생명을 보관
     private Dictionary<int, GameObject> _createdGameObjectContainer = new Dictionary<int, GameObject>();
     private Dictionary<int, DaniTech_2DFieldObject> _fieldObjectContainer = new Dictionary<int, DaniTech_2DFieldObject>();
@@ -43,9 +45,10 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     private void Start()
     {
-        GameObject spawnPlayer = Instantiate(Prefab_Player, Vector3.zero, Quaternion.identity);
-        _localPlayer = spawnPlayer.GetComponent<Player2D>();
+        ResetObjectOnNewGame();
     }
+
+    // 플레이어 관련 ==================================================================
 
     public void RegisterLocalPlayer(Player2D localPlayer)
     {
@@ -218,15 +221,15 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public void StartAutoProjectileSkillLoop()
     {
-        AutoSkillLoop(Prefab_SkillProjectile, Transform_SkillObjectRoot, "skill_magicArrow_01").Forget();
+        AutoSkillLoop(Prefab_SkillProjectile, Transform_SkillObjectRoot, "skill_magicArrow_01", _skillLoopCts.Token).Forget();
     }
 
     public void StartAutoCircleSkillLoop()
     {
-        AutoSkillLoop(Prefab_SkillCircle, Transform_SkillObjectRoot, "skill_fire_01").Forget();
+        AutoSkillLoop(Prefab_SkillCircle, Transform_SkillObjectRoot, "skill_fire_01", _skillLoopCts.Token).Forget();
     }
 
-    private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root, string skillDataId)
+    private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root, string skillDataId, System.Threading.CancellationToken cancellationToken)
     {
         if (Prefab_Skill == null) return;
 
@@ -238,6 +241,8 @@ public class DaniTechGameObjectManager : MonoBehaviour
         // [무한 루프] 게임이 동작하는 동안 무한 반복
         while (true)
         {
+            if (cancellationToken.IsCancellationRequested) return;
+
             // 1. 게임 매니저를 통해 현재 게임 상태가 '스타트'인지 매번 실시간으로 확인
             if (DaniTechGameManager.Inst != null && DaniTechGameManager.Inst.IsGameStart())
             {
@@ -265,7 +270,8 @@ public class DaniTechGameObjectManager : MonoBehaviour
                 }
             }
 
-            await UniTask.Delay(System.TimeSpan.FromSeconds(coolTime));
+            bool isCanceled = await UniTask.Delay(System.TimeSpan.FromSeconds(coolTime), cancellationToken: cancellationToken).SuppressCancellationThrow();
+            if (isCanceled) return;
         }
     }
 
@@ -396,6 +402,73 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
         return _fieldObjectContainer[fieldObjectInstanceId];
     }
+
+    // 리셋 ===================================================================
+
+    public void ResetObjectOnNewGame()
+    {
+        Debug.LogWarning("[오브젝트 매니저] 새 게임 시작을 위해 데이터를 초기화합니다.");
+
+        DaniTechUIManager.Instance.ClearAllHudSlot();
+
+        if (_skillLoopCts != null)
+        {
+            _skillLoopCts.Cancel();
+            _skillLoopCts.Dispose();
+        }
+        _skillLoopCts = new System.Threading.CancellationTokenSource();
+
+        _objectInstanceKeyGenerator = 0;
+
+        List<int> activeMonsterIds = new List<int>(_monsterObjectContainer.Keys);
+        foreach (int id in activeMonsterIds)
+        {
+            if (_monsterObjectContainer.TryGetValue(id, out var monster) && monster != null)
+            {
+                RequestDespawnMonster(id, monster.GetMonsterDataId());
+            }
+        }
+        _monsterObjectContainer.Clear();
+
+        foreach (var kv in _createdGameObjectContainer)
+        {
+            if (kv.Value != null) Destroy(kv.Value);
+        }
+        _createdGameObjectContainer.Clear();
+
+        foreach (var kv in _fieldObjectContainer)
+        {
+            if (kv.Value != null && kv.Value.gameObject != null)
+            {
+                Destroy(kv.Value.gameObject);
+            }
+        }
+        _fieldObjectContainer.Clear();
+
+        _skillList.Clear();
+
+        if (_localPlayer != null && _localPlayer.gameObject != null)
+        {
+            Destroy(_localPlayer.gameObject);
+        }
+
+        _localPlayer = null;
+
+        if (Prefab_Player == null) return;
+
+        var spawnPlayer = Instantiate(Prefab_Player, Vector3.zero, Quaternion.identity);
+        _localPlayer = spawnPlayer.GetComponent<Player2D>();
+
+        Debug.Log("[오브젝트 매니저] 인게임 데이터 리셋 완료!");
+    }
+
+
+
+
+
+
+
+
 
     //코루틴 ====================================================================
     IEnumerator CoWaitForSeconds(float seconds)

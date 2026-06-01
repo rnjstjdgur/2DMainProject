@@ -21,6 +21,6 @@ public class GameOverPopup : DaniTechUIBase
     public void OnClick_Retry()
     {
         DaniTechUIManager.Instance.ClosePopupUI(DaniTechUIType.GameOverPopup);
-        DaniTechGameManager.Inst.StartGame();
+        DaniTechGameManager.Inst.RestartGame();
     }
 }

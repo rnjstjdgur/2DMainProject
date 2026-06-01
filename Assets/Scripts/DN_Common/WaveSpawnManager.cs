@@ -192,6 +192,26 @@ public class WaveSpawnManager : MonoBehaviour
         }
     }
 
+    public void ResetWaveManagerOnRestart()
+    {
+        Debug.LogWarning("[웨이브 매니저] 전체 시간 및 웨이브 타이머 리셋");
+
+        _gameTimer = 0f;
+        _isGameActive = true;
+
+        List<WaveData> waves = new List<WaveData>(_waveTimers.Keys);
+        foreach (var wave in waves)
+        {
+            _waveTimers[wave] = 0f;
+        }
+
+        List<LevelData> manas = new List<LevelData>(_manaTimers.Keys);
+        foreach (var mana in manas)
+        {
+            _manaTimers[mana] = 0f;
+        }
+    }
+
 
 
 

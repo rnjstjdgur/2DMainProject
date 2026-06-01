@@ -27,6 +27,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     // 생성된 오브젝트의 생명을 보관
     private Dictionary<int, GameObject> _createdGameObjectContainer = new Dictionary<int, GameObject>();
     private Dictionary<int, DaniTech_2DFieldObject> _fieldObjectContainer = new Dictionary<int, DaniTech_2DFieldObject>();
+    private Dictionary<string, Queue<Monster2D>> _monsterPool = new Dictionary<string, Queue<Monster2D>>();
     private Dictionary<int, Monster2D> _monsterObjectContainer = new Dictionary<int, Monster2D>();
     private Dictionary<string, int> _skillList = new Dictionary<string, int>();
 
@@ -146,31 +147,68 @@ public class DaniTechGameObjectManager : MonoBehaviour
             return;
         }
 
-        var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(monsterData.PrefabPath, Transform_EnemyRoot, true);
-        if (createdObj == null)
-        {
-            Debug.LogError($"[스폰 실패] 프리팹 경로가 잘못되었거나 생성에 실패했습니다: {monsterData.PrefabPath}");
-            return;
-        }
-        createdObj.transform.position = spawnSpot.position;
+        Monster2D monsterComponent = null;
 
-        AddMonsterObjectOnCreate(createdObj, monsterDataId);
+        if (_monsterPool.TryGetValue(monsterDataId, out Queue<Monster2D> poolQueue) &&  poolQueue.Count > 0)
+        {
+            monsterComponent = poolQueue.Dequeue();
+
+            if (monsterComponent != null)
+            {
+                monsterComponent.transform.position = spawnSpot.position;
+                monsterComponent.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(monsterData.PrefabPath, Transform_EnemyRoot, true);
+            if (createdObj == null)
+            {
+                Debug.LogError($"[스폰 실패] 프리팹 경로가 잘못되었거나 생성에 실패했습니다: {monsterData.PrefabPath}");
+                return;
+            }
+            createdObj.transform.position = spawnSpot.position;
+
+            monsterComponent = createdObj.GetComponent<Monster2D>();
+        }
+
+        if (monsterComponent != null)
+        {
+            AddMonsterObjectOnSpawn(monsterComponent, monsterDataId);
+        }
     }
 
-    private void AddMonsterObjectOnCreate(GameObject createdObject, string monsterDataId)
+    private void AddMonsterObjectOnSpawn(Monster2D monsterComponent, string monsterDataId)
     {
         _objectInstanceKeyGenerator++;
         var generatedInstanceId = _objectInstanceKeyGenerator;
 
-        var monsterComponent = createdObject.GetComponent<Monster2D>();
-        if (monsterComponent == null) return;
+        if (_monsterObjectContainer.ContainsKey(generatedInstanceId)) return;
 
         _monsterObjectContainer.Add(generatedInstanceId, monsterComponent);
 
         monsterComponent.InitMonster(generatedInstanceId, monsterDataId);
     }
 
+    public void RequestDespawnMonster(int instanceId, string monsterDataId)
+    {
+        if (_monsterObjectContainer.TryGetValue(instanceId, out var monsterComponent) == false)
+        {
+            return;
+        }
+        _monsterObjectContainer.Remove(instanceId);
 
+        if (monsterComponent == null) return;
+
+        monsterComponent.gameObject.SetActive(false);
+
+        if (_monsterPool.ContainsKey(monsterDataId) == false)
+        {
+            _monsterPool.Add(monsterDataId, new Queue<Monster2D>());
+        }
+
+        _monsterPool[monsterDataId].Enqueue(monsterComponent);
+    }
 
 
 

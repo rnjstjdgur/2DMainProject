@@ -63,8 +63,10 @@ public class Monster2D : DaniTech_MonsterBase
 
     public void InitMonster(int instanceId, string dataId)
     {
+        Debug.Log($"[Monster2D] 고유번호: {instanceId} / 데이터ID: {dataId} 스폰 완료! (재사용 여부: {gameObject.activeSelf})");
         _instanceId = instanceId;
         _dataId = dataId;
+        _isAlive = true;
 
         var monsterData = DaniTechGameDataManager.Instance.GetDNMonsterData(dataId);
         if (monsterData != null)
@@ -81,6 +83,8 @@ public class Monster2D : DaniTech_MonsterBase
         {
             DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
         }
+
+        InvokeStatChangedEvent();
     }
 
     private void Flip()
@@ -104,8 +108,7 @@ public class Monster2D : DaniTech_MonsterBase
     private void OnBattleUnitDie()
     {
         _isAlive = false;
-        DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
-        Destroy(this.gameObject);
+        DaniTechGameObjectManager.Inst.RequestDespawnMonster(_instanceId, _dataId);
     }
 
     //private int GetFinalNormalAtkDamage(int baseAtk, float normalAtkMultiple)

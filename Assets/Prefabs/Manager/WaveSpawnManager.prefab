@@ -57,12 +57,6 @@ MonoBehaviour:
     monsterDataId: 'mob_bear_1 '
     spawnInterval: 2
     spawnCountPerTime: 3
-  - waveName: "\uAC8C\uC784\uC624\uBC84\uD14C\uC2A4\uD2B8\uC6A9"
-    startTime: 0
-    endTime: 20
-    monsterDataId: 'mob_bear_1 '
-    spawnInterval: 1
-    spawnCountPerTime: 5
   _manaTimeLine:
   - manaBallDataId: dropItem_manaballblue_1
     manaSpawnWaveName: "1\uB819\uB9C8\uB098\uC2A4\uD3F0"

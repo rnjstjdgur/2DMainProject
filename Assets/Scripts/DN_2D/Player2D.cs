@@ -55,7 +55,7 @@ public class Player2D : MonoBehaviour
         _playerLevel = _playerData.PlayerLevel;
         LoadSkill();
         DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
-        DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
+        //DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoCircleSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoLightningSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoAOESkillLoop();

@@ -50,7 +50,7 @@ MonoBehaviour:
     endTime: 60
     monsterDataId: 'mob_slim_1 '
     spawnInterval: 2
-    spawnCountPerTime: 5
+    spawnCountPerTime: 3
   - waveName: "\uACF0 "
     startTime: 10
     endTime: 20

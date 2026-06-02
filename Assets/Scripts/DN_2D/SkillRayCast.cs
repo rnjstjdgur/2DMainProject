@@ -57,16 +57,12 @@ public class SkillRayCast : DaniTech_SkillBase, ISkillObject
 
         for (int i = 0; i < boltCount; i++)
         {
-            Vector2 shootDir;
-
             float randomAngle = UnityEngine.Random.Range(0f, 360f);
-            shootDir = Quaternion.Euler(0, 0, randomAngle) * Vector2.right;
+            Vector2 shootDir = Quaternion.Euler(0, 0, randomAngle) * Vector2.right;
 
             Vector3 endPos = this.transform.position + (Vector3)shootDir * _skillDistance;
 
-            Vector2 boxSize = new Vector2(1f, _skillDistance);
-
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(this.transform.position, boxSize, Mathf.Atan2(shootDir.y, shootDir.x) * Mathf.Rad2Deg, shootDir, 0f, _enemyLayer);
+            var hits = Physics2D.CircleCastAll(this.transform.position, 0.5f, shootDir, _skillDistance, _enemyLayer);
             foreach (var hit in hits)
             {
                 if (hit.collider != null)

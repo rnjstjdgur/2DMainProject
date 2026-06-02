@@ -9,6 +9,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     [SerializeField] private GameObject Prefab_SkillProjectile;
     [SerializeField] private GameObject Prefab_SkillCircle;
     [SerializeField] private GameObject Prefab_SkillLightning;
+    [SerializeField] private GameObject Prefab_SkillAreaOfEffect;
     [SerializeField] private GameObject Prefab_Enemy;
     [SerializeField] private GameObject Prefab_Player;
 
@@ -233,6 +234,11 @@ public class DaniTechGameObjectManager : MonoBehaviour
     public void StartAutoLightningSkillLoop()
     {
         AutoSkillLoop(Prefab_SkillLightning, Transform_SkillObjectRoot, "skill_lightning_01", _skillLoopCts.Token).Forget();
+    }
+
+    public void StartAutoAOESkillLoop()
+    {
+        AutoSkillLoop(Prefab_SkillAreaOfEffect, Transform_SkillObjectRoot, "skill_ice_01", _skillLoopCts.Token).Forget();
     }
 
     private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root, string skillDataId, System.Threading.CancellationToken cancellationToken)

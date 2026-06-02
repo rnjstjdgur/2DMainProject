@@ -58,6 +58,7 @@ public class Player2D : MonoBehaviour
         DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoCircleSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoLightningSkillLoop();
+        DaniTechGameObjectManager.Inst.StartAutoAOESkillLoop();
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
     }
 

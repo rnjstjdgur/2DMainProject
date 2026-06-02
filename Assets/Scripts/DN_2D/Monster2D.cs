@@ -34,7 +34,15 @@ public class Monster2D : DaniTech_MonsterBase
 
     private Transform _playerTransform;
 
+    private Animator _animator;
+
     private event Action<float, float> _onHpChanged;
+
+    private void Awake()
+    {
+        _animator = this.gameObject.GetComponentInChildren<Animator>();
+        _animator.SetBool("isAlive", true);
+    }
 
     private void Start()
     {
@@ -80,6 +88,7 @@ public class Monster2D : DaniTech_MonsterBase
         _instanceId = instanceId;
         _dataId = dataId;
         _isAlive = true;
+        _animator.SetBool("isAlive", true);
 
         SpriteRenderer_MonsterSprite.color = Color.white;
 
@@ -145,7 +154,8 @@ public class Monster2D : DaniTech_MonsterBase
     private void OnBattleUnitDie()
     {
         _isAlive = false;
-        DaniTechGameObjectManager.Inst.RequestDespawnMonster(_instanceId, _dataId);
+        _animator.SetBool("isAlive", false);
+        StartCoroutine(CoDieEffect(1f));
         DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
     }
     public void TakeDamage(float playerDamage)
@@ -153,12 +163,12 @@ public class Monster2D : DaniTech_MonsterBase
         _isHit = true;
         _baseHp -= playerDamage;
         InvokeStatChangedEvent();
-        ApplyHitEffect(0.2f);
-
         if (_baseHp <= 0)
         {
             OnBattleUnitDie();
+            return;
         }
+        ApplyHitEffect(0.2f);
     }
 
     public void ApplyFreezeEffect(float duration)
@@ -234,5 +244,17 @@ public class Monster2D : DaniTech_MonsterBase
 
         SpriteRenderer_MonsterSprite.color = Color.white;
         _isHit = false;
+    }
+
+    private IEnumerator CoDieEffect(float delay)
+    {
+        _isFrozen = true;
+        Rigidbody2D_MonsterRigidbody.simulated = false;
+
+        yield return new WaitForSeconds(delay);
+
+        _isFrozen = false;
+        Rigidbody2D_MonsterRigidbody.simulated = true;
+        DaniTechGameObjectManager.Inst.RequestDespawnMonster(_instanceId, _dataId);
     }
 }

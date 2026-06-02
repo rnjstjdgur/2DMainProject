@@ -5,9 +5,9 @@ using UnityEngine;
 public class Monster2D : DaniTech_MonsterBase
 {
     [Header("몬스터 프리팹에서 미리 세팅할 데이터")]
-    [SerializeField] private float Skill_CoolTime;
+    //[SerializeField] private float Skill_CoolTime;
     [SerializeField] private SpriteRenderer SpriteRenderer_MonsterSprite;
-    [SerializeField] private GameObject Prefab_ThisMonsterSkillObject;
+    //[SerializeField] private GameObject Prefab_ThisMonsterSkillObject;
     [SerializeField] private Rigidbody2D Rigidbody2D_MonsterRigidbody;
 
     [Header("데이터 확인용")]

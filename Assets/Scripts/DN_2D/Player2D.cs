@@ -55,7 +55,7 @@ public class Player2D : MonoBehaviour
         _playerLevel = _playerData.PlayerLevel;
         LoadSkill();
         DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
-        //DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
+        DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoCircleSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoLightningSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoAOESkillLoop();
@@ -141,8 +141,7 @@ public class Player2D : MonoBehaviour
 
         if (_isPlayerLevelUp)
         {
-            //_playerHp = _maxHp;
-            InvokeStatChangedEvent(); // UI 갱신 신호
+            InvokeStatChangedEvent(); // UI 갱신
         }
     }
 
@@ -261,8 +260,7 @@ public class Player2D : MonoBehaviour
 
         if (_playerHp < 0)
         {
-            // 죽음 처리 하기
-            //PlayerDie();
+            PlayerDie();
         }
     }
 

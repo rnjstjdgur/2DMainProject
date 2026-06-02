@@ -45,17 +45,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveSpawnManager
   _waveTimeline:
-  - waveName: "\uC2AC\uB77C\uC784 \uB5BC"
+  - waveName: "\uAE30\uBCF8 \uC6E8\uC774\uBE0C"
     startTime: 0
-    endTime: 60
-    monsterDataId: 'mob_slim_1 '
+    endTime: 120
+    monsterDataId: mob_normal_1
     spawnInterval: 2
     spawnCountPerTime: 3
-  - waveName: "\uACF0 "
-    startTime: 10
-    endTime: 20
-    monsterDataId: 'mob_bear_1 '
+  - waveName: "\uAE30\uBCF8 \uC6E8\uC774\uBE0C 2"
+    startTime: 30
+    endTime: 240
+    monsterDataId: mob_normal_2
     spawnInterval: 2
+    spawnCountPerTime: 3
+  - waveName: "\uAE30\uBCF8 \uC6E8\uC774\uBE0C 3"
+    startTime: 120
+    endTime: 360
+    monsterDataId: mob_green_1
+    spawnInterval: 1
+    spawnCountPerTime: 2
+  - waveName: "\uAE30\uBCF8 \uC6E8\uC774\uBE0C 4"
+    startTime: 240
+    endTime: 480
+    monsterDataId: mob_red_1
+    spawnInterval: 1
+    spawnCountPerTime: 2
+  - waveName: "\uAE30\uBCF8 \uC6E8\uC774\uBE0C 5"
+    startTime: 360
+    endTime: 600
+    monsterDataId: mob_green_1
+    spawnInterval: 2
+    spawnCountPerTime: 4
+  - waveName: "\uAE30\uBCF8 \uC6E8\uC774\uBE0C 6"
+    startTime: 480
+    endTime: 720
+    monsterDataId: mob_green_1
+    spawnInterval: 1
+    spawnCountPerTime: 3
+  - waveName: "\uAE30\uBCF8 \uC6E8\uC774\uBE0C 7"
+    startTime: 600
+    endTime: 720
+    monsterDataId: mob_red_1
+    spawnInterval: 2
+    spawnCountPerTime: 4
+  - waveName: "\uAE30\uBCF8 \uC6E8\uC774\uBE0C 8"
+    startTime: 660
+    endTime: 720
+    monsterDataId: mob_red_1
+    spawnInterval: 1
     spawnCountPerTime: 3
   _manaTimeLine:
   - manaBallDataId: dropItem_manaballblue_1

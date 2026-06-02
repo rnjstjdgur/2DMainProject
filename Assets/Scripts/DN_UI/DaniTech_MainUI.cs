@@ -29,9 +29,9 @@ public class DaniTech_MainUI : DaniTechUIBase
     private void Update()
     {
         _gameTimer = WaveSpawnManager.instance.GetGameTimer();
-        int timeHour = (int)(_gameTimer / 60);
-        int timeMinute = (int)(_gameTimer % 60);
-        Text_GameTimer.text = $"{timeHour} : {timeMinute}";
+        int timeMInute = (int)(_gameTimer / 60);
+        int timeSecond = (int)(_gameTimer % 60);
+        Text_GameTimer.text = $"{timeMInute:D2} : {timeSecond:D2}";
     }
 
     public void OnClick_UseNormalSkill()

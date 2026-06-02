@@ -51,5 +51,65 @@
     "IconPath": "Icon/Icon_Bear",
     "PrefabPath": "2DObject/Monster_Bear",
     "MonsterType": "Elite"
+  },
+  {
+    "Id": "mob_normal_1",
+    "Name": "기본몹",
+    "Description": "기본몹",
+    "BaseHp": 100,
+    "BaseAtk": 20,
+    "NormalAtkMultiple": null,
+    "SkillAtkMultipleList": null,
+    "IconPath": "Icon/Icon_NormalMob_1",
+    "PrefabPath": "2DObject/Monster_Normal_1",
+    "MonsterType": null
+  },
+  {
+    "Id": "mob_normal_2",
+    "Name": "기본몹2",
+    "Description": "좀 더 큰 기본몹",
+    "BaseHp": 500,
+    "BaseAtk": 50,
+    "NormalAtkMultiple": null,
+    "SkillAtkMultipleList": null,
+    "IconPath": "Icon/Icon_NormalMob_2",
+    "PrefabPath": "2DObject/Monster_Normal_2",
+    "MonsterType": null
+  },
+  {
+    "Id": "mob_green_1",
+    "Name": "초록몹",
+    "Description": "초록색 몹",
+    "BaseHp": 1000,
+    "BaseAtk": 80,
+    "NormalAtkMultiple": null,
+    "SkillAtkMultipleList": null,
+    "IconPath": "Icon/Icon_GreenMob",
+    "PrefabPath": "2DObject/Monster_Green",
+    "MonsterType": null
+  },
+  {
+    "Id": "mob_red_1",
+    "Name": "빨간몹",
+    "Description": "빨간색 몹",
+    "BaseHp": 3000,
+    "BaseAtk": 100,
+    "NormalAtkMultiple": null,
+    "SkillAtkMultipleList": null,
+    "IconPath": "Icon/Icon_RedMob",
+    "PrefabPath": "2DObject/Monster_Red",
+    "MonsterType": "Elite"
+  },
+  {
+    "Id": "mob_event_1",
+    "Name": "이벤트몹",
+    "Description": "이벤트 발생시 나오는 몹",
+    "BaseHp": 10000,
+    "BaseAtk": 300,
+    "NormalAtkMultiple": null,
+    "SkillAtkMultipleList": null,
+    "IconPath": "Icon/Icon_EventMob",
+    "PrefabPath": "2DObject/Monster_Event",
+    "MonsterType": "Elite"
   }
 ]

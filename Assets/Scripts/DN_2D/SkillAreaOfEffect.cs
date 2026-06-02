@@ -18,6 +18,8 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
 
     private Action<SkillCollisionInfo> _collisionCallback;
 
+    private HashSet<int> _hitEnemyIds = new HashSet<int>();
+
     private Player2D _localPlayer;
 
     private void Awake()
@@ -32,27 +34,24 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
     {
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         if (skillData == null) return 1.0f;
-        return CalculateCoolTime(_skillDataId, _skillCoolTime, skillData.CoolDownPerLevel);
+        return CalculateCoolTime(_skillDataId, skillData.SkillCoolTime, skillData.CoolDownPerLevel);
     }
 
     public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<SkillCollisionInfo> collisionCallback)
     {
+        this.transform.position = this.transform.position + new Vector3(0, -1f, 0);
+
         _collisionCallback = collisionCallback;
         _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
 
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
+        int currentLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(_skillDataId);
+        if (currentLevel < 1) currentLevel = 1;
+
         if (skillData != null)
         {
             _skillCoolTime = skillData.SkillCoolTime;
-            _skillDuration = skillData.SkillDuration;
-
-            //string animPath = skillData.AnimControllerPath;
-            //if (!string.IsNullOrEmpty(animPath))
-            //{
-            //    LoadAnimatorAddressable(animPath);
-            //}
-
-            //Debug.Log($"[SkillCircle] '{_skillDataId}' 데이터 연동 완료!");
+            _skillDuration = skillData.SkillDuration + ((currentLevel - 1) * skillData.SkillDurationPerLevel);
         }
         else
         {
@@ -75,10 +74,23 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
     {
         if (collision.CompareTag("Enemy"))
         {
-            var info = new SkillCollisionInfo(_skillDataId, collision);
-            _collisionCallback.Invoke(info);
+            int enemyId = collision.GetInstanceID();
 
-            Destroy(this.gameObject);
+            // 아직 타격하지 않은 몬스터라면 데미지 + 빙결 효과 부여
+            if (!_hitEnemyIds.Contains(enemyId))
+            {
+                _hitEnemyIds.Add(enemyId);
+
+                // 1. 데미지 전달
+                _collisionCallback?.Invoke(new SkillCollisionInfo(_skillDataId, collision));
+
+                // 2. 빙결 로직 (몬스터 컴포넌트에 접근)
+                var enemy = collision.GetComponent<Monster2D>();
+                if (enemy != null)
+                {
+                    enemy.ApplyFreezeEffect(_skillDuration);
+                }
+            }
         }
     }
 

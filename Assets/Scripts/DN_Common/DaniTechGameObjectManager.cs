@@ -36,9 +36,6 @@ public class DaniTechGameObjectManager : MonoBehaviour
     private Dictionary<string, int> _skillList = new Dictionary<string, int>();
 
     private Player2D _localPlayer;
-    private Monster2D _monster;
-
-    private DNSkillData _circleSkillData;
 
     private void Awake()
     {

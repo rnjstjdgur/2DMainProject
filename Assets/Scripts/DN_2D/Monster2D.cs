@@ -8,6 +8,7 @@ public class Monster2D : DaniTech_MonsterBase
     [SerializeField] private float Skill_CoolTime;
     [SerializeField] private SpriteRenderer SpriteRenderer_MonsterSprite;
     [SerializeField] private GameObject Prefab_ThisMonsterSkillObject;
+    [SerializeField] private Rigidbody2D Rigidbody2D_MonsterRigidbody;
 
     [Header("데이터 확인용")]
     [SerializeField] private int _instanceId;    // 게임에서 태어날때 부여된 ID                 [오브젝트매니저에서 찾는 용도]
@@ -21,6 +22,8 @@ public class Monster2D : DaniTech_MonsterBase
     [SerializeField] private bool _isAlive = true;
     [SerializeField] private float _damageInterval = 1.0f; // 데미지를 줄 주기
     [SerializeField] private string _monsterType;
+    private bool _isFrozen = false;
+    private Coroutine _freezeCoroutine;
 
     [Header("이동 관련 정보")]
     [SerializeField] private float _moveSpeed = 1.0f;
@@ -37,13 +40,14 @@ public class Monster2D : DaniTech_MonsterBase
         currentDamageTimer = _damageInterval;
         
         _playerTransform = DaniTechGameManager.Inst.GetPlayerTransform();
+        Rigidbody2D_MonsterRigidbody = GetComponent<Rigidbody2D>();
         SpriteRenderer_MonsterSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
     {
         bool isGameStart = DaniTechGameManager.Inst.IsGameStart();
-        if (isGameStart == false) return;
+        if (isGameStart == false || _isFrozen) return;
 
         if (_playerTransform == null) return;
 
@@ -57,6 +61,8 @@ public class Monster2D : DaniTech_MonsterBase
         _isAlive = false;
         ResetStatChangedEvent();
     }
+
+    // 정보 관련 ==================================================
 
     public int GetMonsterInstanceId()
     {
@@ -96,6 +102,7 @@ public class Monster2D : DaniTech_MonsterBase
         InvokeStatChangedEvent();
     }
 
+    // 로직 관련 ============================================================
     private void Flip()
     {
         
@@ -114,22 +121,8 @@ public class Monster2D : DaniTech_MonsterBase
         }
     }
 
-    private void OnBattleUnitDie()
-    {
-        _isAlive = false;
-        DaniTechGameObjectManager.Inst.RequestDespawnMonster(_instanceId, _dataId);
-        DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
-    }
+    // 전투 관련 =================================================================
 
-    //private int GetFinalNormalAtkDamage(int baseAtk, float normalAtkMultiple)
-    //{
-    //    return GetFinalSkillDamage(baseAtk, normalAtkMultiple);
-    //}
-
-    //private int GetFinalSkillDamage(int baseAtk, float skillMultiple)
-    //{
-    //    return (int)(baseAtk * skillMultiple);
-    //}
     public void BindOnStatChangedEvent(Action<float, float> hpChangeCallback)
     {
         _onHpChanged += hpChangeCallback;
@@ -145,6 +138,40 @@ public class Monster2D : DaniTech_MonsterBase
         // 우선 HP든 MP든 하나라도 바뀌면 다 호출해준다
         _onHpChanged?.Invoke(_baseHp, _maxHp);
         // _onMpChanged?.Invoke(_playerMp);
+    }
+
+    private void OnBattleUnitDie()
+    {
+        _isAlive = false;
+        DaniTechGameObjectManager.Inst.RequestDespawnMonster(_instanceId, _dataId);
+        DaniTechUIManager.Instance.RemoveHudSlot(_instanceId);
+    }
+    public void TakeDamage(float playerDamage)
+    {
+        _baseHp -= playerDamage;
+        Debug.LogWarning($"몬스터 {_instanceId}가 플레이어의 공격을 받아 체력이 {_baseHp} / {_maxHp}가 되었습니다.");
+        InvokeStatChangedEvent();
+
+        if (_baseHp <= 0)
+        {
+            OnBattleUnitDie();
+        }
+    }
+
+    public void ApplyFreezeEffect(float duration)
+    {
+        if (_freezeCoroutine != null) StopCoroutine(_freezeCoroutine);
+        _freezeCoroutine = StartCoroutine(CoFreezeRoutine(duration));
+    }
+
+    // 물리 관련 ==============================================
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            currentDamageTimer = _damageInterval;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -171,23 +198,20 @@ public class Monster2D : DaniTech_MonsterBase
         }
     }
 
-    public void TakeDamage(float playerDamage)
-    {
-        _baseHp -= playerDamage;
-        Debug.LogWarning($"몬스터 {_instanceId}가 플레이어의 공격을 받아 체력이 {_baseHp} / {_maxHp}가 되었습니다.");
-        InvokeStatChangedEvent();
+    // 코루틴 ========================================================
 
-        if (_baseHp <= 0)
-        {
-            OnBattleUnitDie();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
+    private IEnumerator CoFreezeRoutine(float duration)
     {
-        if (collision.CompareTag("Player"))
-        {
-            currentDamageTimer = _damageInterval;
-        }
+        _isFrozen = true;
+        Rigidbody2D_MonsterRigidbody.simulated = false;
+        if (SpriteRenderer_MonsterSprite != null)
+            SpriteRenderer_MonsterSprite.color = Color.blue;
+
+        yield return new WaitForSeconds(duration);
+
+        _isFrozen = false;
+        Rigidbody2D_MonsterRigidbody.simulated = true;
+        if (SpriteRenderer_MonsterSprite != null)
+            SpriteRenderer_MonsterSprite.color = Color.white;
     }
 }

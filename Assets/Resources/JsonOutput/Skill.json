@@ -12,7 +12,8 @@
     "SkillDuration": null,
     "SkillDamageInterval": null,
     "DamagePerLevel": 120,
-    "CoolDownPerLevel": 0.2
+    "CoolDownPerLevel": 0.2,
+    "SkillDurationPerLevel": null
   },
   {
     "Id": "skill_fire_01",
@@ -27,7 +28,8 @@
     "SkillDuration": 1.5,
     "SkillDamageInterval": 1.2,
     "DamagePerLevel": 200,
-    "CoolDownPerLevel": 0.3
+    "CoolDownPerLevel": 0.3,
+    "SkillDurationPerLevel": null
   },
   {
     "Id": "skill_ice_01",
@@ -42,7 +44,8 @@
     "SkillDuration": 1,
     "SkillDamageInterval": null,
     "DamagePerLevel": 100,
-    "CoolDownPerLevel": 0.2
+    "CoolDownPerLevel": 0.2,
+    "SkillDurationPerLevel": 0.2
   },
   {
     "Id": "skill_lightning_01",
@@ -57,6 +60,7 @@
     "SkillDuration": null,
     "SkillDamageInterval": null,
     "DamagePerLevel": 50,
-    "CoolDownPerLevel": 0.2
+    "CoolDownPerLevel": 0.2,
+    "SkillDurationPerLevel": null
   }
 ]

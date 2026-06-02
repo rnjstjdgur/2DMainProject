@@ -50,6 +50,7 @@ MonoBehaviour:
   Skill_CoolTime: 3
   SpriteRenderer_MonsterSprite: {fileID: 6627811897836811848}
   Prefab_ThisMonsterSkillObject: {fileID: 3601178608979350394, guid: 9f38ef7ceff11c1469016c97957536c9, type: 3}
+  Rigidbody2D_MonsterRigidbody: {fileID: 5336684423402810778}
   _instanceId: 0
   _dataId: 
   _baseHp: 0

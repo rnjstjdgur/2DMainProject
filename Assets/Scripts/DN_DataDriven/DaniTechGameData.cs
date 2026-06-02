@@ -37,6 +37,7 @@ public class DNSkillData : GameDataBase
     public float SkillDamageInterval;
     public float DamagePerLevel;
     public float CoolDownPerLevel;
+    public float SkillDurationPerLevel;
 }
 
 [System.Serializable]

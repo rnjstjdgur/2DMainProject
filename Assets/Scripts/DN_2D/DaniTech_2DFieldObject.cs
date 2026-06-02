@@ -48,7 +48,7 @@ public class DaniTech_2DFieldObject : MonoBehaviour
             {
                 DaniTechGameManager.Inst.IncreasePlayerExp(fieldObjectData.ManaPoints);
 
-                DaniTechGameObjectManager.Inst.RequestDestroyFieldObject(_fieldObjectInstanceId);
+                DaniTechGameObjectManager.Inst.RequestDespawnFieldObject(_fieldObjectInstanceId, _fieldObjectDataId);
             }
 
             // 채집과 드랍 1-1) 내가 상호작용한 필드 오브젝트가 채집물이거나 드랍아이템 유형인지 확인 (Enum으로 바꿔서 쓰면 더 좋다)
@@ -83,7 +83,7 @@ public class DaniTech_2DFieldObject : MonoBehaviour
 
 
                 // 채집과 드랍 1-5) 추가 완료 되었다면 이 오브젝트를 비활성화 또는 제거하자 (우리는 제거를 선택)
-                DaniTechGameObjectManager.Inst.RequestDestroyFieldObject(_fieldObjectInstanceId);
+                DaniTechGameObjectManager.Inst.RequestDespawnFieldObject(_fieldObjectInstanceId, _fieldObjectDataId);
             }
         }
     }

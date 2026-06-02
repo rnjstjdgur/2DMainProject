@@ -23,15 +23,13 @@ public class DaniTechGameObjectManager : MonoBehaviour
     // 생성된 오브젝트의 키가 됨
     private int _objectInstanceKeyGenerator = 0;
 
-    private Vector2 _lastOverlapOffset = Vector2.zero;
-    private float _lastOverlapRadius = 1f;
-
     private System.Threading.CancellationTokenSource _skillLoopCts;
 
     // 생성된 오브젝트의 생명을 보관
     private Dictionary<int, GameObject> _createdGameObjectContainer = new Dictionary<int, GameObject>();
     private Dictionary<int, DaniTech_2DFieldObject> _fieldObjectContainer = new Dictionary<int, DaniTech_2DFieldObject>();
     private Dictionary<string, Queue<Monster2D>> _monsterPool = new Dictionary<string, Queue<Monster2D>>();
+    private Dictionary<string, Queue<DaniTech_2DFieldObject>> _fieldObjectPool = new Dictionary<string, Queue<DaniTech_2DFieldObject>>();
     private Dictionary<int, Monster2D> _monsterObjectContainer = new Dictionary<int, Monster2D>();
     private Dictionary<string, int> _skillList = new Dictionary<string, int>();
 
@@ -369,40 +367,52 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     public async UniTaskVoid CreateFieldObject(string fieldObjectDataId, Transform spawnSpot)
     {
-        var fieldObject = DaniTechGameDataManager.Instance.GetDNFieldObjectData(fieldObjectDataId);
-        if (fieldObject != null)
+        var fieldObjectData = DaniTechGameDataManager.Instance.GetDNFieldObjectData(fieldObjectDataId);
+        if (fieldObjectData == null) return;
+
+        DaniTech_2DFieldObject fieldObject = null;
+
+        if (_fieldObjectPool.TryGetValue(fieldObjectDataId, out var pool) && pool.Count > 0)
         {
-            var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(fieldObject.PrefabPath, Transform_ManaBallRoot, true);
-            createdObj.transform.position = spawnSpot.position;
-            AddFieldObjectOnCreate(createdObj, fieldObjectDataId);
+            fieldObject = pool.Dequeue();
+            fieldObject.transform.position = spawnSpot.position;
+            fieldObject.gameObject.SetActive(true);
+        }
+        else
+        {
+            var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(fieldObjectData.PrefabPath, Transform_ManaBallRoot, true);
+            fieldObject = createdObj.GetComponent<DaniTech_2DFieldObject>();
+            fieldObject.transform.position = spawnSpot.position;
         }
 
+        AddFieldObjectOnCreate(fieldObject, fieldObjectDataId);
     }
 
-    private void AddFieldObjectOnCreate(GameObject createdObject, string fieldObjectDataId)
+    // Destroy 대신 호출할 메서드
+    public void RequestDespawnFieldObject(int instanceId, string dataId)
+    {
+        if (_fieldObjectContainer.TryGetValue(instanceId, out var fieldObject))
+        {
+            _fieldObjectContainer.Remove(instanceId);
+            fieldObject.gameObject.SetActive(false); // Destroy 대신 비활성화
+
+            if (!_fieldObjectPool.ContainsKey(dataId))
+                _fieldObjectPool.Add(dataId, new Queue<DaniTech_2DFieldObject>());
+
+            _fieldObjectPool[dataId].Enqueue(fieldObject);
+        }
+    }
+
+    private void AddFieldObjectOnCreate(DaniTech_2DFieldObject fieldObject, string fieldObjectDataId)
     {
         _objectInstanceKeyGenerator++;
         var generatedInstanceId = _objectInstanceKeyGenerator;
-        var fieldObject = createdObject.GetComponent<DaniTech_2DFieldObject>();
 
         if (fieldObject != null)
         {
             _fieldObjectContainer.Add(generatedInstanceId, fieldObject);
             fieldObject.InitFieldObjectInfoOnCreated(generatedInstanceId, fieldObjectDataId);
         }
-    }
-
-    public void RequestDestroyFieldObject(int instanceId)
-    {
-        var fieldObjectComponent = GetFieldObjectByInstanceId(instanceId);
-        if (fieldObjectComponent == null)
-        {
-            return;
-        }
-
-        // 요청된 필드 오브젝트를 제거함
-        _fieldObjectContainer.Remove(instanceId);
-        Destroy(fieldObjectComponent.gameObject);
     }
 
     public DaniTech_2DFieldObject GetFieldObjectByInstanceId(int fieldObjectInstanceId)
@@ -442,6 +452,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
             }
         }
         _monsterObjectContainer.Clear();
+        _monsterPool.Clear();
 
         foreach (var kv in _createdGameObjectContainer)
         {
@@ -457,6 +468,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
             }
         }
         _fieldObjectContainer.Clear();
+        _fieldObjectPool.Clear();
 
         if (_skillList != null)
         {

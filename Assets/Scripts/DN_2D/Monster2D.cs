@@ -76,7 +76,6 @@ public class Monster2D : DaniTech_MonsterBase
 
     public void InitMonster(int instanceId, string dataId)
     {
-        Debug.Log($"[Monster2D] 고유번호: {instanceId} / 데이터ID: {dataId} 스폰 완료! (재사용 여부: {gameObject.activeSelf})");
         _instanceId = instanceId;
         _dataId = dataId;
         _isAlive = true;
@@ -149,7 +148,6 @@ public class Monster2D : DaniTech_MonsterBase
     public void TakeDamage(float playerDamage)
     {
         _baseHp -= playerDamage;
-        Debug.LogWarning($"몬스터 {_instanceId}가 플레이어의 공격을 받아 체력이 {_baseHp} / {_maxHp}가 되었습니다.");
         InvokeStatChangedEvent();
 
         if (_baseHp <= 0)
@@ -160,6 +158,7 @@ public class Monster2D : DaniTech_MonsterBase
 
     public void ApplyFreezeEffect(float duration)
     {
+        if (this.gameObject.activeInHierarchy == false) return;
         if (_freezeCoroutine != null) StopCoroutine(_freezeCoroutine);
         _freezeCoroutine = StartCoroutine(CoFreezeRoutine(duration));
     }

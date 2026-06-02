@@ -9,6 +9,7 @@ public class DaniTechGameManager : MonoBehaviour
     private DaniTechPlayerModel _playerModel = new DaniTechPlayerModel();
     private bool _IsGameStart = false;
     private Player2D _localPlayer;
+    private float _gameTimer;
 
 
     private void Awake()

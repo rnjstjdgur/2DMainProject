@@ -89,6 +89,11 @@ public class WaveSpawnManager : MonoBehaviour
         HandleManaSpawn();
     }
 
+    public float GetGameTimer()
+    {
+        return _gameTimer;
+    }
+
     private void HandleMonsterSpawn()
     {
         // 2. 타임라인에 등록된 모든 웨이브 조건을 검사

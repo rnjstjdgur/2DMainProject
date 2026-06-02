@@ -58,17 +58,47 @@ MonoBehaviour:
     spawnInterval: 2
     spawnCountPerTime: 3
   _manaTimeLine:
-  - manaBallDataId: dropItem_manaballpink_1
+  - manaBallDataId: dropItem_manaballblue_1
     manaSpawnWaveName: "1\uB819\uB9C8\uB098\uC2A4\uD3F0"
     startLevel: 0
     endLevel: 2
     manaSpawnInterval: 1
     manaSpawnCountPerTime: 2
-  - manaBallDataId: dropItem_manaballpink_1
+  - manaBallDataId: dropItem_manaballblue_1
     manaSpawnWaveName: "2\uB819\uB9C8\uB098\uC2A4\uD3F0"
-    startLevel: 0
+    startLevel: 2
     endLevel: 10
+    manaSpawnInterval: 2
+    manaSpawnCountPerTime: 3
+  - manaBallDataId: dropItem_manaballorange_1
+    manaSpawnWaveName: "5\uB819\uB9C8\uB098\uC2A4\uD3F0"
+    startLevel: 5
+    endLevel: 10
+    manaSpawnInterval: 2
+    manaSpawnCountPerTime: 2
+  - manaBallDataId: dropItem_manaballorange_1
+    manaSpawnWaveName: "7\uB819\uB9C8\uB098\uC2A4\uD3F0"
+    startLevel: 7
+    endLevel: 12
     manaSpawnInterval: 1
+    manaSpawnCountPerTime: 2
+  - manaBallDataId: dropItem_manaballorange_1
+    manaSpawnWaveName: "10\uB819\uB9C8\uB098\uC2A4\uD3F0"
+    startLevel: 10
+    endLevel: 15
+    manaSpawnInterval: 1
+    manaSpawnCountPerTime: 3
+  - manaBallDataId: dropItem_manaballpink_1
+    manaSpawnWaveName: "11\uB819\uB9C8\uB098\uC2A4\uD3F0"
+    startLevel: 11
+    endLevel: 15
+    manaSpawnInterval: 3
+    manaSpawnCountPerTime: 2
+  - manaBallDataId: dropItem_manaballpink_1
+    manaSpawnWaveName: "12\uB819\uB9C8\uB098\uC2A4\uD3F0"
+    startLevel: 12
+    endLevel: 15
+    manaSpawnInterval: 2
     manaSpawnCountPerTime: 3
   _spawnRadius: 12
   _manaSpawnRadius: 10

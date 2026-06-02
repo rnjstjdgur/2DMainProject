@@ -3,16 +3,17 @@ using UnityEngine.UI;
 
 public class DaniTech_MainUI : DaniTechUIBase
 {
+    [Header("버튼")]
     [SerializeField] private DaniTechUIButton Btn_MyProfile;
     [SerializeField] private DaniTechUIButton Btn_StartBattle;
     [SerializeField] private DaniTechUIButton Btn_MonsterSpawn;
     [SerializeField] private DaniTechUIButton Btn_OpenInventory;
     [SerializeField] private DaniTechUIButton Btn_OpenGameBook;
 
-    [Header("스킬영역")]
-    [SerializeField] private DaniTechUIButton Btn_NormalAttack;
-    [SerializeField] private DaniTechUIButton Btn_CircleSkill;
-    [SerializeField] private DaniTechUIButton Btn_RaySkill;
+    [Header("시간")]
+    [SerializeField] private Text Text_GameTimer;
+
+    private float _gameTimer;
 
     private void OnEnable()
     {
@@ -22,8 +23,15 @@ public class DaniTech_MainUI : DaniTechUIBase
         Btn_OpenInventory.BindOnClickButtonEvent(OnClick_OpenInventory);
         Btn_OpenGameBook.BindOnClickButtonEvent(OnClick_OpenGameBook);
 
-        // 스킬
-        Btn_NormalAttack.BindOnClickButtonEvent(OnClick_UseNormalSkill);
+        Text_GameTimer.GetComponent<Text>();
+    }
+
+    private void Update()
+    {
+        _gameTimer = WaveSpawnManager.instance.GetGameTimer();
+        int timeHour = (int)(_gameTimer / 60);
+        int timeMinute = (int)(_gameTimer % 60);
+        Text_GameTimer.text = $"{timeHour} : {timeMinute}";
     }
 
     public void OnClick_UseNormalSkill()

@@ -49,6 +49,7 @@ public class DaniTechGameManager : MonoBehaviour
         if (DaniTechGameObjectManager.Inst != null)
         {
             DaniTechGameObjectManager.Inst.ResetObjectOnNewGame();
+            DaniTechGameObjectManager.Inst.ResetSkillList();
 
             var newPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
             if (newPlayer != null)
@@ -56,6 +57,10 @@ public class DaniTechGameManager : MonoBehaviour
                 DaniTechGameObjectManager.Inst.RegisterLocalPlayer(newPlayer);
                 _localPlayer = newPlayer;
             }
+        }
+
+        if (DaniTechGameDataManager.Instance != null)
+        {
         }
 
         if (WaveSpawnManager.instance != null)

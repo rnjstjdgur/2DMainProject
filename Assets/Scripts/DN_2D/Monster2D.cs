@@ -23,6 +23,7 @@ public class Monster2D : DaniTech_MonsterBase
     [SerializeField] private float _damageInterval = 1.0f; // 데미지를 줄 주기
     [SerializeField] private string _monsterType;
     private bool _isFrozen = false;
+    private bool _isHit = false;
     private Coroutine _freezeCoroutine;
 
     [Header("이동 관련 정보")]
@@ -79,6 +80,8 @@ public class Monster2D : DaniTech_MonsterBase
         _instanceId = instanceId;
         _dataId = dataId;
         _isAlive = true;
+
+        SpriteRenderer_MonsterSprite.color = Color.white;
 
         _playerTransform = DaniTechGameManager.Inst.GetPlayerTransform();
 
@@ -147,8 +150,10 @@ public class Monster2D : DaniTech_MonsterBase
     }
     public void TakeDamage(float playerDamage)
     {
+        _isHit = true;
         _baseHp -= playerDamage;
         InvokeStatChangedEvent();
+        ApplyHitEffect(0.2f);
 
         if (_baseHp <= 0)
         {
@@ -161,6 +166,12 @@ public class Monster2D : DaniTech_MonsterBase
         if (this.gameObject.activeInHierarchy == false) return;
         if (_freezeCoroutine != null) StopCoroutine(_freezeCoroutine);
         _freezeCoroutine = StartCoroutine(CoFreezeRoutine(duration));
+    }
+
+    public void ApplyHitEffect(float duration)
+    {
+        if (this.gameObject.activeInHierarchy == false) return;
+        StartCoroutine(CoHitEffect(duration));
     }
 
     // 물리 관련 ==============================================
@@ -186,7 +197,7 @@ public class Monster2D : DaniTech_MonsterBase
 
             if (currentDamageTimer >= _damageInterval)
             {
-                var player = collision.gameObject.GetComponent<Player2D>();
+                var player = collision.gameObject.GetComponentInParent<Player2D>();
                 if (player != null)
                 {
                     player.TakeDamage(_baseAtk);
@@ -212,5 +223,16 @@ public class Monster2D : DaniTech_MonsterBase
         Rigidbody2D_MonsterRigidbody.simulated = true;
         if (SpriteRenderer_MonsterSprite != null)
             SpriteRenderer_MonsterSprite.color = Color.white;
+    }
+
+    private IEnumerator CoHitEffect(float duration)
+    {
+        if (SpriteRenderer_MonsterSprite == null) yield return null;
+        SpriteRenderer_MonsterSprite.color = Color.red;
+
+        yield return new WaitForSeconds(duration);
+
+        SpriteRenderer_MonsterSprite.color = Color.white;
+        _isHit = false;
     }
 }

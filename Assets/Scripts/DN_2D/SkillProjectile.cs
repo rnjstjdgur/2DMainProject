@@ -56,8 +56,7 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
         }
         else
         {
-            _skillCoolTime = 1.0f;
-            Debug.LogWarning($"[SkillProjectile] '{_skillDataId}' 데이터를 찾지 못해 인스펙터 기본값으로 작동합니다.");
+            Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못했습니다.");
         }
 
         // 2. 타겟팅 유도 시스템 가동 (주변에 가장 가까운 적 찾기)

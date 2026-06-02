@@ -52,6 +52,10 @@ public class SkillRayCast : DaniTech_SkillBase, ISkillObject
             _skillCoolTime = skillData.SkillCoolTime;
             _skillDamageInterval = skillData.SkillDamageInterval;
         }
+        else
+        {
+            Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못했습니다.");
+        }
 
         int boltCount = Mathf.Min(currentLevel + 1, 7);
 

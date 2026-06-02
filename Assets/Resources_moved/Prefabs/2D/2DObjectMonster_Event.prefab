@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3913345384659400806}
   - component: {fileID: 2495663671829163208}
   - component: {fileID: 5336684423402810778}
-  - component: {fileID: 1874681594026397106}
+  - component: {fileID: 6490470276002078091}
   m_Layer: 3
   m_Name: 2DObjectMonster_Event
   m_TagString: Enemy
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1113892166969296485}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.6, y: -2.06, z: -2.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -86,8 +86,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &1874681594026397106
-BoxCollider2D:
+--- !u!58 &6490470276002078091
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -120,18 +120,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.083785534, y: -0.15672135}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 2.2567797, y: 4.163648}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 3
 --- !u!1 &2944356783977162841
 GameObject:
   m_ObjectHideFlags: 0

@@ -55,8 +55,7 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
         }
         else
         {
-            _skillDuration = 1f;
-            Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못해 기본값으로 작동합니다.");
+            Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못했습니다.");
         }
 
         // 스킬 지속시간 및 방향 동기화를 제어하는 코루틴 시작

@@ -46,6 +46,7 @@ public class WaveSpawnManager : MonoBehaviour
 
     private Dictionary<WaveData, float> _waveTimers = new Dictionary<WaveData, float>();
     private Dictionary<LevelData, float> _manaTimers = new Dictionary<LevelData, float>();
+    private List<float> _waveCurrentTimers = new List<float>();
 
     private void Awake()
     {
@@ -54,6 +55,7 @@ public class WaveSpawnManager : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < _waveTimeline.Count; i++) _waveCurrentTimers.Add(0f);
         // 각 웨이브마다 독립적으로 작동할 주기 타이머 공간 초기화
         foreach (var wave in _waveTimeline)
         {
@@ -96,6 +98,21 @@ public class WaveSpawnManager : MonoBehaviour
 
     private void HandleMonsterSpawn()
     {
+        for (int i = 0; i < _waveTimeline.Count; i++)
+        {
+            var wave = _waveTimeline[i];
+
+            if (_gameTimer >= wave.startTime && _gameTimer <= wave.endTime)
+            {
+                _waveCurrentTimers[i] += Time.deltaTime; // 인덱스로 접근
+
+                if (_waveCurrentTimers[i] >= wave.spawnInterval)
+                {
+                    _waveCurrentTimers[i] = 0f;
+                    SpawnWaveGroup(wave.monsterDataId, wave.spawnCountPerTime, _spawnRadius, false);
+                }
+            }
+        }
         // 2. 타임라인에 등록된 모든 웨이브 조건을 검사
         foreach (var wave in _waveTimeline)
         {

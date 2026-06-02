@@ -40,7 +40,7 @@ public class SkillCircle : DaniTech_SkillBase, ISkillObject
     {
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         if (skillData == null) return 1.0f;
-        return CalculateCoolTime(_skillDataId, _skillCoolTime, skillData.CoolDownPerLevel);
+        return CalculateCoolTime(_skillDataId, skillData.SkillCoolTime, skillData.CoolDownPerLevel);
     }
 
     public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<SkillCollisionInfo> collisionCallback)
@@ -70,9 +70,7 @@ public class SkillCircle : DaniTech_SkillBase, ISkillObject
         }
         else
         {
-            _skillDuration = 1.5f;
-            _skillDamageInterval = 0.3f;
-            Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못해 기본값으로 작동합니다.");
+            Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못했습니다.");
         }
 
         // 스킬 지속시간 및 방향 동기화를 제어하는 코루틴 시작

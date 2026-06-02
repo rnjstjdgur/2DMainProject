@@ -526,8 +526,20 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _waveTimeline.Array.data[0].monsterDataId
+      value: mob_normal_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _waveTimeline.Array.data[1].monsterDataId
+      value: mob_normal_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
       propertyPath: _waveTimeline.Array.data[2].monsterDataId
-      value: mob_bear_1
+      value: mob_green_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: _manaTimeLine.Array.data[0].manaBallDataId
+      value: dropItem_manaballblue_1
       objectReference: {fileID: 0}
     - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
       propertyPath: _manaTimeLine.Array.data[1].manaBallDataId
@@ -680,14 +692,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6288677291912391479, guid: 40be2a791e20a4542b7e9193311c1975, type: 3}
-      propertyPath: _chunkSize
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6288677291912391479, guid: 40be2a791e20a4542b7e9193311c1975, type: 3}
-      propertyPath: Prefab_TilemapChunk
-      value: 
-      objectReference: {fileID: 3691853233084655582, guid: a6900bf1357fae44fb6c2348f1ca4e42, type: 3}
     - target: {fileID: 9192351228819369026, guid: 40be2a791e20a4542b7e9193311c1975, type: 3}
       propertyPath: m_LocalPosition.x
       value: -998.75433

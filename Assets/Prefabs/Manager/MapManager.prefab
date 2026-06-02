@@ -44,6 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c1d1a49b204304eb3be68344b29a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapManager
-  Prefab_Player: {fileID: 9124186025880486968, guid: 2c24543d408afbf49baabb8ff69bba97, type: 3}
   Prefab_TilemapChunk: {fileID: 3691853233084655582, guid: a6900bf1357fae44fb6c2348f1ca4e42, type: 3}
   _chunkSize: 20

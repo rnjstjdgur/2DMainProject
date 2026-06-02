@@ -339,7 +339,6 @@ public class DaniTechGameObjectManager : MonoBehaviour
         }
 
         // 원본 데이터 혹은 세션 데이터의 레벨 갱신
-        skillData.SkillLevel = _skillList[skillDataId];
         Debug.LogError($"스킬 {skillData.Name}의 데미지: {skillData.SkillDamage} | 쿨타임: {skillData.SkillCoolTime}");
     }
 
@@ -358,6 +357,11 @@ public class DaniTechGameObjectManager : MonoBehaviour
             return skillData.SkillLevel;
         }
         return 0; // 아직 배우지 않은 스킬은 레벨 0 반환
+    }
+
+    public void ResetSkillList()
+    {
+        _skillList.Clear();
     }
 
 
@@ -454,7 +458,10 @@ public class DaniTechGameObjectManager : MonoBehaviour
         }
         _fieldObjectContainer.Clear();
 
-        _skillList.Clear();
+        if (_skillList != null)
+        {
+            _skillList.Clear();
+        }
 
         if (_localPlayer != null && _localPlayer.gameObject != null)
         {

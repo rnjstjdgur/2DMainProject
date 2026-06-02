@@ -33,6 +33,7 @@ public class Player2D : MonoBehaviour
     private bool _isLookRight = true;
     private bool _isPlayerLevelUp = false;
     private bool _isPlayerAlive = true;
+    private bool _isPlayerHit = false;
 
     private List<DNSkillData> _skillDataList = new List<DNSkillData>();
 
@@ -51,15 +52,7 @@ public class Player2D : MonoBehaviour
 
     private void Start()
     {
-        _playerData = DaniTechGameDataManager.Instance.GetCharacterData("character_basic_01");
-        _playerLevel = _playerData.PlayerLevel;
-        LoadSkill();
-        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
-        DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
-        DaniTechGameObjectManager.Inst.StartAutoCircleSkillLoop();
-        DaniTechGameObjectManager.Inst.StartAutoLightningSkillLoop();
-        DaniTechGameObjectManager.Inst.StartAutoAOESkillLoop();
-        DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
+        InitPlayer();
     }
 
     private void OnDisable()
@@ -92,6 +85,22 @@ public class Player2D : MonoBehaviour
         }
 
         transform.Translate(Move_Direction * Move_Speed * Time.deltaTime);
+    }
+
+    // 생성 ============================================================
+
+    private void InitPlayer()
+    {
+        _playerData = DaniTechGameDataManager.Instance.GetCharacterData("character_basic_01");
+        _playerLevel = _playerData.PlayerLevel;
+        LoadSkill();
+        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
+        DaniTechGameObjectManager.Inst.StartAutoProjectileSkillLoop();
+        DaniTechGameObjectManager.Inst.StartAutoCircleSkillLoop();
+        DaniTechGameObjectManager.Inst.StartAutoLightningSkillLoop();
+        DaniTechGameObjectManager.Inst.StartAutoAOESkillLoop();
+        DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
+        this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     // 이동 관련 ========================================================
@@ -207,11 +216,7 @@ public class Player2D : MonoBehaviour
 
     // 기믹 관련 ====================================================================
 
-    IEnumerator CoStartNormalAttack()
-    {
-        yield return new WaitForSeconds(1.0f);
-        Collider_PlayerNormalAttack.gameObject.SetActive(false);
-    }
+    
 
     public Vector2 GetPlayerLookDirection()
     {
@@ -254,6 +259,7 @@ public class Player2D : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        StartCoroutine(CoHitEffect());
         _playerHp -= damage;
         Debug.Log($"플레이어가 {damage} 데미지를 입었습니다. 현재체력: {_playerHp}");
         InvokeStatChangedEvent();
@@ -300,5 +306,30 @@ public class Player2D : MonoBehaviour
 
         Vector3 center = transform.position + (Vector3)(rightOffset + upOffset);
         Gizmos.DrawWireSphere(center, _lastOverlapRadius);
+    }
+
+
+
+
+
+
+
+    // 코루틴 ================================
+    private IEnumerator CoStartNormalAttack()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Collider_PlayerNormalAttack.gameObject.SetActive(false);
+    }
+
+    private IEnumerator CoHitEffect()
+    {
+        _isPlayerHit = true;
+        var playerSpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        playerSpriteRenderer.color = Color.red;
+
+        yield return new WaitForSeconds(0.2f);
+        playerSpriteRenderer.color = Color.white;
+
+        _isPlayerHit = false;
     }
 }

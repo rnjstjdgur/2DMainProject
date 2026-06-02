@@ -6,7 +6,6 @@ public class ChooseSkillUI : DaniTechUIBase
 {
     [SerializeField] private GameObject Prefab_Slot;
     [SerializeField] private Transform Transform_UISlotRoot;
-    [SerializeField] private DaniTechUIButton Button_CloseSelfAllArea;
 
     private int _generatedKey = 0;
     private Dictionary<int, ChooseSkillSlotUI> _skillSlotList = new Dictionary<int, ChooseSkillSlotUI>();
@@ -15,7 +14,6 @@ public class ChooseSkillUI : DaniTechUIBase
     private void OnEnable()
     {
         TimeManager.instance.TimeStop();
-        Button_CloseSelfAllArea.BindOnClickButtonEvent(OnClick_ClosePopup);
         SetSkillSlotOnEnable();
     }
 

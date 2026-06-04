@@ -55,6 +55,15 @@ public class DaniTechUIManager : MonoBehaviour
         }
     }
 
+    public void ForceCloseUI(DaniTechUIType uiType)
+    {
+        if (_createdUIDic.TryGetValue(uiType , out var openedUi))
+        {
+            openedUi.gameObject.SetActive(false);
+            _createdUIDic.Remove(uiType);
+        }
+    }
+
     private Transform GetRootTransform(DaniTechUIRootType uiRootType)
     {
         Transform root = null;

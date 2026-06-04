@@ -354,9 +354,12 @@ public class Player2D : MonoBehaviour
     {
         _isPlayerHit = true;
         var playerSpriteRenderer = this.gameObject.GetComponentInChildren<SpriteRenderer>();
+        DaniTechUIManager.Instance.OpenContentUI(DaniTechUIType.AttackedUI);
         playerSpriteRenderer.color = Color.red;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSecondsRealtime(0.2f);
+        Debug.LogError("닫힘");
+        DaniTechUIManager.Instance.CloseContentUI(DaniTechUIType.AttackedUI);
         playerSpriteRenderer.color = Color.white;
 
         _isPlayerHit = false;

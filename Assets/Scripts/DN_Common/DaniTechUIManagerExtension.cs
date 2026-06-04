@@ -25,7 +25,8 @@ public enum DaniTechUIType
     GameBookUI,
     HudUI,
     ChooseSkillUI,
-    GameOverPopup
+    GameOverPopup,
+    AttackedUI
 }
 
 public static class DaniTechUIManagerExtension

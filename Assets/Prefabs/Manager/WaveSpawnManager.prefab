@@ -95,7 +95,7 @@ MonoBehaviour:
     spawnCountPerTime: 3
   _itemWaveTimeline:
   - waveName: "\uCCB4\uB825\uD68C\uBCF5"
-    startTime: 0
+    startTime: 180
     itemDataId: dropItem_heart_1
   - waveName: "\uCCB4\uB825\uD68C\uBCF5"
     startTime: 360
@@ -107,19 +107,19 @@ MonoBehaviour:
     startTime: 720
     itemDataId: dropItem_heart_1
   - waveName: "\uC0C1\uC790\uC774\uBCA4\uD2B8"
-    startTime: 1
+    startTime: 500
     itemDataId: dropItem_chest_1
   - waveName: "\uC0C1\uC790\uC774\uBCA4\uD2B8"
     startTime: 600
     itemDataId: dropItem_chest_1
   - waveName: "\uC9C0\uD321\uC774"
-    startTime: 2
+    startTime: 120
     itemDataId: dropItem_wand_1
   - waveName: "\uC9C0\uD321\uC774"
     startTime: 600
     itemDataId: dropItem_wand_1
   - waveName: "\uACE0\uAE09\uC9C0\uD321\uC774"
-    startTime: 3
+    startTime: 360
     itemDataId: dropItem_wand_dmgup_1
   _manaTimeLine:
   - manaBallDataId: dropItem_manaballblue_1

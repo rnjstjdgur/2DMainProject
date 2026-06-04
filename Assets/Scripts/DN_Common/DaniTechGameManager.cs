@@ -111,20 +111,12 @@ public class DaniTechGameManager : MonoBehaviour
         _localPlayer.HealingHp(healAmount);
     }
 
-    public void IncreasePlayerDmg(float dmgAmount)
+    public void IncreasePlayerStat(float dmgAmount, float speedAmount)
     {
         _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
 
         if (_localPlayer == null) return;
-        _localPlayer.IncreaseDmg(dmgAmount);
-    }
-
-    public void IncreasePlayerSpeed(float speedAmount)
-    {
-        _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
-
-        if (_localPlayer == null) return;
-        _localPlayer.IncreaseSpeed(speedAmount);
+        _localPlayer.ApplyWandBuff(dmgAmount, speedAmount);
     }
 
     public Transform GetPlayerTransform()

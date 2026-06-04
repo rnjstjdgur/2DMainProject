@@ -31,7 +31,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 105beb9d09ed211419f1655873219a1a
-    m_Address: Assets/Prefabs/0_Sample/Item_Wand_Dmgup.prefab
+    m_Address: 2DPrefab/DropItem_WandDmgUp
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -294,7 +294,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
             int currentLevel = GetSkillLevel(info.SkillDataId);
             if (currentLevel < 1) currentLevel = 1;
 
-            calculatedDamage = skillTableData.SkillDamage + (skillTableData.DamagePerLevel * (currentLevel - 1));
+            calculatedDamage = (skillTableData.SkillDamage + (skillTableData.DamagePerLevel * (currentLevel - 1)))*(_localPlayer.Damage());
         }
         else
         {

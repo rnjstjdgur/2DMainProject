@@ -117,7 +117,7 @@
     "PrefabPath": "2DPrefab/DropItem_Wand",
     "ManaPoints": null,
     "HealAmount": null,
-    "DmgAmount": 50,
+    "DmgAmount": 0.5,
     "SpeedAmount": 1
   },
   {
@@ -145,7 +145,7 @@
     "PrefabPath": "2DPrefab/DropItem_WandDmgUp",
     "ManaPoints": null,
     "HealAmount": null,
-    "DmgAmount": 200,
-    "SpeedAmount": 3
+    "DmgAmount": 1,
+    "SpeedAmount": 2
   }
 ]

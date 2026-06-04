@@ -410,7 +410,7 @@ MonoBehaviour:
   _playerMp: 0
   _playerLevel: 1
   _maxMp: 0
-  _playerBaseAtk: 100
+  _playerBaseAtk: 1
   _currentView: 2
 --- !u!61 &4346578616654390479
 BoxCollider2D:

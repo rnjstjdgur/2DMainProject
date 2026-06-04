@@ -19,7 +19,7 @@ public class Player2D : MonoBehaviour
     [SerializeField] private int _playerMp = 0;
     [SerializeField] private int _playerLevel = 1;
     [SerializeField] private int _maxMp;
-    [SerializeField] private int _playerBaseAtk = 100;
+    [SerializeField] private float _playerBaseAtk = 1f;
     // 스킬 관련 =======================================================
     public enum ViewType { Isometric, SideView, TopDown}
     public ViewType _currentView = ViewType.TopDown;
@@ -270,7 +270,7 @@ public class Player2D : MonoBehaviour
 
     // 전투 관련 =================================================
 
-    public int Damage()
+    public float Damage()
     {
         return _playerBaseAtk;
     }
@@ -336,17 +336,10 @@ public class Player2D : MonoBehaviour
         _playerHp += healAmount;
     }
 
-    public void IncreaseDmg(float dmgAmount)
+    public void ApplyWandBuff(float dmgAmount, float speedAmount)
     {
-        StartCoroutine(CoIncreaseStat(_playerBaseAtk, dmgAmount, 20));
+        StartCoroutine(CoIncreaseStat(dmgAmount, speedAmount, 20));
     }
-
-    public void IncreaseSpeed(float speedAmount)
-    {
-        StartCoroutine(CoIncreaseStat((int)Move_Speed, speedAmount, 20));
-    }
-
-
 
 
 
@@ -369,14 +362,22 @@ public class Player2D : MonoBehaviour
         _isPlayerHit = false;
     }
 
-    private IEnumerator CoIncreaseStat(int stat, float increaseAmount, int time)
+    private IEnumerator CoIncreaseStat(float dmgAmount, float speedAmount, int time)
     {
-        int baseStat = stat;
-        stat += (int)increaseAmount;
+        float baseAtk = _playerBaseAtk;
+        float baseSpeed = Move_Speed;
+
+        _playerBaseAtk += dmgAmount;
+        Move_Speed += speedAmount;
+
+        Debug.LogWarning($"데미지 {baseAtk} -> {_playerBaseAtk}, 스피드 {baseSpeed} -> {Move_Speed}로 {time}초 동안 증가");
         // UI 효과 추가 예정
 
         yield return new WaitForSeconds(time);
 
-        stat = baseStat;
+        Debug.LogWarning($"데미지 {_playerBaseAtk}, 스피드 {Move_Speed}로 복구");
+
+        _playerBaseAtk = baseAtk;
+        Move_Speed = baseSpeed;
     }
 }

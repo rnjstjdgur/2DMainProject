@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &469993779483313842
+--- !u!1 &6518724374931704973
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,54 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4713663755639204469}
-  - component: {fileID: 607741792749227522}
+  - component: {fileID: 7480836408669846508}
+  - component: {fileID: 8812819888821309279}
+  - component: {fileID: 2848127191174527572}
   m_Layer: 0
-  m_Name: collider
+  m_Name: Item_Wand_Dmgup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4713663755639204469
+--- !u!4 &7480836408669846508
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 469993779483313842}
+  m_GameObject: {fileID: 6518724374931704973}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.38219967, w: 0.9240798}
-  m_LocalPosition: {x: 0.038, y: -0.037, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7480836408669846508}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -44.94}
---- !u!70 &607741792749227522
+  m_Children:
+  - {fileID: 3455089353606107506}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
+--- !u!114 &8812819888821309279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6518724374931704973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3a70a47b776ef49bdcb165f09636b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DaniTech_2DFieldObject
+  _fieldObjectInstanceId: 0
+  _fieldObjectDataId: 
+  _fieldObjectName: Item_Wand_Dmgup
+--- !u!70 &2848127191174527572
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 469993779483313842}
+  m_GameObject: {fileID: 6518724374931704973}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -66,58 +83,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0008999561, y: 0.019902227}
-  m_Size: {x: 0.41288695, y: 1.878692}
+  m_Offset: {x: 0.037175026, y: 0.0030965798}
+  m_Size: {x: 0.31413466, y: 1.8735889}
   m_Direction: 0
---- !u!1 &6518724374931704973
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7480836408669846508}
-  - component: {fileID: 8812819888821309279}
-  m_Layer: 0
-  m_Name: Item_Wand_Dmgup
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7480836408669846508
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6518724374931704973}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3455089353606107506}
-  - {fileID: 4713663755639204469}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8812819888821309279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6518724374931704973}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c3a70a47b776ef49bdcb165f09636b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DaniTech_2DFieldObject
-  _fieldObjectInstanceId: 0
-  _fieldObjectDataId: 
-  _fieldObjectName: Item_Wand_Dmgup
 --- !u!1 &7084911797115787615
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,13 +111,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7084911797115787615}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7480836408669846508}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!212 &7135193930438079821
 SpriteRenderer:
   serializedVersion: 2

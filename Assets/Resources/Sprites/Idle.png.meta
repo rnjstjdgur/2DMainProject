@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a372041a183b54741bc158e63fdedc7b
+guid: e57133f0e4fe6fb4a9d4ae6fd7cb2666
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,23 +110,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Character_Idle_1_0
+      name: Idle_0
       rect:
         serializedVersion: 2
-        x: 41
-        y: 15
-        width: 253
-        height: 399
-      alignment: 9
-      pivot: {x: 0.5898179, y: 0.6090226}
+        x: 51
+        y: 11
+        width: 93
+        height: 155
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 42f72df63752051439830ff60732d77f
-      internalID: 1564236088
+      spriteID: e4cf5e078f9696342b5ea3d76bf40e45
+      internalID: -1492923774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle_1
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 10
+        width: 88
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67ae810da363f6c4d8d89bca1436551e
+      internalID: -869744412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle_2
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 10
+        width: 88
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6493ff4f91707bd49a66eff1bd1af94f
+      internalID: -945603007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle_3
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 11
+        width: 88
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eb5535336983144cac553fc077cb529
+      internalID: -542619739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle_4
+      rect:
+        serializedVersion: 2
+        x: 931
+        y: 11
+        width: 88
+        height: 161
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb6392698269e5a4ba4971c7f8135f4d
+      internalID: -9556629
       vertices: []
       indices: 
       edges: []
@@ -135,8 +223,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: d96dff634f099d149ad367f2cbfc4607
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -147,7 +235,13 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Character_Idle_1_0: 1564236088
+      Idle_0: -1492923774
+      Idle_1: -869744412
+      Idle_2: -945603007
+      Idle_3: -542619739
+      Idle_4: -9556629
+      Idle_6: 2059988573
+      Idle_7: -1940988405
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -35,6 +35,8 @@ public class Player2D : MonoBehaviour
     private bool _isPlayerAlive = true;
     private bool _isPlayerHit = false;
 
+    private Animator _animator;
+
     private List<DNSkillData> _skillDataList = new List<DNSkillData>();
 
     private readonly int[] _expTable = { 0, 100, 200, 400, 800, 1000, 1200, 1500, 2000, 2200, 2500, 3000, 4000, 5000, 7000, 10000 };
@@ -48,6 +50,8 @@ public class Player2D : MonoBehaviour
 
         _playerHp = 1000;
         _maxHp = _playerHp;
+
+        _animator = this.gameObject.GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -84,6 +88,25 @@ public class Player2D : MonoBehaviour
             Flip();
         }
 
+        // 0: Idle (정지, 위, 아래)
+        // 1: MoveRight (오른쪽, 왼쪽)
+        // 2: MoveRightUp (오른쪽 위, 왼쪽 위)
+        // 3: MoveRightDown (오른쪽 아래, 왼쪽 아래)
+        int animState = 0;
+
+        if (moveX != 0)
+        {
+            if (moveY > 0) animState = 2;
+            else if (moveY < 0) animState = 3;
+            else animState = 1;
+        }
+        else
+        {
+            animState = 0;
+        }
+
+        _animator.SetInteger("animState", animState);
+
         transform.Translate(Move_Direction * Move_Speed * Time.deltaTime);
     }
 
@@ -100,7 +123,7 @@ public class Player2D : MonoBehaviour
         DaniTechGameObjectManager.Inst.StartAutoLightningSkillLoop();
         DaniTechGameObjectManager.Inst.StartAutoAOESkillLoop();
         DaniTechUIManager.Instance.AddHudSlot(_instanceId, this.gameObject.transform);
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        this.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
 
     // 이동 관련 ========================================================
@@ -324,7 +347,7 @@ public class Player2D : MonoBehaviour
     private IEnumerator CoHitEffect()
     {
         _isPlayerHit = true;
-        var playerSpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        var playerSpriteRenderer = this.gameObject.GetComponentInChildren<SpriteRenderer>();
         playerSpriteRenderer.color = Color.red;
 
         yield return new WaitForSeconds(0.2f);

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cd352120d6f85de47b0966a0351ca6a7
+guid: f20753002e3682a42b9147145a192bd6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,23 +110,155 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Character_Idle_2_0
+      name: MoveRight_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 17
-        width: 253
-        height: 399
-      alignment: 9
-      pivot: {x: 0.5747121, y: 0.60106415}
+        x: 15
+        y: 22
+        width: 157
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b441f683767a76a41b6022a7a51f8abb
-      internalID: -1799276353
+      spriteID: 0ef176273f20ca14fbefa2e67bf5f244
+      internalID: -1426373857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveRight_1
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 20
+        width: 157
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ca0a13a8f877ad4cbe20c40936a6d0e
+      internalID: -1246510035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveRight_2
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 19
+        width: 157
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b11ff122c83b254ca759c38ab322323
+      internalID: -555483201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveRight_4
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 22
+        width: 156
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3b92331856f49d4dbc418f6048b5148
+      internalID: 1356666195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveRight_5
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 23
+        width: 156
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c8c4a40182922b45941a0b8917d400b
+      internalID: -1102068764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveRight_6
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 23
+        width: 156
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df9f189cfab83cf4bab9f77070f2734c
+      internalID: -928623274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveRight_7
+      rect:
+        serializedVersion: 2
+        x: 1244
+        y: 23
+        width: 157
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e0134afb20fe134da2db7da11a357a7
+      internalID: -236088981
       vertices: []
       indices: 
       edges: []
@@ -135,7 +267,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2151ad006d01e1f4d9fd7dc72f5ab9d7
+    spriteID: fff795a74214c2e41b4e8e0628b117b3
     internalID: 0
     vertices: []
     indices: 
@@ -147,7 +279,14 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Character_Idle_2_0: -1799276353
+      MoveRight_0: -1426373857
+      MoveRight_1: -1246510035
+      MoveRight_2: -555483201
+      MoveRight_3: 47381352
+      MoveRight_4: 1356666195
+      MoveRight_5: -1102068764
+      MoveRight_6: -928623274
+      MoveRight_7: -236088981
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

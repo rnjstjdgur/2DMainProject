@@ -1269,7 +1269,7 @@ GameObject:
   - component: {fileID: 8638005762859729719}
   - component: {fileID: 4673821532833605249}
   m_Layer: 5
-  m_Name: Image_Bear
+  m_Name: Image_Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1291,7 +1291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -348, y: -40}
+  m_AnchoredPosition: {x: -319, y: -40}
   m_SizeDelta: {x: 200, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3957022666296722274
@@ -1322,7 +1322,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1564236088, guid: a372041a183b54741bc158e63fdedc7b, type: 3}
+  m_Sprite: {fileID: -1492923774, guid: e57133f0e4fe6fb4a9d4ae6fd7cb2666, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1345,11 +1345,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DaniTechUIImageSequencer
   SpriteArray_Sprite:
-  - {fileID: 1564236088, guid: a372041a183b54741bc158e63fdedc7b, type: 3}
-  - {fileID: -1799276353, guid: cd352120d6f85de47b0966a0351ca6a7, type: 3}
-  - {fileID: 1564236088, guid: a372041a183b54741bc158e63fdedc7b, type: 3}
-  - {fileID: -1799276353, guid: cd352120d6f85de47b0966a0351ca6a7, type: 3}
-  _sequenceInterval: 0.5
+  - {fileID: -1492923774, guid: e57133f0e4fe6fb4a9d4ae6fd7cb2666, type: 3}
+  - {fileID: -869744412, guid: e57133f0e4fe6fb4a9d4ae6fd7cb2666, type: 3}
+  - {fileID: -945603007, guid: e57133f0e4fe6fb4a9d4ae6fd7cb2666, type: 3}
+  - {fileID: -542619739, guid: e57133f0e4fe6fb4a9d4ae6fd7cb2666, type: 3}
+  - {fileID: -9556629, guid: e57133f0e4fe6fb4a9d4ae6fd7cb2666, type: 3}
+  _sequenceInterval: 0.2
   _isLoop: 1
 --- !u!1 &6744939883235451302
 GameObject:

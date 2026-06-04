@@ -23,7 +23,7 @@
       1000
     ],
     "DropItemDataId": "Item_Gold_1",
-    "IconPath": null,
+    "IconPath": "Icon/Icon_Gold_1",
     "PrefabPath": "2DPrefab/DropItem_Gold",
     "ManaPoints": null
   },
@@ -73,5 +73,49 @@
     "IconPath": null,
     "PrefabPath": "2DPrefab/DropItem_ManaBallPink",
     "ManaPoints": 100
+  },
+  {
+    "Id": "dropItem_heart_1",
+    "FieldObjectType": "DropItem",
+    "Name": "하트",
+    "Description": "체력을 회복한다",
+    "DropCountRange": null,
+    "DropItemDataId": "Item_Heart_1",
+    "IconPath": "Icon/Icon_Heart_1",
+    "PrefabPath": "2DPrefab/DropItem_Heart",
+    "ManaPoints": null
+  },
+  {
+    "Id": "dropItem_wand_1",
+    "FieldObjectType": "DropItem",
+    "Name": "지팡이",
+    "Description": "공격력과 이동속도가 소량 증가한다",
+    "DropCountRange": null,
+    "DropItemDataId": "Item_Wand_1",
+    "IconPath": "Icon/Icon_Wand_1",
+    "PrefabPath": "2DPrefab/DropItem_Wand",
+    "ManaPoints": null
+  },
+  {
+    "Id": "dropItem_chest_1",
+    "FieldObjectType": "DropItem",
+    "Name": "상자",
+    "Description": "랜덤한 이벤트가 발생한다",
+    "DropCountRange": null,
+    "DropItemDataId": "Item_Chest_1",
+    "IconPath": "Icon/Icon_Chest_1",
+    "PrefabPath": "2DPrefab/DropItem_Chest",
+    "ManaPoints": null
+  },
+  {
+    "Id": "dropItem_wand_dmgup_1",
+    "FieldObjectType": "DropItem",
+    "Name": "고급지팡이",
+    "Description": "공격력과 이동속도가 대폭 증가한다",
+    "DropCountRange": null,
+    "DropItemDataId": "Item_Wand_DmgUp_1",
+    "IconPath": "Icon/Icon_Wand_DmgUp_1",
+    "PrefabPath": "2DPrefab/DropItem_WandDmgUp",
+    "ManaPoints": null
   }
 ]

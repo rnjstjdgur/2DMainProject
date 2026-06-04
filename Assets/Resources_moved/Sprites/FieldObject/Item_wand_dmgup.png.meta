@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 95203c462aeef65458d3be98d4df1494
+guid: f34bd580760c2a64588e7b5550f52ee8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,34 +110,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Item_wand
+      name: Item_wand_dmgup_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 353
-        width: 134
-        height: 135
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 42aa807973b7cf3458de23ace7da710d
-      internalID: -787351068
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Item_wand_dmg
-      rect:
-        serializedVersion: 2
-        x: 162
-        y: 347
-        width: 162
+        x: 0
+        y: 4
+        width: 158
         height: 149
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -147,52 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 943686c062012564bb74be5a34fd65f9
-      internalID: 1323018527
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Item_chest
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 187
-        width: 132
-        height: 100
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e9e40eb1ec5d297449396b4dd5eef186
-      internalID: 663734481
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Item_heart
-      rect:
-        serializedVersion: 2
-        x: 197
-        y: 19
-        width: 113
-        height: 103
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4f112122c65e1734497245b9caac2d35
-      internalID: 812108128
+      spriteID: 093a960a6241e724b8cfc53fadc7635d
+      internalID: -1655718485
       vertices: []
       indices: 
       edges: []
@@ -201,7 +135,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7fb74efd25a66f044b2abe692eddf9b7
+    spriteID: 3181d60d153dce34981681050b6c58c3
     internalID: 0
     vertices: []
     indices: 
@@ -213,16 +147,7 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Item_2: -42647910
-      Item_3: 935193314
-      Item_5: -2054827029
-      Item_6: -310820254
-      Item_7: -1741908168
-      Item_8: -266239034
-      Item_chest: 663734481
-      Item_heart: 812108128
-      Item_wand: -787351068
-      Item_wand_dmg: 1323018527
+      Item_wand_dmgup_0: -1655718485
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0cd3fa87c6b6a4c408d9aa3ba5ca209c
+    m_Address: Icon/Icon_Heart_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0d079c0737bf2f246b127fb22a014fa1
     m_Address: Sound/Voice_Pug_2_failed
     m_ReadOnly: 0
@@ -75,6 +80,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 644938881dddd364e9cbfb7927d9553d
+    m_Address: Icon/Icon_Wand_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 667b719d1d688874a8f6a8ad59d98106
     m_Address: Icon/Icon_Item_Box_1
     m_ReadOnly: 0
@@ -102,6 +112,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 82ed0c9195db5c44ca42a35cc36eec6b
     m_Address: Icon/Icon_RedMob
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8471f3e4a4a1d0346bfc49c3a144f7f0
+    m_Address: Icon/Icon_Chest_1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -157,6 +172,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ed6bb87b989628c4cbc3619289d5d378
     m_Address: 2DObject/Monster_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f34bd580760c2a64588e7b5550f52ee8
+    m_Address: Sprites/FieldObject/Item_wand_dmgup
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

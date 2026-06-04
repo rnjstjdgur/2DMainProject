@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 105beb9d09ed211419f1655873219a1a
+    m_Address: Assets/Prefabs/0_Sample/Item_Wand_Dmgup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 144604d9ace6eb748aea35ecebf0cc27
     m_Address: Texture2D/Texture2D_Loading_1
     m_ReadOnly: 0
@@ -57,6 +62,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2c0b111d3422dbc41b2e1b613ef2307c
     m_Address: Icon/Icon_NormalMob_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 312069b6969f934429929ba1979226e7
+    m_Address: 2DPrefab/DropItem_Chest
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -137,6 +147,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a3ed138b711d71c408a6fdab50726c15
     m_Address: 2DPrefab/DropItem_ManaBallBlue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b079f6519187ad845a12d276045d69f9
+    m_Address: 2DPrefab/DropItem_Wand
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -25,6 +25,7 @@ public class DaniTech_2DFieldObject : MonoBehaviour
         return _fieldObjectDataId;
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
@@ -53,12 +54,28 @@ public class DaniTech_2DFieldObject : MonoBehaviour
 
             if (fieldObjectData.FieldObjectType == "DropItem")
             {
+                DaniTechGameObjectManager.Inst.RequestDespawnFieldObject(_fieldObjectInstanceId, _fieldObjectDataId);
+
                 if (fieldObjectData.Id == "dropItem_heart_1")
                 {
                     DaniTechGameManager.Inst.HealingPlayerHp(fieldObjectData.HealAmount);
                     DaniTechUIManager.Instance.OpenSimplePopup("체력회복!");
                 }
-                DaniTechGameObjectManager.Inst.RequestDespawnFieldObject(_fieldObjectInstanceId, _fieldObjectDataId);
+                else if (fieldObjectData.Id == "dropItem_wand_1")
+                {
+                    DaniTechUIManager.Instance.OpenSimplePopup("공격력, 이동속도 소폭증가!");
+                    DaniTechGameManager.Inst.IncreasePlayerDmg(fieldObjectData.DmgAmount);
+                }
+                else if (fieldObjectData.Id == "dropItem_chest_1")
+                {
+                    DaniTechUIManager.Instance.OpenSimplePopup("랜덤 이벤트 발생!");
+
+                }
+                else if (fieldObjectData.Id == "dropItem_wand_dmgup_1")
+                {
+                    DaniTechUIManager.Instance.OpenSimplePopup("공격력, 이동속도 대폭증가!");
+                    DaniTechGameManager.Inst.IncreasePlayerDmg(fieldObjectData.DmgAmount);
+                }
             }
 
             //// 채집과 드랍 1-1) 내가 상호작용한 필드 오브젝트가 채집물이거나 드랍아이템 유형인지 확인 (Enum으로 바꿔서 쓰면 더 좋다)

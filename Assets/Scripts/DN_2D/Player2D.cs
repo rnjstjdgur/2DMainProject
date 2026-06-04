@@ -336,6 +336,16 @@ public class Player2D : MonoBehaviour
         _playerHp += healAmount;
     }
 
+    public void IncreaseDmg(float dmgAmount)
+    {
+        StartCoroutine(CoIncreaseStat(_playerBaseAtk, dmgAmount, 20));
+    }
+
+    public void IncreaseSpeed(float speedAmount)
+    {
+        StartCoroutine(CoIncreaseStat((int)Move_Speed, speedAmount, 20));
+    }
+
 
 
 
@@ -357,5 +367,16 @@ public class Player2D : MonoBehaviour
         playerSpriteRenderer.color = Color.white;
 
         _isPlayerHit = false;
+    }
+
+    private IEnumerator CoIncreaseStat(int stat, float increaseAmount, int time)
+    {
+        int baseStat = stat;
+        stat += (int)increaseAmount;
+        // UI 효과 추가 예정
+
+        yield return new WaitForSeconds(time);
+
+        stat = baseStat;
     }
 }

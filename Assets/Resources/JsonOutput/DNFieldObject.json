@@ -11,7 +11,10 @@
     "DropItemDataId": "Item_Corn_1",
     "IconPath": null,
     "PrefabPath": "2DPrefab/Harvest_Corn",
-    "ManaPoints": null
+    "ManaPoints": null,
+    "HealAmount": null,
+    "DmgAmount": null,
+    "SpeedAmount": null
   },
   {
     "Id": "dropItem_gold_1",
@@ -25,7 +28,10 @@
     "DropItemDataId": "Item_Gold_1",
     "IconPath": "Icon/Icon_Gold_1",
     "PrefabPath": "2DPrefab/DropItem_Gold",
-    "ManaPoints": null
+    "ManaPoints": null,
+    "HealAmount": null,
+    "DmgAmount": null,
+    "SpeedAmount": null
   },
   {
     "Id": "harv_potate_1",
@@ -39,7 +45,10 @@
     "DropItemDataId": "Item_Potato_1",
     "IconPath": null,
     "PrefabPath": "2DPrefab/Harvest_Potato",
-    "ManaPoints": null
+    "ManaPoints": null,
+    "HealAmount": null,
+    "DmgAmount": null,
+    "SpeedAmount": null
   },
   {
     "Id": "dropItem_manaballblue_1",
@@ -50,7 +59,10 @@
     "DropItemDataId": "Item_ManaBallBlue_1",
     "IconPath": null,
     "PrefabPath": "2DPrefab/DropItem_ManaBallBlue",
-    "ManaPoints": 10
+    "ManaPoints": 10,
+    "HealAmount": null,
+    "DmgAmount": null,
+    "SpeedAmount": null
   },
   {
     "Id": "dropItem_manaballorange_1",
@@ -61,7 +73,10 @@
     "DropItemDataId": "Item_ManaBallOrange_1",
     "IconPath": null,
     "PrefabPath": "2DPrefab/DropItem_ManaBallOrange",
-    "ManaPoints": 50
+    "ManaPoints": 50,
+    "HealAmount": null,
+    "DmgAmount": null,
+    "SpeedAmount": null
   },
   {
     "Id": "dropItem_manaballpink_1",
@@ -72,7 +87,10 @@
     "DropItemDataId": "Item_ManaBallPink_1",
     "IconPath": null,
     "PrefabPath": "2DPrefab/DropItem_ManaBallPink",
-    "ManaPoints": 100
+    "ManaPoints": 100,
+    "HealAmount": null,
+    "DmgAmount": null,
+    "SpeedAmount": null
   },
   {
     "Id": "dropItem_heart_1",
@@ -83,7 +101,10 @@
     "DropItemDataId": "Item_Heart_1",
     "IconPath": "Icon/Icon_Heart_1",
     "PrefabPath": "2DPrefab/DropItem_Heart",
-    "ManaPoints": null
+    "ManaPoints": null,
+    "HealAmount": 300,
+    "DmgAmount": null,
+    "SpeedAmount": null
   },
   {
     "Id": "dropItem_wand_1",
@@ -94,7 +115,10 @@
     "DropItemDataId": "Item_Wand_1",
     "IconPath": "Icon/Icon_Wand_1",
     "PrefabPath": "2DPrefab/DropItem_Wand",
-    "ManaPoints": null
+    "ManaPoints": null,
+    "HealAmount": null,
+    "DmgAmount": 50,
+    "SpeedAmount": 1
   },
   {
     "Id": "dropItem_chest_1",
@@ -105,7 +129,10 @@
     "DropItemDataId": "Item_Chest_1",
     "IconPath": "Icon/Icon_Chest_1",
     "PrefabPath": "2DPrefab/DropItem_Chest",
-    "ManaPoints": null
+    "ManaPoints": null,
+    "HealAmount": null,
+    "DmgAmount": null,
+    "SpeedAmount": null
   },
   {
     "Id": "dropItem_wand_dmgup_1",
@@ -116,6 +143,9 @@
     "DropItemDataId": "Item_Wand_DmgUp_1",
     "IconPath": "Icon/Icon_Wand_DmgUp_1",
     "PrefabPath": "2DPrefab/DropItem_WandDmgUp",
-    "ManaPoints": null
+    "ManaPoints": null,
+    "HealAmount": null,
+    "DmgAmount": 200,
+    "SpeedAmount": 3
   }
 ]

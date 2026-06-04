@@ -1,10 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets.Initialization;
 
 [System.Serializable]
-public class WaveData
+public class MonsterWaveData
 {
     public string waveName;
     public float startTime;
@@ -12,6 +13,14 @@ public class WaveData
     public string monsterDataId;
     public float spawnInterval;
     public int spawnCountPerTime;
+}
+
+[System.Serializable]
+public class ItemWaveData
+{
+    public string waveName;
+    public float startTime;
+    public string itemDataId;
 }
 
 [System.Serializable]
@@ -28,7 +37,10 @@ public class LevelData
 public class WaveSpawnManager : MonoBehaviour
 {
     [Header("몬스터 웨이브 타임라인 설정")]
-    [SerializeField] private List<WaveData> _waveTimeline;
+    [SerializeField] private List<MonsterWaveData> _waveTimeline;
+
+    [Header("아이템 웨이브 타임라인 설정")]
+    [SerializeField] private List<ItemWaveData> _itemWaveTimeline;
 
     [Header("레벨별 마나볼 스폰 설정")]
     [SerializeField] private List<LevelData> _manaTimeLine;
@@ -44,9 +56,11 @@ public class WaveSpawnManager : MonoBehaviour
 
     private bool _isGameActive = true;
 
-    private Dictionary<WaveData, float> _waveTimers = new Dictionary<WaveData, float>();
+    private Dictionary<MonsterWaveData, float> _waveTimers = new Dictionary<MonsterWaveData, float>();
+    private Dictionary<ItemWaveData, float> _itemWaveTimers = new Dictionary<ItemWaveData, float>();
     private Dictionary<LevelData, float> _manaTimers = new Dictionary<LevelData, float>();
     private List<float> _waveCurrentTimers = new List<float>();
+    private List<bool> _isItemSpawned = new List<bool>();
 
     private void Awake()
     {
@@ -56,6 +70,7 @@ public class WaveSpawnManager : MonoBehaviour
     void Start()
     {
         for (int i = 0; i < _waveTimeline.Count; i++) _waveCurrentTimers.Add(0f);
+        for (int i = 0; i < _itemWaveTimeline.Count; i++) _isItemSpawned.Add(false);
         // 각 웨이브마다 독립적으로 작동할 주기 타이머 공간 초기화
         foreach (var wave in _waveTimeline)
         {
@@ -65,6 +80,11 @@ public class WaveSpawnManager : MonoBehaviour
         foreach (var levelData in _manaTimeLine)
         {
             _manaTimers.Add(levelData, 0f);
+        }
+
+        foreach (var itemData in _itemWaveTimeline)
+        {
+            _itemWaveTimers.Add(itemData, 0f);
         }
     }
 
@@ -89,6 +109,7 @@ public class WaveSpawnManager : MonoBehaviour
 
         HandleMonsterSpawn();
         HandleManaSpawn();
+        HandleItemSpawn();
     }
 
     public float GetGameTimer()
@@ -152,7 +173,24 @@ public class WaveSpawnManager : MonoBehaviour
         }
     }
 
-    private void SpawnWaveGroup(string dataId, int count, float radius, bool isMana = false)
+    private void HandleItemSpawn()
+    {
+        for (int i = 0; i < _itemWaveTimeline.Count; i++)
+        {
+            var wave = _itemWaveTimeline[i];
+
+            if (!_isItemSpawned[i] && _gameTimer >= wave.startTime)
+            {
+                SpawnWaveGroup(wave.itemDataId, 1, _spawnRadius, true);
+
+                // 소환 완료 표시
+                _isItemSpawned[i] = true;
+                Debug.Log($"[아이템 스폰] {wave.itemDataId} 소환 완료");
+            }
+        }
+    }
+
+    private void SpawnWaveGroup(string dataId, int count, float radius, bool isFieldObject = false)
     {
         var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
         // 1. 이미 검증된 게임오브젝트 매니저에서 플레이어 위치 가져오기
@@ -171,7 +209,7 @@ public class WaveSpawnManager : MonoBehaviour
             // 이 매니저 스크립트가 붙은 오브젝트의 위치를 소환 위치로 잠시 순간이동 시켜서 넘겨줌
             this.transform.position = finalSpawnPosition;
 
-            if (isMana)
+            if (isFieldObject)
             {
                 DaniTechGameObjectManager.Inst.CreateFieldObject(dataId, this.transform).Forget();
             }
@@ -214,6 +252,8 @@ public class WaveSpawnManager : MonoBehaviour
         }
     }
 
+    // 리셋 ============================================================
+
     public void ResetWaveManagerOnRestart()
     {
         Debug.LogWarning("[웨이브 매니저] 전체 시간 및 웨이브 타이머 리셋");
@@ -221,7 +261,7 @@ public class WaveSpawnManager : MonoBehaviour
         _gameTimer = 0f;
         _isGameActive = true;
 
-        List<WaveData> waves = new List<WaveData>(_waveTimers.Keys);
+        List<MonsterWaveData> waves = new List<MonsterWaveData>(_waveTimers.Keys);
         foreach (var wave in waves)
         {
             _waveTimers[wave] = 0f;
@@ -231,6 +271,17 @@ public class WaveSpawnManager : MonoBehaviour
         foreach (var mana in manas)
         {
             _manaTimers[mana] = 0f;
+        }
+
+        List<ItemWaveData> items = new List<ItemWaveData>(_itemWaveTimers.Keys);
+        foreach (var item in items)
+        {
+            _itemWaveTimers[item] = 0f;
+        }
+
+        for (int i = 0; i < _isItemSpawned.Count; i++)
+        {
+            _isItemSpawned[i] = false;
         }
     }
 

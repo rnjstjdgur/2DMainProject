@@ -331,7 +331,10 @@ public class Player2D : MonoBehaviour
         Gizmos.DrawWireSphere(center, _lastOverlapRadius);
     }
 
-
+    public void HealingHp(int healAmount)
+    {
+        _playerHp += healAmount;
+    }
 
 
 

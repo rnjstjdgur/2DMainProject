@@ -176,12 +176,17 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f34bd580760c2a64588e7b5550f52ee8
-    m_Address: Sprites/FieldObject/Item_wand_dmgup
+    m_Address: Icon/Icon_Wand_DmgUp_1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f3a09a8551a56ca4e96b661e673f2239
     m_Address: 2DObject/Monster_Slime
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5c697769beb37e438cbf3150ed1ec3b
+    m_Address: 2DPrefab/DropItem_Heart
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

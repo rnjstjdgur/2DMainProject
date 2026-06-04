@@ -15,7 +15,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     [Header("트랜스폼")]
     [SerializeField] private Transform Transform_EnemyRoot;
-    [SerializeField] private Transform Transform_ManaBallRoot;
+    [SerializeField] private Transform Transform_FieldObjectRoot;
     [SerializeField] private Transform Transform_SkillObjectRoot;
 
     public static DaniTechGameObjectManager Inst { get; set; }
@@ -380,7 +380,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
         }
         else
         {
-            var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(fieldObjectData.PrefabPath, Transform_ManaBallRoot, true);
+            var createdObj = await DaniTechResourceManager.Inst.InstantiateAsync(fieldObjectData.PrefabPath, Transform_FieldObjectRoot, true);
             fieldObject = createdObj.GetComponent<DaniTech_2DFieldObject>();
             fieldObject.transform.position = spawnSpot.position;
         }

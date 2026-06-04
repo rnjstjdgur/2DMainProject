@@ -85,7 +85,7 @@ MonoBehaviour:
   Prefab_Enemy: {fileID: 1113892166969296485, guid: 33289810de593244280e028a4e52de47, type: 3}
   Prefab_Player: {fileID: 9124186025880486968, guid: 2c24543d408afbf49baabb8ff69bba97, type: 3}
   Transform_EnemyRoot: {fileID: 3626098656697799223}
-  Transform_ManaBallRoot: {fileID: 6891288498084464713}
+  Transform_FieldObjectRoot: {fileID: 6891288498084464713}
   Transform_SkillObjectRoot: {fileID: 1064879135952590158}
 --- !u!1 &7582464774712193345
 GameObject:

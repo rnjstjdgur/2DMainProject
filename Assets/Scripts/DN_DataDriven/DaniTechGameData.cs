@@ -97,6 +97,9 @@ public class DNFieldObjectData : GameDataBase
     public string IconPath;
     public string PrefabPath;
     public int ManaPoints;
+    public int HealAmount;
+    public float DmgAmount;
+    public float SpeedAmount;
 }
 
 [System.Serializable]

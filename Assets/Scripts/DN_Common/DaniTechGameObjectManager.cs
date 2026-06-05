@@ -22,6 +22,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     // 생성된 오브젝트의 키가 됨
     private int _objectInstanceKeyGenerator = 0;
+    private float _calculatedDamage = 0;
 
     private System.Threading.CancellationTokenSource _skillLoopCts;
 
@@ -32,6 +33,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
     private Dictionary<string, Queue<DaniTech_2DFieldObject>> _fieldObjectPool = new Dictionary<string, Queue<DaniTech_2DFieldObject>>();
     private Dictionary<int, Monster2D> _monsterObjectContainer = new Dictionary<int, Monster2D>();
     private Dictionary<string, int> _skillList = new Dictionary<string, int>();
+    private Dictionary<string, float> _skillCoolTimeList = new Dictionary<string, float>();
 
     private Player2D _localPlayer;
 
@@ -238,15 +240,10 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     private async UniTaskVoid AutoSkillLoop(GameObject Prefab_Skill, Transform Transform_Root, string skillDataId, System.Threading.CancellationToken cancellationToken)
     {
-        if (Prefab_Skill == null) return;
-
-        ISkillObject sampleComponent = Prefab_Skill.GetComponent<ISkillObject>();
-        if (sampleComponent == null) return;
-
         // [무한 루프] 게임이 동작하는 동안 무한 반복
         while (true)
         {
-            float currentCoolTime = sampleComponent.GetSkillCoolTime();
+           var currentCoolTime = GetCurrentSkillCoolTime(skillDataId);
 
             if (cancellationToken.IsCancellationRequested) return;
 
@@ -286,7 +283,6 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         if (info.TargetCollider == null) return;
 
-        float calculatedDamage = 0;
         var skillTableData = DaniTechGameDataManager.Instance.GetSkill(info.SkillDataId);
 
         if (skillTableData != null)
@@ -294,25 +290,25 @@ public class DaniTechGameObjectManager : MonoBehaviour
             int currentLevel = GetSkillLevel(info.SkillDataId);
             if (currentLevel < 1) currentLevel = 1;
 
-            calculatedDamage = (skillTableData.SkillDamage + (skillTableData.DamagePerLevel * (currentLevel - 1)))*(_localPlayer.Damage());
+            _calculatedDamage = (skillTableData.SkillDamage + (skillTableData.DamagePerLevel * (currentLevel - 1)))*(_localPlayer.Damage());
         }
         else
         {
-            calculatedDamage = 0;
+            _calculatedDamage = 0;
         }
 
         var player = info.TargetCollider.GetComponent<Player2D>();
         if (player != null)
         {
-            player.TakeDamage(calculatedDamage);
+            player.TakeDamage(_calculatedDamage);
             return;
         }
 
         var monster = info.TargetCollider.GetComponent<Monster2D>();
         if (monster != null)
         {
-            monster.TakeDamage(calculatedDamage);
-            Debug.Log($"[매니저] 몬스터 {monster.name}에게 스킬 {info.SkillDataId}로 대미지 {calculatedDamage} 전달!");
+            monster.TakeDamage(_calculatedDamage);
+            Debug.Log($"[매니저] 몬스터 {monster.name}에게 스킬 {info.SkillDataId}로 대미지 {_calculatedDamage} 전달!");
         }
     }
 
@@ -335,31 +331,50 @@ public class DaniTechGameObjectManager : MonoBehaviour
             _skillList.Add(skillDataId, 1);
             Debug.LogWarning($"새로운 스킬 {skillData.Name}을 배웠습니다. 스킬레벨: {_skillList[skillDataId]}");
         }
-
-        // 원본 데이터 혹은 세션 데이터의 레벨 갱신
-        Debug.LogError($"스킬 {skillData.Name}의 데미지: {skillData.SkillDamage} | 쿨타임: {skillData.SkillCoolTime}");
     }
 
-    // 3. 기존의 GetSkillLevel 함수도 매니저의 딕셔너리를 기반으로 작동하도록 안전하게 변경
     public int GetSkillLevel(string skillDataId)
     {
+        if (string.IsNullOrEmpty(skillDataId))
+        {
+            Debug.LogWarning("[게임오브젝트매니저] GetSkillLevel에 유효하지 않은 null ID가 전달되었습니다.");
+            return 0;
+        }
+
         if (_skillList.TryGetValue(skillDataId, out int level))
         {
             return level;
         }
 
-        // 딕셔너리에 없다면(레벨업 전) 데이터에서 레벨을 확인 (기초마법을 사용하기 위함)
         var skillData = DaniTechGameDataManager.Instance.GetSkill(skillDataId);
-        if (skillData != null)
+        if (skillData != null && skillData.SkillLevel >= 1)
         {
+            _skillList[skillDataId] = skillData.SkillLevel;
             return skillData.SkillLevel;
         }
         return 0; // 아직 배우지 않은 스킬은 레벨 0 반환
     }
 
+    public float GetCurrentSkillCoolTime(string skillDataId)
+    {
+        var skillData = DaniTechGameDataManager.Instance.GetSkill(skillDataId);
+        if (skillData == null) return 1.0f; // 기본값
+
+        int currentLevel = GetSkillLevel(skillDataId);
+
+        float coolTime = skillData.SkillCoolTime - (skillData.CoolDownPerLevel * (currentLevel - 1));
+
+        return Mathf.Max(0.5f, coolTime);
+    }
+
     public void ResetSkillList()
     {
         _skillList.Clear();
+    }
+
+    public Dictionary<string, int> GetSkillList()
+    {
+        return _skillList;
     }
 
 

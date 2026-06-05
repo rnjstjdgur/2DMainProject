@@ -39,7 +39,8 @@ public class Player2D : MonoBehaviour
 
     private List<DNSkillData> _skillDataList = new List<DNSkillData>();
 
-    private readonly int[] _expTable = { 0, 100, 200, 400, 800, 1000, 1200, 1500, 2000, 2200, 2500, 3000, 4000, 5000, 7000, 10000 };
+    private readonly int[] _expTable = { 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}; // 레벨업 확인용
+    //private readonly int[] _expTable = { 0, 100, 200, 400, 800, 1000, 1200, 1500, 1700, 2000, 2200, 2400, 2600, 2800, 3000, 3300, 3600, 3900, 4200, 4500, 4800 };
 
     private event Action<float, float> _onHpChanged;
     private event Action<int, int> _onMpChanged;
@@ -146,6 +147,11 @@ public class Player2D : MonoBehaviour
     public int GetPlayerMp()
     {
         return _playerMp;
+    }
+
+    public int GetMaxLevel()
+    {
+        return _expTable.Length - 1;
     }
 
     private void CheckPlayerLevelUp()
@@ -316,7 +322,7 @@ public class Player2D : MonoBehaviour
     {
         // 우선 HP든 MP든 하나라도 바뀌면 다 호출해준다
         _onHpChanged?.Invoke(_playerHp, _maxHp);
-        int currentLevelExpRequired = (_playerLevel < _expTable.Length) ? _expTable[_playerLevel] : 1;
+        int currentLevelExpRequired = (_playerLevel < _expTable.Length) ? _expTable[_playerLevel] : _expTable[_expTable.Length - 1]; ;
         _onMpChanged?.Invoke(_playerMp, currentLevelExpRequired);
     }
 
@@ -358,7 +364,6 @@ public class Player2D : MonoBehaviour
         playerSpriteRenderer.color = Color.red;
 
         yield return new WaitForSecondsRealtime(0.2f);
-        Debug.LogError("닫힘");
         DaniTechUIManager.Instance.CloseContentUI(DaniTechUIType.AttackedUI);
         playerSpriteRenderer.color = Color.white;
 

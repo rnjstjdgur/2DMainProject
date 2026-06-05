@@ -23,7 +23,7 @@ public class ESCUI : DaniTechUIBase
 
     private void OnClick_OpenCurrentMagic()
     {
-
+        DaniTechUIManager.Instance.OpenContentUI(DaniTechUIType.CurrentMagicUI);
     }
 
     private void OnClick_EndGame()

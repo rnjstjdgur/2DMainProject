@@ -30,7 +30,8 @@ public enum DaniTechUIType
     GameOverPopup,
     AttackedUI,
     EscUI,
-    AskEndGameUI
+    AskEndGameUI,
+    CurrentMagicUI
 }
 
 public static class DaniTechUIManagerExtension

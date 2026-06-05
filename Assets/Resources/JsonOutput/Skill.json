@@ -4,7 +4,7 @@
     "Name": "매직애로우",
     "Description": "마법으로 만든 화살을 날린다 (스킬 레벨이 증가할수록 데미지가 증가하고 쿨타임이 감소한다)",
     "IconPath": "Icon/Icon_Item_MagicArrow",
-    "SkillLevel": 1,
+    "SkillLevel": 10,
     "SkillDamage": 150,
     "SkillDistance": 10,
     "SkillCoolTime": 1,

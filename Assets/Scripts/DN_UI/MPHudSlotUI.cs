@@ -34,9 +34,10 @@ public class MPHudSlotUI : MonoBehaviour
         if (maxMp <= 0) return;
 
         _localPlayer = DaniTechGameObjectManager.Inst.GetLocalPlayer();
+        int maxLevel = _localPlayer.GetMaxLevel();
         float ratio = (curMp / (float)maxMp);
 
-        if (_localPlayer.GetPlayerLevel() == 15)
+        if (_localPlayer.GetPlayerLevel() == maxLevel)
         {
             ratio = 1;
         }

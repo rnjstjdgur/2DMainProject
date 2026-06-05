@@ -295,7 +295,7 @@ MonoBehaviour:
     startTime: 360
     itemDataId: dropItem_wand_dmgup_1
   _manaTimeLine:
-  - manaBallDataId: dropItem_manaballblue_1
+  - manaBallDataId: dropItem_manaballpink_1
     manaSpawnWaveName: "1\uB819\uB9C8\uB098\uC2A4\uD3F0"
     startLevel: 0
     endLevel: 2

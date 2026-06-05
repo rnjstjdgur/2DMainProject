@@ -53,10 +53,6 @@ public class GameBookSlotUI : MonoBehaviour
         _slotDataId = dataId;
 
         _onClickSlot += onClickCallback;
-
-        // Text_MainName.text = 
-        // TODO 슬롯 로드가 들어갈 예정
-        // Image_MainIcon.sprite = 
     }
 
     public void SetSelectedUI(bool isSelect)

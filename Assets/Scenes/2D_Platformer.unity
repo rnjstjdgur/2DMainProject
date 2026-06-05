@@ -539,7 +539,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
       propertyPath: _manaTimeLine.Array.data[0].manaBallDataId
-      value: dropItem_manaballpink_1
+      value: dropItem_manaballblue_1
       objectReference: {fileID: 0}
     - target: {fileID: 371992770535450594, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
       propertyPath: _manaTimeLine.Array.data[1].manaBallDataId

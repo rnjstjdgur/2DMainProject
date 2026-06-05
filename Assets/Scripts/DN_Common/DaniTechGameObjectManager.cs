@@ -288,9 +288,12 @@ public class DaniTechGameObjectManager : MonoBehaviour
         if (skillTableData != null)
         {
             int currentLevel = GetSkillLevel(info.SkillDataId);
+            bool isAwakened = (currentLevel >= 15);
+
             if (currentLevel < 1) currentLevel = 1;
 
-            _calculatedDamage = (skillTableData.SkillDamage + (skillTableData.DamagePerLevel * (currentLevel - 1)))*(_localPlayer.Damage());
+            float baseDamage = isAwakened ? skillTableData.AwakedDamage : (skillTableData.SkillDamage + (skillTableData.DamagePerLevel * (currentLevel - 1))) * (_localPlayer.Damage());
+            _calculatedDamage = baseDamage;
         }
         else
         {
@@ -362,6 +365,11 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
         int currentLevel = GetSkillLevel(skillDataId);
 
+        if (currentLevel >= 15)
+        {
+            return skillData.AwakedCoolTime;
+        }
+
         float coolTime = skillData.SkillCoolTime - (skillData.CoolDownPerLevel * (currentLevel - 1));
 
         return Mathf.Max(0.5f, coolTime);
@@ -375,6 +383,11 @@ public class DaniTechGameObjectManager : MonoBehaviour
     public Dictionary<string, int> GetSkillList()
     {
         return _skillList;
+    }
+
+    public float GetCalculatedDamage()
+    {
+        return _calculatedDamage;
     }
 
 

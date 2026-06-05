@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SocialPlatforms;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class SkillRayCast : DaniTech_SkillBase, ISkillObject
 {
@@ -22,6 +23,9 @@ public class SkillRayCast : DaniTech_SkillBase, ISkillObject
     private float _skillDistance;
     private float _skillDamage;
 
+    private bool _isSkillMaxLevel;
+    public bool IsAwakened => _isSkillMaxLevel;
+
     private int _ownerInstanceId;
     private Action<SkillCollisionInfo> _collisionCallback;
 
@@ -31,8 +35,8 @@ public class SkillRayCast : DaniTech_SkillBase, ISkillObject
     {
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         if (skillData == null) return 1.0f;
-        // 부모(DaniTech_SkillBase)가 제공하는 CalculateCoolTime 메서드 사용
-        return CalculateCoolTime(_skillDataId, skillData.SkillCoolTime, skillData.CoolDownPerLevel);
+
+        return CalculateCoolTime(_skillDataId, _skillCoolTime, skillData.CoolDownPerLevel);
     }
 
     public void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<SkillCollisionInfo> collisionCallback)
@@ -43,6 +47,7 @@ public class SkillRayCast : DaniTech_SkillBase, ISkillObject
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         int currentLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(_skillDataId);
         if (currentLevel < 1) currentLevel = 1;
+        _isSkillMaxLevel = (currentLevel >= 15);
         if (skillData != null)
         {
             _ownerInstanceId = ownerInstanceId;
@@ -58,6 +63,11 @@ public class SkillRayCast : DaniTech_SkillBase, ISkillObject
         }
 
         int boltCount = Mathf.Min(currentLevel + 1, 7);
+
+        if (_isSkillMaxLevel)
+        {
+            boltCount = 10;
+        }
 
         for (int i = 0; i < boltCount; i++)
         {
@@ -81,7 +91,7 @@ public class SkillRayCast : DaniTech_SkillBase, ISkillObject
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
                     LightningEffect effect = handle.Result.GetComponent<LightningEffect>();
-                    effect.Play(this.transform.position, endPos, _segments, _boltLifeTime, null, _skillDataId);
+                    effect.Play(this.transform.position, endPos, _segments, _boltLifeTime, null, _skillDataId, _isSkillMaxLevel);
                 }
             };
         }

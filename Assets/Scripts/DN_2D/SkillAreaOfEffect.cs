@@ -15,6 +15,9 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
 
     private float _skillCoolTime;
     private float _skillDuration;
+    private bool _isSkillMaxLevel;
+
+    public bool IsAwakened => _isSkillMaxLevel;
 
     private Action<SkillCollisionInfo> _collisionCallback;
 
@@ -46,7 +49,7 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
 
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         int currentLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(_skillDataId);
-        bool isSkillMaxLevel = (currentLevel >= 15);
+        _isSkillMaxLevel = (currentLevel >= 15);
         if (currentLevel < 1) currentLevel = 1;
 
         if (skillData != null)
@@ -55,7 +58,7 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
             _skillDuration = skillData.SkillDuration/* + ((currentLevel - 1) * skillData.SkillDurationPerLevel)*/;  // 일단 바로 시전되는 스킬로 하고 나중에 지속시간 추가
         }
 
-        if (isSkillMaxLevel)
+        if (_isSkillMaxLevel)
         {
             ApplyAwakeningEffect();
         }
@@ -102,6 +105,8 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
 
     private void ApplyAwakeningEffect()
     {
+        var skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
+
         var collider = GetComponentInChildren<CircleCollider2D>();
         if (collider != null) collider.radius *= 1.5f;
 
@@ -111,8 +116,6 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
             sprite.transform.localScale *= 1.5f;
             sprite.color = Color.red;
         }
-
-        _skillCoolTime
     }
 
 

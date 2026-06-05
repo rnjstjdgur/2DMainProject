@@ -22,6 +22,8 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
 
     private int _damage;
     private int _ownerInstanceId;
+    private bool _isSkillMaxLevel;
+    public bool IsAwakened => _isSkillMaxLevel;
 
     private Action<SkillCollisionInfo> _collisionCallback;
 
@@ -61,6 +63,8 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
 
         // 2. 타겟팅 유도 시스템 가동 (주변에 가장 가까운 적 찾기)
         Transform targetEnemy = DaniTechGameManager.Inst.GetClosestEnemy(this.transform.position, _scanRadius, _enemyLayer, _skillDistance);
+        int currentLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(_skillDataId);
+        _isSkillMaxLevel = (currentLevel >= 15);
 
         if (targetEnemy != null)
         {
@@ -83,7 +87,30 @@ public class SkillProjectile : DaniTech_SkillBase, ISkillObject
         float angle = Mathf.Atan2(_moveDirection.y, _moveDirection.x) * Mathf.Rad2Deg;
         this.transform.rotation = Quaternion.Euler(0, 0, angle);
 
+        if (_isSkillMaxLevel)
+        {
+            ApplyAwakeningEffect();
+        }
+
         StartCoroutine(DestroySkillAfterDelay());
+    }
+
+    private void ApplyAwakeningEffect()
+    {
+        var skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
+        if (skillData == null) return;
+
+        var collider = GetComponentInChildren<BoxCollider2D>();
+        if (collider != null) collider.size *= 1.5f;
+
+        var sprite = GetComponentInChildren<SpriteRenderer>();
+        if (sprite != null)
+        {
+            sprite.transform.localScale *= 1.5f;
+            sprite.color = Color.red;
+        }
+
+        _skillMoveSpeed *= 2;
     }
 
     // 생성, 물리 관련 ==============================================================

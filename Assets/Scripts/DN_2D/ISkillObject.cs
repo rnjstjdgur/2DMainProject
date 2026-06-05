@@ -15,6 +15,8 @@ public struct SkillCollisionInfo
 
 public interface ISkillObject
 {
+    bool IsAwakened { get; }
+
     float GetSkillCoolTime();
 
     void InitSkillObject(int ownerInstanceId, Vector3 direction, string targetTag, Action<SkillCollisionInfo> collisionCallback);

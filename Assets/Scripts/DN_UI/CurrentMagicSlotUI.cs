@@ -41,6 +41,8 @@ public class CurrentMagicSlotUI : MonoBehaviour
         if (currentLevel >= 15)
         {
             masterSkill = "각성 ";
+            currentSkillDamage = skillData.AwakedDamage;
+            currentSkillCoolTime = skillData.AwakedCoolTime;
         }
         Text_SkillName.text = $"{masterSkill}{skillData.Name}";
         Text_Dmg.text = $"데미지: {currentSkillDamage}";

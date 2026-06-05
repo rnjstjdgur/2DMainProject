@@ -18,6 +18,8 @@ public class SkillCircle : DaniTech_SkillBase, ISkillObject
     private int _ownerInstanceId;
     private Vector3 _skillDirection;
     private Action<SkillCollisionInfo> _collisionCallback;
+    private bool _isSkillMaxLevel;
+    public bool IsAwakened => _isSkillMaxLevel;
 
     private Player2D _localPlayer;
     private Animator _animator;
@@ -54,6 +56,9 @@ public class SkillCircle : DaniTech_SkillBase, ISkillObject
         _targetHitHistory.Clear();
 
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
+        int currentLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(_skillDataId);
+        _isSkillMaxLevel = (currentLevel >= 15);
+
         if (skillData != null)
         {
             _skillDuration = skillData.SkillDuration;
@@ -68,9 +73,15 @@ public class SkillCircle : DaniTech_SkillBase, ISkillObject
 
             Debug.Log($"[SkillCircle] '{_skillDataId}' 데이터 연동 완료!");
         }
+
         else
         {
             Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못했습니다.");
+        }
+
+        if (_isSkillMaxLevel)
+        {
+            ApplyAwakeningEffect();
         }
 
         // 스킬 지속시간 및 방향 동기화를 제어하는 코루틴 시작
@@ -96,6 +107,23 @@ public class SkillCircle : DaniTech_SkillBase, ISkillObject
             }
         };
     }
+
+    private void ApplyAwakeningEffect()
+    {
+        var skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
+        if (skillData == null) return;
+
+        var collider = GetComponentInChildren<BoxCollider2D>();
+        if (collider != null) collider.size *= 1.5f;
+
+        var sprite = GetComponentInChildren<SpriteRenderer>();
+        if (sprite != null)
+        {
+            sprite.transform.localScale *= 1.5f;
+            sprite.color = Color.red;
+        }
+    }
+
 
     // ==============================================================
 

@@ -8,9 +8,14 @@ public class LightningEffect : MonoBehaviour
     private Action<SkillCollisionInfo> _collisionCallback;
 
     // 외부에서 호출하여 번개를 즉시 생성
-    public void Play(Vector3 start, Vector3 end, int segments, float duration, Action<SkillCollisionInfo> callback, string skillDataId)
+    public void Play(Vector3 start, Vector3 end, int segments, float duration, Action<SkillCollisionInfo> callback, string skillDataId, bool isAwaked)
     {
         _lineRenderer = GetComponentInChildren<LineRenderer>();
+        if (isAwaked)
+        {
+            _lineRenderer.startColor = Color.red;
+            _lineRenderer.endColor = Color.white;
+        }
         DrawZigzag(start, end, segments);
 
         // [수정] 직선상의 모든 적을 찾음
@@ -35,7 +40,7 @@ public class LightningEffect : MonoBehaviour
             Vector3 point = Vector3.Lerp(start, end, t);
             if (i > 0 && i < segments - 1)
             {
-                point += new Vector3(UnityEngine.Random.Range(-0.3f, 0.3f), UnityEngine.Random.Range(-0.3f, 0.3f), 0);
+                point += new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f), 0);
             }
             _lineRenderer.SetPosition(i, point);
         }

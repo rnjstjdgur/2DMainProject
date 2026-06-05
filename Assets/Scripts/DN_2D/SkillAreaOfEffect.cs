@@ -46,13 +46,20 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
 
         DNSkillData skillData = DaniTechGameDataManager.Instance.GetSkill(_skillDataId);
         int currentLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(_skillDataId);
+        bool isSkillMaxLevel = (currentLevel >= 15);
         if (currentLevel < 1) currentLevel = 1;
 
         if (skillData != null)
         {
             _skillCoolTime = skillData.SkillCoolTime;
-            _skillDuration = skillData.SkillDuration + ((currentLevel - 1) * skillData.SkillDurationPerLevel);
+            _skillDuration = skillData.SkillDuration/* + ((currentLevel - 1) * skillData.SkillDurationPerLevel)*/;  // 일단 바로 시전되는 스킬로 하고 나중에 지속시간 추가
         }
+
+        if (isSkillMaxLevel)
+        {
+            ApplyAwakeningEffect();
+        }
+
         else
         {
             Debug.LogWarning($"[SkillCircle] 데이터를 찾지 못했습니다.");
@@ -91,6 +98,21 @@ public class SkillAreaOfEffect : DaniTech_SkillBase, ISkillObject
                 }
             }
         }
+    }
+
+    private void ApplyAwakeningEffect()
+    {
+        var collider = GetComponentInChildren<CircleCollider2D>();
+        if (collider != null) collider.radius *= 1.5f;
+
+        var sprite = GetComponentInChildren<SpriteRenderer>();
+        if (sprite != null)
+        {
+            sprite.transform.localScale *= 1.5f;
+            sprite.color = Color.red;
+        }
+
+        _skillCoolTime
     }
 
 

@@ -4,7 +4,7 @@
     "Name": "매직애로우",
     "Description": "마법으로 만든 화살을 날린다 (스킬 레벨이 증가할수록 데미지가 증가하고 쿨타임이 감소한다)",
     "IconPath": "Icon/Icon_Item_MagicArrow",
-    "SkillLevel": 10,
+    "SkillLevel": 0,
     "SkillDamage": 150,
     "SkillDistance": 10,
     "SkillCoolTime": 1,
@@ -13,7 +13,9 @@
     "SkillDamageInterval": null,
     "DamagePerLevel": 150,
     "CoolDownPerLevel": 0.2,
-    "SkillDurationPerLevel": null
+    "SkillDurationPerLevel": null,
+    "AwakedCoolTime": 0.1,
+    "AwakedDamage": 5000
   },
   {
     "Id": "skill_fire_01",
@@ -29,14 +31,16 @@
     "SkillDamageInterval": 0.5,
     "DamagePerLevel": 50,
     "CoolDownPerLevel": 0.3,
-    "SkillDurationPerLevel": null
+    "SkillDurationPerLevel": null,
+    "AwakedCoolTime": 5,
+    "AwakedDamage": 3000
   },
   {
     "Id": "skill_ice_01",
     "Name": "아이스",
     "Description": "스킬범위 안의 적들을 얼린다 (스킬 레벨이 증가할수록 얼어있는 시간이 늘어난다)",
     "IconPath": "Icon/Icon_Item_Ice",
-    "SkillLevel": 0,
+    "SkillLevel": 14,
     "SkillDamage": 100,
     "SkillDistance": 15,
     "SkillCoolTime": 8,
@@ -45,7 +49,9 @@
     "SkillDamageInterval": null,
     "DamagePerLevel": 100,
     "CoolDownPerLevel": 0.2,
-    "SkillDurationPerLevel": 0.2
+    "SkillDurationPerLevel": 0.2,
+    "AwakedCoolTime": 3,
+    "AwakedDamage": 4000
   },
   {
     "Id": "skill_lightning_01",
@@ -61,6 +67,8 @@
     "SkillDamageInterval": null,
     "DamagePerLevel": 50,
     "CoolDownPerLevel": 0.2,
-    "SkillDurationPerLevel": null
+    "SkillDurationPerLevel": null,
+    "AwakedCoolTime": 2,
+    "AwakedDamage": 5000
   }
 ]

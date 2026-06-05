@@ -38,6 +38,8 @@ public class DNSkillData : GameDataBase
     public float DamagePerLevel;
     public float CoolDownPerLevel;
     public float SkillDurationPerLevel;
+    public float AwakedCoolTime;
+    public float AwakedDamage;
 }
 
 [System.Serializable]

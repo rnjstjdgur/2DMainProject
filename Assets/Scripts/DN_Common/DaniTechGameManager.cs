@@ -29,13 +29,6 @@ public class DaniTechGameManager : MonoBehaviour
         return _IsGameStart;
     }
 
-    public void StartGame()
-    {
-        _IsGameStart = true;
-
-        DaniTechGameObjectManager.Inst.ResetObjectOnNewGame();
-    }
-
     public void RestartGame()
     {
         Time.timeScale = 1f;

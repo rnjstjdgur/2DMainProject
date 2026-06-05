@@ -6,6 +6,7 @@ public class DaniTechUIManager : MonoBehaviour
 {
     [SerializeField] Canvas Canvas_BgRoot;
     [SerializeField] Canvas Canvas_MainRoot;
+    [SerializeField] Canvas Canvas_BackContentRoot;
     [SerializeField] Canvas Canvas_ContentRoot;
     [SerializeField] Canvas Canvas_PopupRoot;
     [SerializeField] Canvas Canvas_VeryFrontRoot;
@@ -75,6 +76,9 @@ public class DaniTechUIManager : MonoBehaviour
             case DaniTechUIRootType.MainUI:
                 root = Canvas_MainRoot.transform;
                 break;
+            case DaniTechUIRootType.BackContentUI:
+                root = Canvas_BackContentRoot.transform;
+                break;
             case DaniTechUIRootType.ContentUI:
                 root = Canvas_ContentRoot.transform;
                 break;
@@ -118,6 +122,11 @@ public class DaniTechUIManager : MonoBehaviour
         return _createdUIDic[uiType];
     }
 
+    public DaniTechUIBase openBackContentUI(DaniTechUIType uiType)
+    {
+        return OpenUI(DaniTechUIRootType.BackContentUI, uiType);
+    }
+
 
     public DaniTechUIBase OpenContentUI(DaniTechUIType uiType)
     {
@@ -129,6 +138,11 @@ public class DaniTechUIManager : MonoBehaviour
         return OpenUI(DaniTechUIRootType.PopupUI, uiType);
     }
 
+    public void CloseBackContentUI(DaniTechUIType uiType)
+    {
+        CloseUI(DaniTechUIRootType.BackContentUI, uiType);
+    }
+
     public void CloseContentUI(DaniTechUIType uiType)
     {
         CloseUI(DaniTechUIRootType.ContentUI, uiType);
@@ -138,5 +152,4 @@ public class DaniTechUIManager : MonoBehaviour
     {
         CloseUI(DaniTechUIRootType.PopupUI, uiType);
     }
-
 }

@@ -32,6 +32,10 @@ public class DaniTech_MainUI : DaniTechUIBase
         int timeMInute = (int)(_gameTimer / 60);
         int timeSecond = (int)(_gameTimer % 60);
         Text_GameTimer.text = $"{timeMInute:D2} : {timeSecond:D2}";
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            DaniTechUIManager.Instance.openBackContentUI(DaniTechUIType.EscUI);
+        }
     }
 
     public void OnClick_UseNormalSkill()

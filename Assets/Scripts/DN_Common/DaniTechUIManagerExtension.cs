@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using NUnit.Framework;
 using UnityEngine;
 
 public enum DaniTechUIRootType
@@ -6,6 +7,7 @@ public enum DaniTechUIRootType
     None = 0,
     BackgroundUI,
     MainUI,
+    BackContentUI,
     ContentUI,
     PopupUI,
     VeryFrontUI
@@ -26,7 +28,9 @@ public enum DaniTechUIType
     HudUI,
     ChooseSkillUI,
     GameOverPopup,
-    AttackedUI
+    AttackedUI,
+    EscUI,
+    AskEndGameUI
 }
 
 public static class DaniTechUIManagerExtension
@@ -160,10 +164,10 @@ public static class DaniTechUIManagerExtension
 
     public static void ClearAllHudSlot(this DaniTechUIManager uiManager)
     {
-        var uiBase = uiManager.GetOpenedUI(DaniTechUIRootType.MainUI, DaniTechUIType.HudUI);
-        if (uiBase == null) return;
+        var uiMainBase = uiManager.GetOpenedUI(DaniTechUIRootType.MainUI, DaniTechUIType.HudUI);
+        if (uiMainBase == null) return;
 
-        if (uiBase is HudUI hudUi)
+        if (uiMainBase is HudUI hudUi)
         {
             hudUi.ClearAllHudSlots();
         }

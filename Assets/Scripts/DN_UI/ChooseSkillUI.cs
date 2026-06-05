@@ -33,18 +33,31 @@ public class ChooseSkillUI : DaniTechUIBase
         var myHero = DaniTechGameDataManager.Instance.GetCharacterData("character_basic_01");
         if (myHero == null) return;
 
+        
+
 
         // 스킬 정보가 있다면
         if (myHero.SkillList != string.Empty)
         {
             string[] fullSkillList = myHero.SkillList.Split(',');
 
-            var randomThreeSkills = fullSkillList.OrderBy(x => Random.value).Take(3);
+            List<string> availableSkillIds = new List<string>();
+            foreach (string skillId in fullSkillList)
+            {
+                int level = DaniTechGameObjectManager.Inst.GetSkillLevel(skillId);
+                if (level < 15) // 만렙 미만인 것만 추가
+                {
+                    availableSkillIds.Add(skillId);
+                }
+            }
+
+            var randomThreeSkills = availableSkillIds.OrderBy(x => Random.value).Take(3);
 
             foreach (string skillName in randomThreeSkills)
             {
                 var skillData = DaniTechGameDataManager.Instance.GetSkill(skillName);
-                if (skillData != null)
+                var skillLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(skillData.Id);
+                if (skillData != null && skillLevel < 15)
                 {
                     CreateSlot(skillData.Id, skillData.Name);
                 }

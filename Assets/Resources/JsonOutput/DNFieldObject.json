@@ -110,7 +110,7 @@
     "Id": "dropItem_wand_1",
     "FieldObjectType": "DropItem",
     "Name": "지팡이",
-    "Description": "공격력과 이동속도가 소량 증가한다",
+    "Description": "공격력과 이동속도가 소폭 증가한다",
     "DropCountRange": null,
     "DropItemDataId": "Item_Wand_1",
     "IconPath": "Icon/Icon_Wand_1",

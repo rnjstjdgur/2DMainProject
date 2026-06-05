@@ -1,75 +1,5 @@
 [
   {
-    "Id": "Item_DummyBox_1",
-    "Name": "상자",
-    "Description": "상자다. 딱히 의미가 있진 않다.",
-    "ItemType": "Normal",
-    "Grade": "Normal",
-    "MaxStackCount": 20,
-    "SellingPrice": 100,
-    "IconPath": "Icon/Icon_Item_Box_1",
-    "UseItemType": "RandomItemBox",
-    "UseItemParameterList": [
-      "Item_Equip_Hat_1:1",
-      "Item_Corn_1:20",
-      "Item_Gold_1:100"
-    ]
-  },
-  {
-    "Id": "Item_Gold_1",
-    "Name": "화폐",
-    "Description": "지역에 나타나는 금화",
-    "ItemType": "Normal",
-    "Grade": "Legend",
-    "MaxStackCount": 1000,
-    "SellingPrice": 1000,
-    "IconPath": "Icon/Icon_Item_Gold_1",
-    "UseItemType": null,
-    "UseItemParameterList": null
-  },
-  {
-    "Id": "Item_Equip_Hat_1",
-    "Name": "의문의 모자",
-    "Description": "착용하면 공격력이 강해진다.",
-    "ItemType": "Equipment",
-    "Grade": "Epic",
-    "MaxStackCount": 0,
-    "SellingPrice": 1,
-    "IconPath": "Icon/Icon_Item_Equip_Hat_1",
-    "UseItemType": "StatChangeAtk",
-    "UseItemParameterList": [
-      "700"
-    ]
-  },
-  {
-    "Id": "Item_Corn_1",
-    "Name": "옥수수",
-    "Description": "옥수수다",
-    "ItemType": "Normal",
-    "Grade": "Normal",
-    "MaxStackCount": 100,
-    "SellingPrice": 20,
-    "IconPath": "Icon/Icon_Item_Corn",
-    "UseItemType": "StatChangeHp",
-    "UseItemParameterList": [
-      "20"
-    ]
-  },
-  {
-    "Id": "Item_Potato_1",
-    "Name": "감자",
-    "Description": "감자다. 딱히 의미가 있진 않다.",
-    "ItemType": "Normal",
-    "Grade": "Normal",
-    "MaxStackCount": 20,
-    "SellingPrice": 100,
-    "IconPath": "Icon/Icon_Item_Box_1",
-    "UseItemType": "SummonMonster",
-    "UseItemParameterList": [
-      "mob_bear_1:2"
-    ]
-  },
-  {
     "Id": "Item_MagicArrow",
     "Name": "매직 애로우",
     "Description": "기초적인 공격마법으로 마나 덩어리로 적을 공격한다",
@@ -126,6 +56,54 @@
     "MaxStackCount": 1,
     "SellingPrice": 0,
     "IconPath": "Icon/Icon_Item_Lightning",
+    "UseItemType": null,
+    "UseItemParameterList": null
+  },
+  {
+    "Id": "Item_Heart_1",
+    "Name": "하트",
+    "Description": "먹으면 체력을 300회복한다",
+    "ItemType": null,
+    "Grade": null,
+    "MaxStackCount": null,
+    "SellingPrice": null,
+    "IconPath": "Icon/Icon_Heart_1",
+    "UseItemType": null,
+    "UseItemParameterList": null
+  },
+  {
+    "Id": "Item_Chest_1",
+    "Name": "상자",
+    "Description": "먹으면 랜덤한 이벤트가 발생한다",
+    "ItemType": null,
+    "Grade": null,
+    "MaxStackCount": null,
+    "SellingPrice": null,
+    "IconPath": "Icon/Icon_Chest_1",
+    "UseItemType": null,
+    "UseItemParameterList": null
+  },
+  {
+    "Id": "Item_Wand_1",
+    "Name": "지팡이",
+    "Description": "먹으면 공격력과 이동속도가 소폭 증가한다",
+    "ItemType": null,
+    "Grade": null,
+    "MaxStackCount": null,
+    "SellingPrice": null,
+    "IconPath": "Icon/Icon_Wand_1",
+    "UseItemType": null,
+    "UseItemParameterList": null
+  },
+  {
+    "Id": "Item_Wand_DmgUp_1",
+    "Name": "고급지팡이",
+    "Description": "먹으면 공격력과 이동속도가 대폭 증가한다",
+    "ItemType": null,
+    "Grade": null,
+    "MaxStackCount": null,
+    "SellingPrice": null,
+    "IconPath": "Icon/Icon_Wand_DmgUp_1",
     "UseItemType": null,
     "UseItemParameterList": null
   }

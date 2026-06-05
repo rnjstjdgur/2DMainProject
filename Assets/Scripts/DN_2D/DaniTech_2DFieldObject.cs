@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DaniTech_2DFieldObject : MonoBehaviour
@@ -6,6 +7,8 @@ public class DaniTech_2DFieldObject : MonoBehaviour
     [SerializeField] private int _fieldObjectInstanceId;
     [SerializeField] private string _fieldObjectDataId;
     [SerializeField] private string _fieldObjectName;
+
+    private static int _manaEvent = 1;
 
     public void InitFieldObjectInfoOnCreated(int instanceId, string fieldObjectDataId)
     {
@@ -43,10 +46,9 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                 Debug.LogWarning($"유효하지 않은 필드 오브젝트 데이터 입니다! {_fieldObjectDataId}");
                 return;
             }
-
             if (fieldObjectData.FieldObjectType == "Exp")
             {
-                DaniTechGameManager.Inst.IncreasePlayerExp(fieldObjectData.ManaPoints);
+                DaniTechGameManager.Inst.IncreasePlayerExp(fieldObjectData.ManaPoints * _manaEvent);
 
                 DaniTechGameObjectManager.Inst.RequestDespawnFieldObject(_fieldObjectInstanceId, _fieldObjectDataId);
             }
@@ -63,6 +65,27 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                 else if (fieldObjectData.Id == "dropItem_chest_1")
                 {
                     DaniTechUIManager.Instance.OpenSimplePopup("랜덤 이벤트 발생!");
+                    int randomNum = Random.Range(0, 4);
+                    randomNum = 0;
+                    switch (randomNum)
+                    {
+                        case 0:
+                            DaniTechUIManager.Instance.OpenSimplePopup("이벤트 웨이브 발생!");
+                            WaveSpawnManager.instance.TriggerEventWave("mob_event_1", 30, 10);
+                            break;
+                        case 1:
+                            DaniTechUIManager.Instance.OpenSimplePopup("마나 획득량 2배 증가!");
+                            StartCoroutine(CoManaEvent());
+                            break;
+                        case 2:
+                            DaniTechUIManager.Instance.OpenSimplePopup("체력 모두 회복!");
+                            DaniTechGameManager.Inst.HealingPlayerHp((int)player.GetMaxHp());
+                            break;
+                        case 3:
+                            DaniTechUIManager.Instance.OpenSimplePopup("매직미사일 일시적 각성!");
+                            StartCoroutine(CoAwakenEvent());
+                            break;
+                    }
 
                 }
                 else if (fieldObjectData.Id == "dropItem_wand_1")
@@ -76,41 +99,34 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                     DaniTechGameManager.Inst.IncreasePlayerStat(fieldObjectData.DmgAmount, fieldObjectData.SpeedAmount);
                 }
             }
-
-            //// 채집과 드랍 1-1) 내가 상호작용한 필드 오브젝트가 채집물이거나 드랍아이템 유형인지 확인 (Enum으로 바꿔서 쓰면 더 좋다)
-            //if (fieldObjectData.FieldObjectType == "Harvest"  ||  fieldObjectData.FieldObjectType == "DropItem")
-            //{
-            //    if (string.IsNullOrEmpty(fieldObjectData.DropItemDataId))
-            //    {
-            //        // 드랍 아이템이 없다면 더이상 처리하지 않는다
-            //        return;
-            //    }
-
-            //    // 채집과 드랍 1-2) 채집물이나 드랍이 맞으면 "아이템 정보를 찾아서" 인벤토리에 추가해주자
-            //    var itemData = DaniTechGameDataManager.Instance.GetDNItemData(fieldObjectData.DropItemDataId);
-            //    if(itemData == null)
-            //    {
-            //        Debug.LogWarning($"유효하지 않은 아이템 데이터 입니다! {_fieldObjectDataId}");
-            //        return;
-            //    }
-
-            //    // 채집과 드랍 1-3) 아이템 드랍 수를 FieldObject 데이터의 DropCountRange 범위 내에서 랜덤으로 가져오자
-            //    List<int> dropCountRange = fieldObjectData.DropCountRange;
-            //    int finalDropItemCount = 1;
-
-            //    if (dropCountRange != null && dropCountRange.Count > 0)
-            //    {
-            //        // 다항 연산자로 카운트가 2개 이상이면 첫번째와 두번째 수를 최소, 최대로 랜덤값을 구해오고, 1개만 기입되어 있다면 그 수량을 무조건 획득
-            //        finalDropItemCount = dropCountRange.Count > 1 ? Random.Range(dropCountRange[0], dropCountRange[1]) : dropCountRange[0];
-            //    }
-
-            //    // 채집과 드랍 1-4) 게임 매니저에게 "어디서든"(현재는 채집물이 충돌된 시점) 편하게 아이템 추가를 요청한다!
-            //    DaniTechGameManager.Inst.AddItem(itemData.Id, finalDropItemCount);
-
-
-            //    // 채집과 드랍 1-5) 추가 완료 되었다면 이 오브젝트를 비활성화 또는 제거하자 (우리는 제거를 선택)
-            //    DaniTechGameObjectManager.Inst.RequestDespawnFieldObject(_fieldObjectInstanceId, _fieldObjectDataId);
-            //}
         }
+    }
+
+
+
+    // 코루틴 =========================================
+    
+    private IEnumerator CoManaEvent()
+    {
+        _manaEvent = 2;
+
+        yield return new WaitForSeconds(30);
+
+        _manaEvent = 1;
+        DaniTechUIManager.Instance.OpenSimplePopup("마나 획득량 원상복구!");
+    }
+
+    private IEnumerator CoAwakenEvent()
+    {
+        var skillData = DaniTechGameDataManager.Instance.GetSkill("skill_magicArrow_01");
+        if (skillData == null) yield return null;
+
+        var skillLevel = DaniTechGameObjectManager.Inst.GetSkillLevel("skill_magicArrow_01");
+        int eventSkillLevel = 15;
+        skillData.SkillLevel = eventSkillLevel;
+
+        yield return new WaitForSeconds(15);
+
+        skillData.SkillLevel = skillLevel;
     }
 }

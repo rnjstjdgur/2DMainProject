@@ -613,6 +613,10 @@ PrefabInstance:
       propertyPath: _manaTimeLine.Array.data[5].manaSpawnCountPerTime
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1610703454328357445, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
+      propertyPath: m_SortingOrder
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 1861007714871500051, guid: d9614b341da396f43a8b38d13a069d93, type: 3}
       propertyPath: m_LocalPosition.x
       value: 999.36273

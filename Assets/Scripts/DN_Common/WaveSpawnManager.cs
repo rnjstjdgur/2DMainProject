@@ -223,7 +223,6 @@ public class WaveSpawnManager : MonoBehaviour
     // 이벤트 웨이브
     public void TriggerEventWave(string monsterDataId, int totalCount, float duration = 0f)
     {
-
         // 1. duration이 0이면? 아이템을 먹은 순간 '즉시 동시에' 한꺼번에 스폰 (폭발형 이벤트)
         if (duration <= 0f)
         {

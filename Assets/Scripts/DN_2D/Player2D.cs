@@ -274,6 +274,11 @@ public class Player2D : MonoBehaviour
         return new Vector3(_lookDirection.x, _lookDirection.y, 0f);
     }
 
+    public float GetMaxHp()
+    {
+        return _maxHp;
+    }
+
     // 전투 관련 =================================================
 
     public float Damage()
@@ -340,6 +345,10 @@ public class Player2D : MonoBehaviour
     public void HealingHp(int healAmount)
     {
         _playerHp += healAmount;
+        if (_playerHp >= _maxHp)
+        {
+            _playerHp = _maxHp;
+        }
     }
 
     public void ApplyWandBuff(float dmgAmount, float speedAmount)

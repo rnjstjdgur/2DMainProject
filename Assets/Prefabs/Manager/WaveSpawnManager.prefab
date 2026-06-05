@@ -280,13 +280,13 @@ MonoBehaviour:
     startTime: 720
     itemDataId: dropItem_heart_1
   - waveName: "\uC0C1\uC790\uC774\uBCA4\uD2B8"
-    startTime: 500
+    startTime: 0
     itemDataId: dropItem_chest_1
   - waveName: "\uC0C1\uC790\uC774\uBCA4\uD2B8"
-    startTime: 600
+    startTime: 700
     itemDataId: dropItem_chest_1
   - waveName: "\uC9C0\uD321\uC774"
-    startTime: 120
+    startTime: 400
     itemDataId: dropItem_wand_1
   - waveName: "\uC9C0\uD321\uC774"
     startTime: 600

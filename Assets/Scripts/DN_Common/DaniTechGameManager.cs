@@ -172,7 +172,7 @@ public class DaniTechGameManager : MonoBehaviour
 
     public void StartAwakenEvent()
     {
-        CoAwakenEvent();
+        StartCoroutine(CoAwakenEvent());
     }
 
     // 스킬 관련 ======================================================
@@ -215,16 +215,17 @@ public class DaniTechGameManager : MonoBehaviour
 
     private IEnumerator CoAwakenEvent()
     {
-        var skillData = DaniTechGameDataManager.Instance.GetSkill("skill_magicArrow_01");
+        string skillDataId = "skill_magicArrow_01";
+        var skillData = DaniTechGameDataManager.Instance.GetSkill(skillDataId);
         if (skillData == null) yield return null;
 
-        var skillLevel = DaniTechGameObjectManager.Inst.GetSkillLevel("skill_magicArrow_01");
-        int originalLevel = skillLevel;
+        int originalLevel = DaniTechGameObjectManager.Inst.GetSkillLevel(skillDataId);
         int eventSkillLevel = 15;
-        skillData.SkillLevel = eventSkillLevel;
+
+        DaniTechGameObjectManager.Inst.SetSkillLevel(skillDataId, eventSkillLevel);
 
         yield return new WaitForSeconds(15);
 
-        skillData.SkillLevel = originalLevel;
+        DaniTechGameObjectManager.Inst.SetSkillLevel(skillDataId, originalLevel);
     }
 }

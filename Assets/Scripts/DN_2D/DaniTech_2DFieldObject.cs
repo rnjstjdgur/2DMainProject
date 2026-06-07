@@ -64,7 +64,6 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                 {
                     DaniTechUIManager.Instance.OpenSimplePopup("랜덤 이벤트 발생!");
                     int randomNum = Random.Range(0, 4);
-                    randomNum = 1;
                     switch (randomNum)
                     {
                         case 0:

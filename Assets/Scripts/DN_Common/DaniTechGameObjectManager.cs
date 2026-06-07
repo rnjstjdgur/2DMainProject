@@ -336,6 +336,18 @@ public class DaniTechGameObjectManager : MonoBehaviour
         }
     }
 
+    public void SetSkillLevel(string skillDataId, int skillLevel)
+    {
+        var skillData = DaniTechGameDataManager.Instance.GetSkill(skillDataId);
+        if (skillData == null) return;
+
+        if (_skillList.ContainsKey(skillDataId))
+        {
+            _skillList[skillDataId] = skillLevel;
+            Debug.LogWarning($"스킬 {skillData.Name}의 레벨이 {_skillList[skillDataId]}이 되었습니다!");
+        }
+    }
+
     public int GetSkillLevel(string skillDataId)
     {
         if (string.IsNullOrEmpty(skillDataId))

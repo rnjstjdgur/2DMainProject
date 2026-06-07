@@ -138,6 +138,11 @@ public class DaniTechUIManager : MonoBehaviour
         return OpenUI(DaniTechUIRootType.PopupUI, uiType);
     }
 
+    public DaniTechUIBase OpenVeryFrontUI(DaniTechUIType uiType)
+    {
+        return OpenUI(DaniTechUIRootType.VeryFrontUI, uiType);
+    }
+
     public void CloseBackContentUI(DaniTechUIType uiType)
     {
         CloseUI(DaniTechUIRootType.BackContentUI, uiType);

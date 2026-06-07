@@ -4,7 +4,6 @@ public class SettingPopup : DaniTechUIBase
 {
     [Header("버튼")]
     [SerializeField] private DaniTechUIButton Button_ClosePopup;
-    [SerializeField] private DaniTechUIButton Button_GameBook;
     [SerializeField] private DaniTechUIButton Button_Magic;
     [SerializeField] private DaniTechUIButton Button_Tutorial;
 
@@ -15,8 +14,11 @@ public class SettingPopup : DaniTechUIBase
     [SerializeField] private DaniTechUIButton Button_Lightning;
     [SerializeField] private DaniTechUIButton Button_Back;
 
-    [Header("애니메이터")]
-    [SerializeField] private Animator Animator_Animation;
+    [Header("시퀀서")]
+    [SerializeField] private DaniTechUIImageSequencer Sequencer_MagicArrow;
+    [SerializeField] private DaniTechUIImageSequencer Sequencer_Ice;
+    [SerializeField] private DaniTechUIImageSequencer Sequencer_Fire;
+    [SerializeField] private DaniTechUIImageSequencer Sequencer_Lightning;
 
     [Header("레이아웃")]
     [SerializeField] private GameObject Layout_MagicButton;
@@ -25,7 +27,6 @@ public class SettingPopup : DaniTechUIBase
     private void OnEnable()
     {
         Button_ClosePopup.BindOnClickButtonEvent(OnClick_ClosePopup);
-        Button_GameBook.BindOnClickButtonEvent(OnClick_OpenGameBook);
         Button_Magic.BindOnClickButtonEvent(OnClick_ShowMagicButton);
         Button_Tutorial.BindOnClickButtonEvent(OnClick_OpenTutorialSequencer);
         Button_MagicArrow.BindOnClickButtonEvent(OnClick_MagicArrowSequencer);
@@ -42,11 +43,6 @@ public class SettingPopup : DaniTechUIBase
         DaniTechUIManager.Instance.ClosePopupUI(DaniTechUIType.SettingPopup);
     }
 
-    private void OnClick_OpenGameBook()
-    {
-        DaniTechUIManager.Instance.OpenContentUI(DaniTechUIType.GameBookUI);
-    }
-
     private void OnClick_ShowMagicButton()
     {
         Layout_Button.SetActive(false);
@@ -55,28 +51,29 @@ public class SettingPopup : DaniTechUIBase
 
     private void OnClick_OpenTutorialSequencer()
     {
-
+        SetVideoNumAndStartVideo(4);
     }
 
     // 마법 시연 영상 버튼 이벤트 =============================================
 
     private void OnClick_MagicArrowSequencer()
     {
-        
+        SetVideoNumAndStartVideo(0);
     }
 
     private void OnClick_IceSequencer()
     {
-       
+        SetVideoNumAndStartVideo(1);
     }
 
     private void OnClick_FireSequencer()
     {
-        
+        SetVideoNumAndStartVideo(2);
     }
 
     private void OnClick_LightningSequencer()
     {
+        SetVideoNumAndStartVideo(3);
     }
 
     private void OnClick_BackToSettingButton()
@@ -86,5 +83,10 @@ public class SettingPopup : DaniTechUIBase
     }
 
     // 영상 재생관련 ============================================
+
+    private void SetVideoNumAndStartVideo(int videoNumber)
+    {
+        Animator_Animation.SetInteger("videoNum", videoNumber);
+    }
 
 }

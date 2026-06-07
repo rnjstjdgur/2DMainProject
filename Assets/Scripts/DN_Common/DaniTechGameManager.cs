@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DaniTechGameManager : MonoBehaviour
@@ -10,6 +11,10 @@ public class DaniTechGameManager : MonoBehaviour
     private bool _IsGameStart = false;
     private Player2D _localPlayer;
     private float _gameTimer;
+    private int _gameClearTime = 720;
+    private bool _IsGameClear = false;
+    private WaveSpawnManager _waveManager;
+    public int _manaMultiplier { get; private set; }
 
 
     private void Awake()
@@ -19,9 +24,19 @@ public class DaniTechGameManager : MonoBehaviour
 
     private void Start()
     {
+        _manaMultiplier = 1;
         LoadSaveData();
+        _waveManager = WaveSpawnManager.instance;
     }
 
+    private void Update()
+    {
+        var gameTimer = _waveManager.GetGameTimer();
+        if (gameTimer >= _gameClearTime && _IsGameClear == false)
+        {
+            GameClear();
+        }
+    }
     // 게임 흐름 관련 =======================================================
 
     public bool IsGameStart()
@@ -61,6 +76,7 @@ public class DaniTechGameManager : MonoBehaviour
             WaveSpawnManager.instance.ResetWaveManagerOnRestart();
         }
 
+        _IsGameClear = false;
         _IsGameStart = true;
     }
 
@@ -69,6 +85,14 @@ public class DaniTechGameManager : MonoBehaviour
         _IsGameStart = false;
         SaveData();
         Application.Quit();
+    }
+
+    private void GameClear()
+    {
+        _IsGameClear = true;
+        Debug.LogError("게임클리어!");
+        DaniTechUIManager.Instance.OpenPopupUI(DaniTechUIType.GameClearUI);
+        TimeManager.instance.TimeStop();
     }
 
     // 데이터 관련 ==========================================================
@@ -141,6 +165,16 @@ public class DaniTechGameManager : MonoBehaviour
         return _playerModel.ItemList;
     }
 
+    public void StartManaEvent()
+    {
+        StartCoroutine(CoManaEvent());
+    }
+
+    public void StartAwakenEvent()
+    {
+        CoAwakenEvent();
+    }
+
     // 스킬 관련 ======================================================
 
     public Transform GetClosestEnemy(Vector3 thisPosition, float scanRadius, LayerMask enemyLayer, float skillDistance)
@@ -164,5 +198,33 @@ public class DaniTechGameManager : MonoBehaviour
         }
 
         return closestEnemy;
+    }
+
+
+    // 코루틴 =================================================
+
+    private IEnumerator CoManaEvent()
+    {
+        _manaMultiplier = 2;
+
+        yield return new WaitForSeconds(30);
+
+        _manaMultiplier = 1;
+        DaniTechUIManager.Instance.OpenSimplePopup("마나 획득량 원상복구!");
+    }
+
+    private IEnumerator CoAwakenEvent()
+    {
+        var skillData = DaniTechGameDataManager.Instance.GetSkill("skill_magicArrow_01");
+        if (skillData == null) yield return null;
+
+        var skillLevel = DaniTechGameObjectManager.Inst.GetSkillLevel("skill_magicArrow_01");
+        int originalLevel = skillLevel;
+        int eventSkillLevel = 15;
+        skillData.SkillLevel = eventSkillLevel;
+
+        yield return new WaitForSeconds(15);
+
+        skillData.SkillLevel = originalLevel;
     }
 }

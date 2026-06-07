@@ -8,8 +8,6 @@ public class DaniTech_2DFieldObject : MonoBehaviour
     [SerializeField] private string _fieldObjectDataId;
     [SerializeField] private string _fieldObjectName;
 
-    private static int _manaEvent = 1;
-
     public void InitFieldObjectInfoOnCreated(int instanceId, string fieldObjectDataId)
     {
         var fieldObjectData = DaniTechGameDataManager.Instance.GetDNFieldObjectData(fieldObjectDataId);
@@ -48,7 +46,7 @@ public class DaniTech_2DFieldObject : MonoBehaviour
             }
             if (fieldObjectData.FieldObjectType == "Exp")
             {
-                DaniTechGameManager.Inst.IncreasePlayerExp(fieldObjectData.ManaPoints * _manaEvent);
+                DaniTechGameManager.Inst.IncreasePlayerExp(fieldObjectData.ManaPoints * DaniTechGameManager.Inst._manaMultiplier);
 
                 DaniTechGameObjectManager.Inst.RequestDespawnFieldObject(_fieldObjectInstanceId, _fieldObjectDataId);
             }
@@ -66,7 +64,7 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                 {
                     DaniTechUIManager.Instance.OpenSimplePopup("랜덤 이벤트 발생!");
                     int randomNum = Random.Range(0, 4);
-                    randomNum = 0;
+                    randomNum = 1;
                     switch (randomNum)
                     {
                         case 0:
@@ -75,7 +73,7 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                             break;
                         case 1:
                             DaniTechUIManager.Instance.OpenSimplePopup("마나 획득량 2배 증가!");
-                            StartCoroutine(CoManaEvent());
+                            DaniTechGameManager.Inst.StartManaEvent();
                             break;
                         case 2:
                             DaniTechUIManager.Instance.OpenSimplePopup("체력 모두 회복!");
@@ -83,7 +81,7 @@ public class DaniTech_2DFieldObject : MonoBehaviour
                             break;
                         case 3:
                             DaniTechUIManager.Instance.OpenSimplePopup("매직미사일 일시적 각성!");
-                            StartCoroutine(CoAwakenEvent());
+                            DaniTechGameManager.Inst.StartAwakenEvent();
                             break;
                     }
 
@@ -104,29 +102,4 @@ public class DaniTech_2DFieldObject : MonoBehaviour
 
 
 
-    // 코루틴 =========================================
-    
-    private IEnumerator CoManaEvent()
-    {
-        _manaEvent = 2;
-
-        yield return new WaitForSeconds(30);
-
-        _manaEvent = 1;
-        DaniTechUIManager.Instance.OpenSimplePopup("마나 획득량 원상복구!");
-    }
-
-    private IEnumerator CoAwakenEvent()
-    {
-        var skillData = DaniTechGameDataManager.Instance.GetSkill("skill_magicArrow_01");
-        if (skillData == null) yield return null;
-
-        var skillLevel = DaniTechGameObjectManager.Inst.GetSkillLevel("skill_magicArrow_01");
-        int eventSkillLevel = 15;
-        skillData.SkillLevel = eventSkillLevel;
-
-        yield return new WaitForSeconds(15);
-
-        skillData.SkillLevel = skillLevel;
-    }
 }

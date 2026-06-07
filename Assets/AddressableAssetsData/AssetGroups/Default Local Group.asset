@@ -90,6 +90,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52e464434f3702442ad640467eb56ff5
+    m_Address: Texture2D/Texture2D_Loading_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 644938881dddd364e9cbfb7927d9553d
     m_Address: Icon/Icon_Wand_1
     m_ReadOnly: 0
@@ -137,6 +142,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 87efaaea717ae8b48981b41cda59c537
     m_Address: 2DObject/Monster_Event
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8be7c6fa2caf6c14a800f921e6152aa6
+    m_Address: Texture2D/Texture2D_Loading_4
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

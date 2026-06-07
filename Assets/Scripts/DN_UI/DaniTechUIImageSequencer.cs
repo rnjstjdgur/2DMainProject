@@ -48,7 +48,7 @@ public class DaniTechUIImageSequencer : MonoBehaviour
             _image.sprite = SpriteArray_Sprite[currentIndex];
 
             // 설정한 시간만큼 대기 (밀리초 단위로 변환)
-            await UniTask.Delay(TimeSpan.FromSeconds(_sequenceInterval), cancellationToken: _cancelToken.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_sequenceInterval),true,  cancellationToken: _cancelToken.Token);
 
             currentIndex++;
 

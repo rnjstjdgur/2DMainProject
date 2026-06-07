@@ -30,10 +30,10 @@ public class DaniTech_LoadingUI : DaniTechUIBase
         switch (randomIdx)
         {
             case 0:
-                texturePath = "Texture2D/Texture2D_Loading_1";
+                texturePath = "Texture2D/Texture2D_Loading_3";
                 break;
             case 1:
-                texturePath = "Texture2D/Texture2D_Loading_2";
+                texturePath = "Texture2D/Texture2D_Loading_4";
                 break;
         }
 
